@@ -1,4 +1,5 @@
 import os, sys, binascii
+from constants import text
 
 # print(__file__)
 
@@ -41,42 +42,21 @@ output_rom_location = os.path.join(script_dir, 'output_rom.smc')
 # print(res)
 # print(type(res))
 # sys.exit('temp breaking point')
-filler_values = [
-    # {
-    #     "address": 0x13B2B,
-    #     "length": 93,
-    #     "character": " " # This doesn't quite work... Still needs some work
-    # },
-    {
-        "address": 0x13B3C,
-        "length": 19,
-        "character": " "
-    },
-    {
-        "address": 0x13B52,
-        "length": 27,
-        "character": " "
-    },
-    {
-        "address": 0x13B70,
-        "length": 20,
-        "character": " "
-    }
-]
+
 
 with open(output_rom_location, 'wb') as f:
     f.write(rom_content)
-    for filler in filler_values:
+    for filler in text.FILLER_REPLACEMENT:
         f.seek(filler['address'])
         pad_value = ''.ljust(filler['length'], filler['character'])
         pad_value = bytearray(pad_value, 'utf-8')
         f.write(pad_value)
-    f.seek(0x13B2B)
-    # f.write(binascii.hexlify(b'hello world'))
-    f.write(b'RANDO HYPE') # Be careful of the number of characters we use... 
-    f.seek(0x13B3C)
-    # f.write(binascii.hexlify(b'Line 2'))
-    f.write(b'LINE 2 Plus more info')
+    # f.seek(0x13B2B)
+    # # f.write(binascii.hexlify(b'hello world'))
+    # f.write(b'RANDO HYPE') # Be careful of the number of characters we use... 
+    # f.seek(0x13B3C)
+    # # f.write(binascii.hexlify(b'Line 2'))
+    # f.write(b'LINE 2 Plus more info')
     # f.seek(0x143B9)
     # # f.write(binascii.hexlify(b'seed info'))
     # f.write(b'SEED INFO567890')
