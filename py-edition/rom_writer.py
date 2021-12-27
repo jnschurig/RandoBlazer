@@ -36,7 +36,14 @@ def main(argv):
     return arguments
     # End main
 
+def modify_rom_data(rom_data, change_list):
+    for change in change_list:
+
+        pass
+
+    return rom_data
+
 
 if __name__ == '__main__':
     # Run this with creds built in.
-    settingsDict = main(sys.argv[1:])
+    settings_dict = main(sys.argv[1:])
