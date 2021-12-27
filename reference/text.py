@@ -1,10 +1,10 @@
-import os 
+import constants
 
-script_dir = os.path.dirname(__file__)
-version_file = os.path.join(script_dir, '..', 'version.txt')
+# script_dir = os.path.dirname(__file__)
+# version_file = os.path.abspath(os.path.join(script_dir, '..', 'version.txt'))
 
-with open(version_file, 'r') as f:
-    version_code = f.read()
+# with open(version_file, 'r') as f:
+#     version_code = f.read()
 
 TITLE_TEXT = [
     {
@@ -14,7 +14,7 @@ TITLE_TEXT = [
     },
     {
         "address": 0x13B3C,
-        "value": bytearray('RandoBlazer version v' + version_code, 'utf-8'),
+        "value": bytearray('RandoBlazer version v' + constants.VERSION_CODE, 'utf-8'),
         "note": "First Line on the title screen"
     },
     {
@@ -46,17 +46,19 @@ FILLER_REPLACEMENT = [
     {
         "address": 0x13B3C,
         "length": 19,
-        "character": " "
+        "pad_value": " ",
+        "pad_right": True
     },
     {
         "address": 0x13B52,
         "length": 27,
-        "character": " "
+        "pad_value": " ",
+        "pad_right": True
     },
     {
         "address": 0x13B70,
         "length": 20,
-        "character": " "
+        "pad_value": " "
     }
 ]
     

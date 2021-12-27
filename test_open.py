@@ -1,5 +1,5 @@
 import os, sys, binascii
-from constants import text
+# from constants import text
 
 # print(__file__)
 
@@ -42,6 +42,14 @@ output_rom_location = os.path.join(script_dir, 'output_rom.smc')
 # print(res)
 # print(type(res))
 # sys.exit('temp breaking point')
+
+print(type(b'hi'))
+print(type('hi'))
+print(type(1))
+print(type(bytearray(1)))
+print(type(1.1))
+print(type(bytearray(1.1)))
+sys.exit(1)
 
 
 with open(output_rom_location, 'wb') as f:

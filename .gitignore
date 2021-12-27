@@ -1,2 +1,3 @@
 *.smc
 deprecated/
+__pycache__
