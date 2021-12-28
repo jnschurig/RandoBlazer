@@ -1,6 +1,6 @@
 import os, sys, getopt
-import binascii
-from reference import constants
+import binascii, shutil
+from reference import constants, text
 
 valid_args =  "-h                --help                       | Information about the script. \n"
 valid_args += "-r <ROM Location> --rom_path    <ROM Location> | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc \n"
@@ -8,7 +8,7 @@ valid_args += "-t <Target ROM>   --target_path <Target ROM>   | Path to target R
 
 help_info  = "Help Info: \n"
 help_info += "This script will modify the contents ROM data and replace bits of it with other data. \n"
-help_info += "The arguments are intended to be used for testing by running this script all by itself."
+help_info += "The arguments are intended to be used for testing by running this script all by itself. \n"
 
 def main(argv):
     arguments = {
@@ -38,32 +38,49 @@ def main(argv):
     return arguments
     # End main
 
-def modify_rom_data(rom_data, change_list):
-    for change in change_list:
-        if 'length' in change: # We need to do some padding...
-            if 'value' not in change: # We might want to pad an existing item...
-                change['value'] = ''
-                if 'pad_right' not in change:
-                    change['pad_right'] = True
-                if change['pad_right']:
-                    change['value'].ljust(change['length'], change['pad_value'])
-                else:
-                    change['value'].rjust(change['length'], change['pad_value'])
+def modify_rom_data(target_rom_location, change_list):
+    with open(target_rom_location, 'rb') as f:
+    # rom_content = f.read()
+    
+        for change in change_list:
+            if 'length' in change: # We need to do some padding...
+                if 'value' not in change: # We might want to pad an existing item...
+                    change['value'] = ''
+                    if 'pad_right' not in change:
+                        change['pad_right'] = True
+                    if change['pad_right']:
+                        change['value'].ljust(change['length'], change['pad_value'])
+                    else:
+                        change['value'].rjust(change['length'], change['pad_value'])
 
 
-        if 'value' in change:
-            if type(change['value']) is str:
-                change['value'] = bytearray(change['value'], 'utf-8')
-            if type(change['value']) is int:
-                change['value'] = bytearray(change['value'])
-        else:
-            change['value'] = 0x00
-        
-        rom_data.seek(change['address'])
-        rom_data.write(binascii.hexlify(change['value']))
-        
+            if 'value' in change:
+                if type(change['value']) is str:
+                    change['value'] = bytearray(change['value'], 'utf-8')
+                if type(change['value']) is int:
+                    change['value'] = bytearray(change['value'])
+            else:
+                change['value'] = 0x00
 
-    return rom_data
+            # change['address'] = bytearray(hex(change['address']).upper(), 'utf-8')
+
+            # print(type(change['address']))
+            # print(change['address'])
+
+            # print(type(change['value']))
+            # print(change['value'])
+
+            f.seek(change['address'])
+            f.write(binascii.hexlify(change['value']))
+    
+    return target_rom_location
+
+# def manage_file_access(target_rom_location):
+#     with open(target_rom_location, 'rb') as f:
+#         # rom_content = f.read()
+#         f.seek()
+
+#     return 'hi'
 
 
 if __name__ == '__main__':
@@ -72,10 +89,24 @@ if __name__ == '__main__':
     source_rom_path = os.path.join(constants.REPOSITORY_ROOT_DIR, settings_dict['rom_path'])
     target_rom_path = os.path.join(constants.REPOSITORY_ROOT_DIR, settings_dict['target_path'])
 
-    with open(source_rom_path, 'rb') as f:
-        rom_content = f.read()
-    
-    rom_content = modify_rom_data(rom_content, [])
+    try:
+        os.remove(target_rom_path)
+    except:
+        pass
 
-    with open(target_rom_path, 'wb') as f:
-        f.write(rom_content)
+    shutil.copy(source_rom_path, target_rom_path)
+
+    # with open(source_rom_path, 'rb') as f:
+    #     with open(target_rom_path, 'wb') as g:
+    #         g.write(f)
+
+    # print(type(0xc0010))
+    # print(type(text.FILLER_REPLACEMENT[1]['address']))
+
+    
+    # rom_content = modify_rom_data(rom_content, text.FILLER_REPLACEMENT)
+    result_path = modify_rom_data(target_rom_path, text.TITLE_TEXT)
+    print(result_path)
+
+    # with open(target_rom_path, 'wb') as f:
+    #     f.write(rom_content)
