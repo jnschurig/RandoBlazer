@@ -1,4 +1,4 @@
-import os, sys, getopt
+import os, sys, getopt, json
 import binascii, shutil
 from reference import constants, text
 
@@ -39,10 +39,11 @@ def main(argv):
     # End main
 
 def modify_rom_data(target_rom_location, change_list):
-    with open(target_rom_location, 'rb') as f:
-    # rom_content = f.read()
+    with open(target_rom_location, 'r+b') as f:
+        # rom_content = f.read()
     
         for change in change_list:
+            # change = json.loads(change)
             if 'length' in change: # We need to do some padding...
                 if 'value' not in change: # We might want to pad an existing item...
                     change['value'] = ''
@@ -60,7 +61,11 @@ def modify_rom_data(target_rom_location, change_list):
                 if type(change['value']) is int:
                     change['value'] = bytearray(change['value'])
             else:
-                change['value'] = 0x00
+                # change['value'] = 0x00
+                # change['value'] = ''
+                # change += ",'value': ''"
+                pass
+
 
             # change['address'] = bytearray(hex(change['address']).upper(), 'utf-8')
 
@@ -69,18 +74,37 @@ def modify_rom_data(target_rom_location, change_list):
 
             # print(type(change['value']))
             # print(change['value'])
-
             f.seek(change['address'])
-            f.write(binascii.hexlify(change['value']))
+            if type(change['value']) is bytes: # if bytes
+                f.write(change['value']) # write directly
+            elif type(change['value']) is str: # if string
+                f.write(binascii.hexlify(change['value'])) # convert to bytes
+            else: # This may be redundant, but it might be good to handle things that aren't strings a little differently.
+                f.write(change['value'])
+        
+        # for change in text.TITLE_TEXT:
+        #     f.seek(change['address'])
+        #     f.write(change['value'])
     
     return target_rom_location
 
-# def manage_file_access(target_rom_location):
-#     with open(target_rom_location, 'rb') as f:
-#         # rom_content = f.read()
-#         f.seek()
+def compile_changes():
 
-#     return 'hi'
+    # change_list_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'change_list.json')
+
+    change_list = []
+    # change_list.append(text.FILLER_REPLACEMENT)
+    for item in text.FILLER_REPLACEMENT:
+        change_list.append(item)
+    for item in text.TITLE_TEXT:
+        change_list.append(item)
+    # change_list.append(text.TITLE_TEXT)
+    
+
+    # with open(change_list_file, 'w') as f:
+    #     f.write(json.dumps(change_list))
+    
+    return change_list
 
 
 if __name__ == '__main__':
@@ -89,6 +113,11 @@ if __name__ == '__main__':
     source_rom_path = os.path.join(constants.REPOSITORY_ROOT_DIR, settings_dict['rom_path'])
     target_rom_path = os.path.join(constants.REPOSITORY_ROOT_DIR, settings_dict['target_path'])
 
+    all_changes = compile_changes()
+    # print(change_list_file)
+
+    # print(0x13B2B)
+
     try:
         os.remove(target_rom_path)
     except:
@@ -96,16 +125,7 @@ if __name__ == '__main__':
 
     shutil.copy(source_rom_path, target_rom_path)
 
-    # with open(source_rom_path, 'rb') as f:
-    #     with open(target_rom_path, 'wb') as g:
-    #         g.write(f)
-
-    # print(type(0xc0010))
-    # print(type(text.FILLER_REPLACEMENT[1]['address']))
-
-    
-    # rom_content = modify_rom_data(rom_content, text.FILLER_REPLACEMENT)
-    result_path = modify_rom_data(target_rom_path, text.TITLE_TEXT)
+    result_path = modify_rom_data(target_rom_path, all_changes)
     print(result_path)
 
     # with open(target_rom_path, 'wb') as f:
