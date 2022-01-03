@@ -40,26 +40,39 @@ def main(argv):
 
 def modify_rom_data(target_rom_location, change_list):
     with open(target_rom_location, 'r+b') as f:
-        # rom_content = f.read()
-    
         for change in change_list:
             # change = json.loads(change)
-            if 'length' in change: # We need to do some padding...
-                if 'value' not in change: # We might want to pad an existing item...
-                    change['value'] = ''
-                    if 'pad_right' not in change:
-                        change['pad_right'] = True
-                    if change['pad_right']:
-                        change['value'].ljust(change['length'], change['pad_value'])
-                    else:
-                        change['value'].rjust(change['length'], change['pad_value'])
+            if 'value' not in change: # We might want to pad an existing item...
+                    # change['value'] = ''
+                    change_val = ''
+            else:
+                change_val = change['value']
 
+            if 'length' in change: # We need to do some padding...
+                change_val = change_val[:change['length']] # truncate to the length, if needed.
+                if 'pad_value' not in change:
+                    change['pad_value'] = ' '
+                if 'pad_dir' not in change:
+                    change['pad_dir'] = 'right'
+                if change['pad_dir'] == 'right':
+                    change_val = change_val.ljust(change['length'], change['pad_value'])
+                if change['pad_dir'] == 'left':
+                    change_val = change_val.rjust(change['length'], change['pad_value'])
+                if change['pad_dir'] == 'center':
+                    change_val = change_val.center(change['length'], change['pad_value'])
+
+                if 'pad_right' not in change:
+                    change['pad_right'] = True
+                if change['pad_right']:
+                    change_val = change_val.ljust(change['length'], change['pad_value'])
+                else:
+                    change_val = change_val.rjust(change['length'], change['pad_value'])
 
             if 'value' in change:
-                if type(change['value']) is str:
-                    change['value'] = bytearray(change['value'], 'utf-8')
-                if type(change['value']) is int:
-                    change['value'] = bytearray(change['value'])
+                if type(change_val) is str:
+                    change_val = bytearray(change_val, 'utf-8')
+                if type(change_val) is int:
+                    change_val = bytearray(change_val)
             else:
                 # change['value'] = 0x00
                 # change['value'] = ''
@@ -75,12 +88,12 @@ def modify_rom_data(target_rom_location, change_list):
             # print(type(change['value']))
             # print(change['value'])
             f.seek(change['address'])
-            if type(change['value']) is bytes: # if bytes
-                f.write(change['value']) # write directly
-            elif type(change['value']) is str: # if string
-                f.write(binascii.hexlify(change['value'])) # convert to bytes
+            if type(change_val) is bytes: # if bytes
+                f.write(change_val) # write directly
+            elif type(change_val) is str: # if string
+                f.write(binascii.hexlify(change_val)) # convert to bytes
             else: # This may be redundant, but it might be good to handle things that aren't strings a little differently.
-                f.write(change['value'])
+                f.write(change_val)
         
         # for change in text.TITLE_TEXT:
         #     f.seek(change['address'])
@@ -94,15 +107,11 @@ def compile_changes():
 
     change_list = []
     # change_list.append(text.FILLER_REPLACEMENT)
-    for item in text.FILLER_REPLACEMENT:
-        change_list.append(item)
+    # for item in text.FILLER_REPLACEMENT:
+    #     change_list.append(item)
     for item in text.TITLE_TEXT:
         change_list.append(item)
     # change_list.append(text.TITLE_TEXT)
-    
-
-    # with open(change_list_file, 'w') as f:
-    #     f.write(json.dumps(change_list))
     
     return change_list
 
