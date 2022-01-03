@@ -1,4 +1,4 @@
-import os, sys, getopt, json
+import os, sys, getopt
 import binascii, shutil
 from reference import constants, text
 

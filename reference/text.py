@@ -45,8 +45,9 @@ TITLE_TEXT = [
 OTHER_TEXT = [
     {
         'address': 0x143B9,
-        'value': b'SEED INFO012345',
-        'note': 'Not sure where this is supposed to show up yet.'
+        'value': 'SEED ${seed}',
+        'note': 'Shows up in the file select screen.',
+        'length': 22
     }
 ]
 
