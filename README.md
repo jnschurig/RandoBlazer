@@ -52,3 +52,10 @@ You can use this tracker made by Netanonima: https://eggper.com/blazer_tracker/
 
 ### Known issues/limitations
 
+### Rom Information
+[ROMhacking.net](http://www.romhacking.net/) has some fantastic tools for checking roms.
+
+[TUSH](http://www.romhacking.net/utilities/608/) - A tool for adding or removing headers from SNES roms.
+
+[ROM Hasher](http://www.romhacking.net/utilities/1002/) - Calculates hashes and checks ROM information in a database.
+

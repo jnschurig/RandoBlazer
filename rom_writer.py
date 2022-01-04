@@ -1,10 +1,11 @@
 import os, sys, getopt
-import binascii, shutil
+import binascii, shutil, hashlib
 from reference import constants, text
 
 valid_args =  "-h                --help                       | Information about the script. \n"
 valid_args += "-r <ROM Location> --rom_path    <ROM Location> | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc \n"
 valid_args += "-t <Target ROM>   --target_path <Target ROM>   | Path to target ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/output_rom.smc \n"
+valid_args += "-d                --debug                      | Enable detailed output for debugging. Default is False. \n"
 
 help_info  = "Help Info: \n"
 help_info += "This script will modify the contents ROM data and replace bits of it with other data. \n"
@@ -13,12 +14,13 @@ help_info += "The arguments are intended to be used for testing by running this 
 def main(argv):
     arguments = {
         'rom_path': 'Soul Blazer (U) [!].smc',
-        'target_path': 'output_rom.smc'
+        'target_path': 'output_rom.smc',
+        'debug': False
     }
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hr:t:',['help','rom_path=','target_path='])
+        opts, args = getopt.getopt(argv,'hr:t:d',['help','rom_path=','target_path=','debug'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -28,9 +30,11 @@ def main(argv):
             print(help_info)
             sys.exit()
         elif opt in ('-r', '--rom_path'):
-            arguments['rom_path'] = arg.lower()
+            arguments['rom_path'] = arg
         elif opt in ('-t', '--target_path'):
-            arguments['target_path'] = arg.lower()
+            arguments['target_path'] = arg
+        elif opt in ('-d', '--debug'):
+            arguments['debug'] = True
     
     if False: # Thank you, I hate it.
         print(args)
@@ -115,6 +119,28 @@ def compile_changes():
     
     return change_list
 
+def check_hash(source_rom_path, debug=False):
+    with open(source_rom_path, 'rb') as f:
+        # rom_data = f.read()
+        rom_md5 = hashlib.md5(f.read()).hexdigest()
+
+    if debug:
+        print('DEBUG - Rom Hash: ' + rom_md5)
+
+    payload = {
+        'source_rom_path': source_rom_path,
+        'rom_md5': rom_md5,
+        'is_ok': False
+    }
+
+    if rom_md5 == constants.ROM_HASH_MD5_UNHEADERED:
+        payload['is_ok'] = True
+        payload['headered'] = False
+    elif rom_md5 == constants.ROM_HASH_MD5_HEADERED:
+        payload['is_ok'] = True
+        payload['headered'] = True 
+
+    return payload
 
 if __name__ == '__main__':
     # Run this with creds built in.
@@ -123,7 +149,11 @@ if __name__ == '__main__':
     target_rom_path = os.path.join(constants.REPOSITORY_ROOT_DIR, settings_dict['target_path'])
 
     all_changes = compile_changes()
-    # print(change_list_file)
+    rom_info = check_hash(source_rom_path)
+    if settings_dict['debug']:
+        print('DEBUG - ROM INFO')
+        for key in rom_info.keys():
+            print('DEBUG - ' + str(key) + ': ' + str(rom_info[key]))
 
     # print(0x13B2B)
 
