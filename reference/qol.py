@@ -1,10 +1,14 @@
 
 # Enables instant text in most cases.
-FAST_TEXT = [
+TEXT_SCROLL = [
     {
-        'address': 0x13B2B,
-        'value': 0x00,
-        'note': 'General text. Covers 90 percent of text boxes.',
-        'note2': 'This is a placeholder until the actual information is available.'
+        'address': 0x02796C,
+        'note': 'General text speed. Covers 90 percent of text boxes.',
+        'speed': {
+            'normal': 0x03,
+            'fast': 0x02,
+            'faster': 0x01,
+            'instant': 0x00
+        }
     },
 ]
