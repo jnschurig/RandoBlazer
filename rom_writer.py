@@ -1,5 +1,6 @@
 import os, sys, getopt
-import binascii, shutil, hashlib
+import binascii, hashlib
+# import shutil
 from reference import constants, text
 
 valid_args =  "-h                --help                       | Information about the script. \n"
@@ -84,13 +85,6 @@ def modify_rom_data(target_rom_location, change_list):
                 pass
 
 
-            # change['address'] = bytearray(hex(change['address']).upper(), 'utf-8')
-
-            # print(type(change['address']))
-            # print(change['address'])
-
-            # print(type(change['value']))
-            # print(change['value'])
             f.seek(change['address'])
             if type(change_val) is bytes: # if bytes
                 f.write(change_val) # write directly
@@ -99,13 +93,11 @@ def modify_rom_data(target_rom_location, change_list):
             else: # This may be redundant, but it might be good to handle things that aren't strings a little differently.
                 f.write(change_val)
         
-        # for change in text.TITLE_TEXT:
-        #     f.seek(change['address'])
-        #     f.write(change['value'])
-    
     return target_rom_location
 
 def compile_changes():
+    # Need to have a way of selectively compiling changes... 
+    # Maybe this function is not the right things...
 
     # change_list_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'change_list.json')
 
@@ -142,6 +134,22 @@ def check_hash(source_rom_path, debug=False):
 
     return payload
 
+def initialize_file(source_rom_path, target_rom_path, file_has_header):
+    # Remove the target file if it exists.
+    try:
+        os.remove(target_rom_path)
+    except:
+        pass
+
+    with open(source_rom_path, 'rb') as f: 
+        with open(target_rom_path, 'wb') as g:
+            if file_has_header:
+                g.write(f.read()[200:])
+            else:
+                g.write(f.read())
+
+    return True
+
 if __name__ == '__main__':
     # Run this with creds built in.
     settings_dict = main(sys.argv[1:])
@@ -156,13 +164,7 @@ if __name__ == '__main__':
             print('DEBUG - ' + str(key) + ': ' + str(rom_info[key]))
 
     # print(0x13B2B)
-
-    try:
-        os.remove(target_rom_path)
-    except:
-        pass
-
-    shutil.copy(source_rom_path, target_rom_path)
+    initialize_file(source_rom_path, target_rom_path, settings_dict['headered'])
 
     result_path = modify_rom_data(target_rom_path, all_changes)
     print(result_path)
