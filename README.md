@@ -59,3 +59,12 @@ You can use this tracker made by Netanonima: https://eggper.com/blazer_tracker/
 
 [ROM Hasher](http://www.romhacking.net/utilities/1002/) - Calculates hashes and checks ROM information in a database.
 
+### Credits
+
+Original RandoBlazer created by [Lehulk](https://github.com/LeHulk1/RandoBlazer).
+
+Additional work and improvements by [Orphis](https://github.com/Orphis/).
+
+Python conversion by [James 'Reaif' Schurig](https://github.com/jnschurig).
+
+ROM mapping contributions from Tranquilite.
