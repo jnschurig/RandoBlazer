@@ -5,10 +5,10 @@ TEXT_SCROLL = [
         'address': 0x02796C,
         'note': 'General text speed. Covers 90 percent of text boxes.',
         'speed': {
-            'normal': 0x03,
-            'fast': 0x02,
-            'faster': 0x01,
-            'instant': 0x00
+            'normal': b'\x03',
+            'fast': b'\x02',
+            'faster': b'\x01',
+            'instant': b'\x00'
         }
-    },
+    }
 ]

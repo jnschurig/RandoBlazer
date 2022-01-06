@@ -1,12 +1,14 @@
 import os, sys, getopt
 import binascii, hashlib
 # import shutil
-from reference import constants, text
+from reference import constants, text, qol
 
-valid_args =  "-h                --help                       | Information about the script. \n"
-valid_args += "-r <ROM Location> --rom_path    <ROM Location> | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc \n"
-valid_args += "-t <Target ROM>   --target_path <Target ROM>   | Path to target ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/output_rom.smc \n"
-valid_args += "-d                --debug                      | Enable detailed output for debugging. Default is False. \n"
+valid_args =  "-h                  --help                         | Information about the script. \n"
+valid_args += "-r <ROM Location>   --rom_path    <ROM Location>   | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc \n"
+valid_args += "-t <Target ROM>     --target_path <Target ROM>     | Path to target ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/output_rom.smc \n"
+valid_args += "-d                  --debug                        | Enable detailed output for debugging. Default is False. \n"
+valid_args += "-r <Setting String> --randomize   <Setting String> | Apply Randomization with settings. \n"
+valid_args += "-q <QOL String>     --qol         <QOL String>     | Quality of Life Settings. Text speed (Tnormal,Tfast,Tfaster,Tinstant) \n"
 
 help_info  = "Help Info: \n"
 help_info += "This script will modify the contents ROM data and replace bits of it with other data. \n"
@@ -16,12 +18,14 @@ def main(argv):
     arguments = {
         'rom_path': 'Soul Blazer (U) [!].smc',
         'target_path': 'output_rom.smc',
+        'randomize': False,
+        'qol': '',
         'debug': False
     }
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hr:t:d',['help','rom_path=','target_path=','debug'])
+        opts, args = getopt.getopt(argv,'hr:t:r:q:d',['help','rom_path=','target_path=','randomize=','qol=','debug'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -34,6 +38,10 @@ def main(argv):
             arguments['rom_path'] = arg
         elif opt in ('-t', '--target_path'):
             arguments['target_path'] = arg
+        elif opt in ('-r', '--randomize'):
+            arguments['randomize'] = arg
+        elif opt in ('-q', '--qol'):
+            arguments['qol'] = arg
         elif opt in ('-d', '--debug'):
             arguments['debug'] = True
     
@@ -72,17 +80,17 @@ def modify_rom_data(target_rom_location, change_list):
                     change_val = change_val.ljust(change['length'], change['pad_value'])
                 else:
                     change_val = change_val.rjust(change['length'], change['pad_value'])
-
-            if 'value' in change:
-                if type(change_val) is str:
-                    change_val = bytearray(change_val, 'utf-8')
-                if type(change_val) is int:
-                    change_val = bytearray(change_val)
-            else:
+            
+            # if 'value' in change:
+            if type(change_val) is str:
+                change_val = bytearray(change_val, 'utf-8')
+            if type(change_val) is int:
+                change_val = bytearray(change_val)
+            # else:
                 # change['value'] = 0x00
                 # change['value'] = ''
                 # change += ",'value': ''"
-                pass
+                # pass
 
 
             f.seek(change['address'])
@@ -90,24 +98,38 @@ def modify_rom_data(target_rom_location, change_list):
                 f.write(change_val) # write directly
             elif type(change_val) is str: # if string
                 f.write(binascii.hexlify(change_val)) # convert to bytes
+            elif type(change_val) is int:
+                number_of_bytes = 1
+                f.write(change_val.to_bytes(number_of_bytes, 'big'))
             else: # This may be redundant, but it might be good to handle things that aren't strings a little differently.
                 f.write(change_val)
         
     return target_rom_location
 
-def compile_changes():
+def compile_changes(inclusion_settings):
     # Need to have a way of selectively compiling changes... 
     # Maybe this function is not the right things...
+    change_list = []
+
+    if inclusion_settings['qol'] != '':
+        qol_list = inclusion_settings['qol'].split(':')
+        for qol_item in qol_list:
+            if qol_item[:1] == 'T': # Text speed
+                print('Found T setting')
+                for text_setting in qol.TEXT_SCROLL:
+                    speed_change = {
+                        'address': text_setting['address'],
+                        'value': text_setting['speed'][qol_item[1:]]
+                    }
+                    print(speed_change)
+                    change_list.append(speed_change)
+        
 
     # change_list_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'change_list.json')
+    if inclusion_settings['randomize']:
 
-    change_list = []
-    # change_list.append(text.FILLER_REPLACEMENT)
-    # for item in text.FILLER_REPLACEMENT:
-    #     change_list.append(item)
-    for item in text.TITLE_TEXT:
-        change_list.append(item)
-    # change_list.append(text.TITLE_TEXT)
+        for item in text.TITLE_TEXT:
+            change_list.append(item)
     
     return change_list
 
@@ -144,7 +166,8 @@ def initialize_file(source_rom_path, target_rom_path, file_has_header):
     with open(source_rom_path, 'rb') as f: 
         with open(target_rom_path, 'wb') as g:
             if file_has_header:
-                g.write(f.read()[200:])
+                print('Header Detected. Removing...')
+                g.write(f.read()[512:])
             else:
                 g.write(f.read())
 
@@ -156,7 +179,7 @@ if __name__ == '__main__':
     source_rom_path = os.path.join(constants.REPOSITORY_ROOT_DIR, settings_dict['rom_path'])
     target_rom_path = os.path.join(constants.REPOSITORY_ROOT_DIR, settings_dict['target_path'])
 
-    all_changes = compile_changes()
+    all_changes = compile_changes(settings_dict)
     rom_info = check_hash(source_rom_path)
     if settings_dict['debug']:
         print('DEBUG - ROM INFO')
@@ -164,7 +187,7 @@ if __name__ == '__main__':
             print('DEBUG - ' + str(key) + ': ' + str(rom_info[key]))
 
     # print(0x13B2B)
-    initialize_file(source_rom_path, target_rom_path, settings_dict['headered'])
+    initialize_file(source_rom_path, target_rom_path, rom_info['headered'])
 
     result_path = modify_rom_data(target_rom_path, all_changes)
     print(result_path)
