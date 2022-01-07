@@ -35,12 +35,12 @@ CHESTS = [
 	{
 		"chest_id": 2,
 		"item_id": "GEMS_EXP",
-		"gem_count": 50
+		"amount": 50
 	},
 	{
 		"chest_id": 3,
 		"item_id": "GEMS_EXP",
-		"gem_count": 12
+		"amount": 12
 	},
 	{
 		"chest_id": 4,
@@ -73,12 +73,12 @@ CHESTS = [
 	{
 		"chest_id": 11,
 		"item_id": "GEMS_EXP",
-		"gem_count": 50
+		"amount": 50
 	},
 	{
 		"chest_id": 12,
 		"item_id": "GEMS_EXP",
-		"gem_count": 150
+		"amount": 150
 	},
 	{
 		"chest_id": 13,
@@ -91,7 +91,7 @@ CHESTS = [
 	{
 		"chest_id": 15,
 		"item_id": "GEMS_EXP",
-		"gem_count": 50
+		"amount": 50
 	},
 	{
 		"chest_id": 16,
@@ -108,12 +108,12 @@ CHESTS = [
 	{
 		"chest_id": 19,
 		"item_id": "GEMS_EXP",
-		"gem_count": 100
+		"amount": 100
 	},
 	{
 		"chest_id": 20,
 		"item_id": "GEMS_EXP",
-		"gem_count": 60
+		"amount": 60
 	},
 	{
 		"chest_id": 21,
@@ -134,7 +134,7 @@ CHESTS = [
 	{
 		"chest_id": 25,
 		"item_id": "GEMS_EXP",
-		"gem_count": 80
+		"amount": 80
 	},
 	{
 		"chest_id": 26,
@@ -155,7 +155,7 @@ CHESTS = [
 	{
 		"chest_id": 30,
 		"item_id": "GEMS_EXP",
-		"gem_count": 60
+		"amount": 60
 	},
 	{
 		"chest_id": 31,
@@ -168,7 +168,7 @@ CHESTS = [
 	{
 		"chest_id": 33,
 		"item_id": "GEMS_EXP",
-		"gem_count": 1
+		"amount": 1
 	},
 	{
 		"chest_id": 34,
@@ -177,7 +177,7 @@ CHESTS = [
 	{
 		"chest_id": 35,
 		"item_id": "GEMS_EXP",
-		"gem_count": 40
+		"amount": 40
 	},
 	{
 		"chest_id": 36,
@@ -194,7 +194,7 @@ CHESTS = [
 	{
 		"chest_id": 39,
 		"item_id": "GEMS_EXP",
-		"gem_count": 50
+		"amount": 50
 	},
 	{
 		"chest_id": 40,
@@ -219,7 +219,7 @@ CHESTS = [
 	{
 		"chest_id": 45,
 		"item_id": "GEMS_EXP",
-		"gem_count": 50
+		"amount": 50
 	},
 	{
 		"chest_id": 46,
@@ -228,7 +228,7 @@ CHESTS = [
 	{
 		"chest_id": 47,
 		"item_id": "GEMS_EXP",
-		"gem_count": 80
+		"amount": 80
 	},
 	{
 		"chest_id": 48,
@@ -241,7 +241,7 @@ CHESTS = [
 	{
 		"chest_id": 50,
 		"item_id": "GEMS_EXP",
-		"gem_count": 80
+		"amount": 80
 	},
 	{
 		"chest_id": 51,
@@ -258,7 +258,7 @@ CHESTS = [
 	{
 		"chest_id": 54,
 		"item_id": "GEMS_EXP",
-		"gem_count": 100
+		"amount": 100
 	},
 	{
 		"chest_id": 55,
@@ -267,17 +267,17 @@ CHESTS = [
 	{
 		"chest_id": 56,
 		"item_id": "GEMS_EXP",
-		"gem_count": 80
+		"amount": 80
 	},
 	{
 		"chest_id": 57,
 		"item_id": "GEMS_EXP",
-		"gem_count": 80
+		"amount": 80
 	},
 	{
 		"chest_id": 58,
 		"item_id": "GEMS_EXP",
-		"gem_count": 100
+		"amount": 100
 	},
 	{
 		"chest_id": 59,
@@ -290,7 +290,7 @@ CHESTS = [
 	{
 		"chest_id": 61,
 		"item_id": "GEMS_EXP",
-		"gem_count": 200
+		"amount": 200
 	},
 	{
 		"chest_id": 62,
@@ -307,6 +307,6 @@ CHESTS = [
 	{
 		"chest_id": 65,
 		"item_id": "GEMS_EXP",
-		"gem_count": 100
+		"amount": 100
 	}
 ]

@@ -111,17 +111,17 @@ def compile_changes(inclusion_settings):
     # Maybe this function is not the right things...
     change_list = []
 
+    # Quality of Life
     if inclusion_settings['qol'] != '':
         qol_list = inclusion_settings['qol'].split(':')
         for qol_item in qol_list:
-            if qol_item[:1] == 'T': # Text speed
-                print('Found T setting')
+            # Text Speeeeeeeeed
+            if qol_item[:1] == 'T': 
                 for text_setting in qol.TEXT_SCROLL:
                     speed_change = {
                         'address': text_setting['address'],
                         'value': text_setting['speed'][qol_item[1:]]
                     }
-                    print(speed_change)
                     change_list.append(speed_change)
         
 
