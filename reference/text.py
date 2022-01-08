@@ -116,31 +116,37 @@ MASTER_DEATH_TEXT = [
     "Don`t give up.\rYou got this!"
 ]
 
-DEATH_TOLL_INTRO_TEXT = [
-    "Peekaboo!",
-    "Guess who!",
-    "Your adventure\rends here.",
-    "Time for an\repic battle!",
-    "In case you haven`t\rguessed, I`m the\rfinal boss.",
-    "How did you make it\rhere? This seed was\rsupposed to be\rsuper trolly!",
-    "Surpriiiiise!",
-    "Incoming the game`s\rhardest fight.",
-    "So we meet again,\rMr. Bond.",
-    "I`ll put an end\rto your misery."
-]
+DEATH_TOLL_INTRO_TEXT = {
+    "address": 0x4EF9,
+    "text_options": [
+        "Peekaboo!",
+        "Guess who!",
+        "Your adventure\rends here.",
+        "Time for an\repic battle!",
+        "In case you haven`t\rguessed, I`m the\rfinal boss.",
+        "How did you make it\rhere? This seed was\rsupposed to be\rsuper trolly!",
+        "Surpriiiiise!",
+        "Incoming the game`s\rhardest fight.",
+        "So we meet again,\rMr. Bond.",
+        "I`ll put an end\rto your misery."
+    ]
+}
 
-TRUE_DEATH_TOLL_INTRO_TEXT = [
-    "This is not even\rmy final form!",
-    "All right.\rNow this is\rserious business.",
-    "I hope you didn`t\rforget Phoenix!",
-    "Okay, time for an\ractually challenging\rbattle.",
-    "Time to die!",
-    "You didn`t think\rit was that easy,\rdid you?",
-    "Loading Deathtoll.exe\r   .......Complete!",
-    "Don`t tell me\ryou also got the\rSuper Bracelet!?",
-    "And now behold...\rmy true power!",
-    "Dang, I hope my next\rphase is better..."
-]
+TRUE_DEATH_TOLL_INTRO_TEXT = {
+    "address": 0x4FB7,
+    "text_options": [
+        "This is not even\rmy final form!",
+        "All right.\rNow this is\rserious business.",
+        "I hope you didn`t\rforget Phoenix!",
+        "Okay, time for an\ractually challenging\rbattle.",
+        "Time to die!",
+        "You didn`t think\rit was that easy,\rdid you?",
+        "Loading Deathtoll.exe\r   .......Complete!",
+        "Don`t tell me\ryou also got the\rSuper Bracelet!?",
+        "And now behold...\rmy true power!",
+        "Dang, I hope my next\rphase is better..."
+    ]
+}
 
 VICTORY_TEXT = [
     "\r         G  G",

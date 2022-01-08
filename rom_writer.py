@@ -131,6 +131,38 @@ def compile_changes(inclusion_settings):
         for item in text.TITLE_TEXT:
             change_list.append(item)
     
+    # Manual Testing
+    temp_item = {
+        'address': 0x9CCA00,
+        'value': b'\x22'
+    }
+
+    change_list.append(temp_item)
+    temp_item = {
+        'address': 0x9CCE,
+        'value': b'\x22'
+    }
+
+    change_list.append(temp_item)
+    temp_item = {
+        'address': 0x9CD2,
+        'value': b'\x22'
+    }
+
+    change_list.append(temp_item)
+    temp_item = {
+        'address': 0x9CD6,
+        'value': b'\x22'
+    }
+
+    change_list.append(temp_item)
+    temp_item = {
+        'address': 0x9CDA,
+        'value': b'\x22'
+    }
+
+    change_list.append(temp_item)
+    
     return change_list
 
 def check_hash(source_rom_path, debug=False):
@@ -167,6 +199,7 @@ def initialize_file(source_rom_path, target_rom_path, file_has_header):
         with open(target_rom_path, 'wb') as g:
             if file_has_header:
                 print('Header Detected. Removing...')
+                # This assumes a hex(200)/512 byte header.
                 g.write(f.read()[512:])
             else:
                 g.write(f.read())

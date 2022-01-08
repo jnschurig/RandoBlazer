@@ -26,7 +26,7 @@ def main(argv):
             print(help_info)
             sys.exit()
         elif opt in ('-s', '--seed'):
-            arguments['seed'] = arg.lower()
+            arguments['seed'] = arg.strip()
     
     if False: # Thank you, I hate it.
         print(args)
@@ -35,7 +35,7 @@ def main(argv):
     # End main
 
 def start_randomization(seed_value=None):
-    if seed_value == None:
+    if seed_value == None or seed_value == '':
         seed_value = random.randint(constants.SEED_MIN, constants.SEED_MAX)
 
     random.seed(seed_value)
