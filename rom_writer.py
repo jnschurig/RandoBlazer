@@ -7,7 +7,7 @@ valid_args =  "-h                  --help                         | Information 
 valid_args += "-r <ROM Location>   --rom_path    <ROM Location>   | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc \n"
 valid_args += "-t <Target ROM>     --target_path <Target ROM>     | Path to target ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/output_rom.smc \n"
 valid_args += "-d                  --debug                        | Enable detailed output for debugging. Default is False. \n"
-valid_args += "-r <Setting String> --randomize   <Setting String> | Apply Randomization with settings. \n"
+valid_args += "-z <Setting String> --randomize   <Setting String> | Apply Randomization with settings. \n"
 valid_args += "-q <QOL String>     --qol         <QOL String>     | Quality of Life Settings. Text speed (Tnormal,Tfast,Tfaster,Tinstant) \n"
 
 help_info  = "Help Info: \n"
@@ -25,11 +25,11 @@ def main(argv):
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hr:t:r:q:d',['help','rom_path=','target_path=','randomize=','qol=','debug'])
+        opts, args = getopt.getopt(argv,'hr:t:z:q:d',['help','rom_path=','target_path=','randomize=','qol=','debug'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
-    for opt, arg in opts: # Set the arguments as usable variables.
+    for opt, arg in opts: # Set Sthe arguments as usable variables.
         if opt in ('-h', '--help'): # Print the usage when receiving -h
             print('Valid arguments: \n' + valid_args)
             print(help_info)
@@ -38,7 +38,7 @@ def main(argv):
             arguments['rom_path'] = arg
         elif opt in ('-t', '--target_path'):
             arguments['target_path'] = arg
-        elif opt in ('-r', '--randomize'):
+        elif opt in ('-z', '--randomize'):
             arguments['randomize'] = arg
         elif opt in ('-q', '--qol'):
             arguments['qol'] = arg
@@ -57,52 +57,57 @@ def modify_rom_data(target_rom_location, change_list):
             # change = json.loads(change)
             if 'value' not in change: # We might want to pad an existing item...
                     # change['value'] = ''
-                    change_val = ''
+                    values = ['']
+            elif type(change['value']) is not list:
+                values = [change['value']]
             else:
-                change_val = change['value']
+                values = change['value']
 
             if 'length' in change: # We need to do some padding...
-                change_val = change_val[:change['length']] # truncate to the length, if needed.
-                if 'pad_value' not in change:
-                    change['pad_value'] = ' '
-                if 'pad_dir' not in change:
-                    change['pad_dir'] = 'right'
-                if change['pad_dir'] == 'right':
-                    change_val = change_val.ljust(change['length'], change['pad_value'])
-                if change['pad_dir'] == 'left':
-                    change_val = change_val.rjust(change['length'], change['pad_value'])
-                if change['pad_dir'] == 'center':
-                    change_val = change_val.center(change['length'], change['pad_value'])
+                for change_val in values:
+                    change_val = change_val[:change['length']] # truncate to the length, if needed.
+                    if 'pad_value' not in change:
+                        change['pad_value'] = ' '
+                    if 'pad_dir' not in change:
+                        change['pad_dir'] = 'right'
+                    if change['pad_dir'] == 'right':
+                        change_val = change_val.ljust(change['length'], change['pad_value'])
+                    if change['pad_dir'] == 'left':
+                        change_val = change_val.rjust(change['length'], change['pad_value'])
+                    if change['pad_dir'] == 'center':
+                        change_val = change_val.center(change['length'], change['pad_value'])
 
-                if 'pad_right' not in change:
-                    change['pad_right'] = True
-                if change['pad_right']:
-                    change_val = change_val.ljust(change['length'], change['pad_value'])
-                else:
-                    change_val = change_val.rjust(change['length'], change['pad_value'])
+                    # if 'pad_right' not in change:
+                    #     change['pad_right'] = True
+                    # if change['pad_right']:
+                    #     change_val = change_val.ljust(change['length'], change['pad_value'])
+                    # else:
+                    #     change_val = change_val.rjust(change['length'], change['pad_value'])
             
-            # if 'value' in change:
-            if type(change_val) is str:
-                change_val = bytearray(change_val, 'utf-8')
-            if type(change_val) is int:
-                change_val = bytearray(change_val)
-            # else:
-                # change['value'] = 0x00
-                # change['value'] = ''
-                # change += ",'value': ''"
-                # pass
+            # # if 'value' in change:
+            # for change_val in values:
+                    if type(change_val) is str:
+                        change_val = bytearray(change_val, 'utf-8')
+                    if type(change_val) is int:
+                        change_val = bytearray(change_val)
+                    # else:
+                        # change['value'] = 0x00
+                        # change['value'] = ''
+                        # change += ",'value': ''"
+                        # pass
 
 
-            f.seek(change['address'])
-            if type(change_val) is bytes: # if bytes
-                f.write(change_val) # write directly
-            elif type(change_val) is str: # if string
-                f.write(binascii.hexlify(change_val)) # convert to bytes
-            elif type(change_val) is int:
-                number_of_bytes = 1
-                f.write(change_val.to_bytes(number_of_bytes, 'big'))
-            else: # This may be redundant, but it might be good to handle things that aren't strings a little differently.
-                f.write(change_val)
+                f.seek(change['address'])
+                for change_val in values:
+                    if type(change_val) is bytes: # if bytes
+                        f.write(change_val) # write directly
+                    elif type(change_val) is str: # if string
+                        f.write(binascii.hexlify(change_val)) # convert to bytes
+                    elif type(change_val) is int:
+                        number_of_bytes = 1
+                        f.write(change_val.to_bytes(number_of_bytes, 'big'))
+                    else: # This may be redundant, but it might be good to handle things that aren't strings a little differently.
+                        f.write(change_val)
         
     return target_rom_location
 
