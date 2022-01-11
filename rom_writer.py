@@ -111,6 +111,13 @@ def modify_rom_data(target_rom_location, change_list):
         
     return target_rom_location
 
+def compile_data_value(data):
+    # This is where I am going to check the data type of the 'value'
+    # This is where we will adjust the string length.
+    # This is where we will convert it to a byte-like object (hopefully)
+
+    return b'new data'
+
 def compile_changes(inclusion_settings):
     # Need to have a way of selectively compiling changes... 
     # Maybe this function is not the right things...
@@ -137,36 +144,6 @@ def compile_changes(inclusion_settings):
             change_list.append(item)
     
     # Manual Testing
-    temp_item = {
-        'address': 0x9CCA00,
-        'value': b'\x22'
-    }
-
-    change_list.append(temp_item)
-    temp_item = {
-        'address': 0x9CCE,
-        'value': b'\x22'
-    }
-
-    change_list.append(temp_item)
-    temp_item = {
-        'address': 0x9CD2,
-        'value': b'\x22'
-    }
-
-    change_list.append(temp_item)
-    temp_item = {
-        'address': 0x9CD6,
-        'value': b'\x22'
-    }
-
-    change_list.append(temp_item)
-    temp_item = {
-        'address': 0x9CDA,
-        'value': b'\x22'
-    }
-
-    change_list.append(temp_item)
     
     return change_list
 
