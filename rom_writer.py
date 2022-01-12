@@ -1,5 +1,6 @@
 import os, sys, getopt
-import binascii, hashlib
+import hashlib
+# import binascii
 # import shutil
 from reference import constants, text, qol
 
@@ -54,69 +55,140 @@ def main(argv):
 def modify_rom_data(target_rom_location, change_list):
     with open(target_rom_location, 'r+b') as f:
         for change in change_list:
-            # change = json.loads(change)
-            if 'value' not in change: # We might want to pad an existing item...
-                    # change['value'] = ''
-                    values = ['']
-            elif type(change['value']) is not list:
-                values = [change['value']]
+            if type(change) is not dict:
+                # Not going to make this change because it isn't formatted right.
+                pass
             else:
-                values = change['value']
+                # We really want the values to be a list, even if it's only one.
+                if type(change['value']) is list:
+                    value_list = change['value']
+                else:
+                    value_list = [change['value']]
 
-            if 'length' in change: # We need to do some padding...
-                for change_val in values:
-                    change_val = change_val[:change['length']] # truncate to the length, if needed.
-                    if 'pad_value' not in change:
-                        change['pad_value'] = ' '
-                    if 'pad_dir' not in change:
-                        change['pad_dir'] = 'right'
-                    if change['pad_dir'] == 'right':
-                        change_val = change_val.ljust(change['length'], change['pad_value'])
-                    if change['pad_dir'] == 'left':
-                        change_val = change_val.rjust(change['length'], change['pad_value'])
-                    if change['pad_dir'] == 'center':
-                        change_val = change_val.center(change['length'], change['pad_value'])
-
-                    # if 'pad_right' not in change:
-                    #     change['pad_right'] = True
-                    # if change['pad_right']:
-                    #     change_val = change_val.ljust(change['length'], change['pad_value'])
-                    # else:
-                    #     change_val = change_val.rjust(change['length'], change['pad_value'])
-            
-            # # if 'value' in change:
-            # for change_val in values:
-                    if type(change_val) is str:
-                        change_val = bytearray(change_val, 'utf-8')
-                    if type(change_val) is int:
-                        change_val = bytearray(change_val)
-                    # else:
-                        # change['value'] = 0x00
-                        # change['value'] = ''
-                        # change += ",'value': ''"
-                        # pass
-
-
+                # Go to the address.
                 f.seek(change['address'])
-                for change_val in values:
-                    if type(change_val) is bytes: # if bytes
-                        f.write(change_val) # write directly
-                    elif type(change_val) is str: # if string
-                        f.write(binascii.hexlify(change_val)) # convert to bytes
-                    elif type(change_val) is int:
-                        number_of_bytes = 1
-                        f.write(change_val.to_bytes(number_of_bytes, 'big'))
-                    else: # This may be redundant, but it might be good to handle things that aren't strings a little differently.
-                        f.write(change_val)
+                # Iterate through values and write changes.
+                for change_val in value_list:
+                    # If I have been good about the data compiler function, data will be 'bytes' or 'bytes-like'
+                    f.write(change_val)
+
+            # change = json.loads(change)
+            # if 'value' not in change: # We might want to pad an existing item...
+            #         # change['value'] = ''
+            #         values = ['']
+            # elif type(change['value']) is not list:
+            #     values = [change['value']]
+            # else:
+            #     values = change['value']
+
+            # if 'length' in change: # We need to do some padding...
+            #     for change_val in values:
+            #         change_val = change_val[:change['length']] # truncate to the length, if needed.
+            #         if 'pad_value' not in change:
+            #             change['pad_value'] = ' '
+            #         if 'pad_dir' not in change:
+            #             change['pad_dir'] = 'right'
+            #         if change['pad_dir'] == 'right':
+            #             change_val = change_val.ljust(change['length'], change['pad_value'])
+            #         if change['pad_dir'] == 'left':
+            #             change_val = change_val.rjust(change['length'], change['pad_value'])
+            #         if change['pad_dir'] == 'center':
+            #             change_val = change_val.center(change['length'], change['pad_value'])
+
+            #         # if 'pad_right' not in change:
+            #         #     change['pad_right'] = True
+            #         # if change['pad_right']:
+            #         #     change_val = change_val.ljust(change['length'], change['pad_value'])
+            #         # else:
+            #         #     change_val = change_val.rjust(change['length'], change['pad_value'])
+            
+            # # # if 'value' in change:
+            # # for change_val in values:
+            #         if type(change_val) is str:
+            #             change_val = bytearray(change_val, 'utf-8')
+            #         if type(change_val) is int:
+            #             change_val = bytearray(change_val)
+            #         # else:
+            #             # change['value'] = 0x00
+            #             # change['value'] = ''
+            #             # change += ",'value': ''"
+            #             # pass
+
+
+                # f.seek(change['address'])
+                # for change_val in values:
+                #     if type(change_val) is bytes: # if bytes
+                #         f.write(change_val) # write directly
+                #     elif type(change_val) is str: # if string
+                #         f.write(binascii.hexlify(change_val)) # convert to bytes
+                #     elif type(change_val) is int:
+                #         number_of_bytes = 1
+                #         f.write(change_val.to_bytes(number_of_bytes, 'big'))
+                #     else: # This may be redundant, but it might be good to handle things that aren't strings a little differently.
+                #         f.write(change_val)
         
     return target_rom_location
 
-def compile_data_value(data):
-    # This is where I am going to check the data type of the 'value'
-    # This is where we will adjust the string length.
-    # This is where we will convert it to a byte-like object (hopefully)
+def to_bytes(data):
+    # Check main data types and convert it to a byte-like object (hopefully)
+    # Lists utilize recursion to convert every item in the list to byte-like objects.
 
-    return b'new data'
+    data_dict = {}
+    if type(data) is dict:
+        # We should search for the 'value' field and attempt to process it as data.
+        if 'value' in data:
+            data_dict = data 
+            data = data['value']
+        else:
+            # The default, for when we don't know what is in a dict.
+            data = 0x00
+        
+    
+    if type(data) is list:
+        # Use recursion to compile every item in the list.
+        # The only case in which the function will return
+        # something other than a bytes-like object.
+        new_list = []
+        for value in data:
+            new_list.append(to_bytes(value))
+        return new_list
+    elif type(data) is int:
+        # Detect the minimum number of bytes required
+        # Unless the number of bytes is specified in the data_dict
+        if 'length' in data_dict:
+            # The length in bytes has already been provided.
+            data = data.to_bytes(data_dict['length'], 'big')
+        else:
+            length = 1
+            while True:
+                # Cycle through exponents until 
+                if data < (256 ** length):
+                    break
+                # Increment by two because rom uses two byte pairs at each address.
+                length += 1
+            data = data.to_bytes(length, 'big')
+    elif type(data) is str:
+        if 'length' in data_dict: # We need to do some padding...
+            # for change_val in data_dict:
+            data = data[:data_dict['length']] # truncate to the length, if needed.
+            if 'pad_value' not in data_dict:
+                data_dict['pad_value'] = ' '
+            if 'pad_dir' not in data_dict:
+                data_dict['pad_dir'] = 'right'
+            if data_dict['pad_dir'] == 'right':
+                data = data.ljust(data_dict['length'], data_dict['pad_value'])
+            elif data_dict['pad_dir'] == 'left':
+                data = data.rjust(data_dict['length'], data_dict['pad_value'])
+            elif data_dict['pad_dir'] == 'center':
+                data = data.center(data_dict['length'], data_dict['pad_value'])
+        
+        # Convert to bytes-like object
+        data = bytearray(data, 'utf-8')
+        # this ^ returns a bytearray, which I'm pretty sure is right for strings.
+        # data = binascii.hexlify(data)
+        # This ^ will convert the bytearray into bytes, which I think is wrong.
+
+    return data
 
 def compile_changes(inclusion_settings):
     # Need to have a way of selectively compiling changes... 
