@@ -34,9 +34,26 @@ def main(argv):
     return arguments
     # End main
 
+def number_to_base(n, b):
+    if n == 0:
+        return [0]
+    digits = []
+    while n:
+        digits.append(int(n % b))
+        n //= b
+    return digits[::-1]
+
+def number_list_to_str(num_list):
+    new_num = ''
+    for val in num_list:
+        new_num += constants.BASE_LOOKUP[val]
+
+    return new_num
+
 def start_randomization(seed_value=None):
     if seed_value == None or seed_value == '':
-        seed_value = random.randint(constants.SEED_MIN, constants.SEED_MAX)
+        seed_int = random.randint(constants.SEED_MIN, constants.SEED_MAX)
+        seed_value = number_list_to_str(number_to_base(seed_int, constants.SEED_BASE))
 
     random.seed(seed_value)
 
