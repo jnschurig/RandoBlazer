@@ -30,10 +30,12 @@ TITLE_TEXT = [
         'pad_dir': 'center'
     },
     {
-        'address': 0x13B70,
-        'value': "GET TO IT!",
+        'address': 0x13B6E,
+        'value': "Seed: ${seed}",
         'note': 'Third Line on the title screen',
-        'length': 20,
+        'length': 22,
+        'pad_dir': 'center',
+        'pad_value': ' '
     },
     # {
     #     'address': 0x143B9,

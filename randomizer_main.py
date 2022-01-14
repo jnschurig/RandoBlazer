@@ -53,6 +53,26 @@ def main(argv):
 
     return arguments
 
+def get_text_changes(settings={}):
+    text_changes = []
+
+    for item in text.TITLE_TEXT:
+        rom_edit = {}
+        if type(item['value']) is str:
+            # Check for variable replacements...
+            if 'race' in settings:
+                item['value'] = "Let the race begin!"
+            elif 'seed' in settings:
+                item['value'] = item['value'].replace('${seed}', settings['seed'])
+            else:
+                item['value'] = 'Good luck out there!'
+        rom_edit['value'] = rom_writer.to_bytes(item)
+        rom_edit['address'] = item['address']
+
+        text_changes.append(rom_edit)
+
+    return text_changes
+
 def randomizer(settings):
     debug = settings['debug']
     # Check the ROM
@@ -74,6 +94,7 @@ def randomizer(settings):
     if settings['randomize']:
         # Start up the rng
         seed = random_manager.start_randomization(settings['seed'])
+        settings['seed'] = seed
     if debug: print('Seed:', seed)
 
     # 
@@ -87,6 +108,9 @@ def randomizer(settings):
     if debug: 
         print('Output ROM created:', rom_created)
         print('Output ROM location:', target_rom_path)
+
+    if rom_created:
+        rom_writer.modify_rom_data(target_rom_path, get_text_changes(settings))
 
     # Do QOL Replacements
 

@@ -190,34 +190,34 @@ def to_bytes(data):
 
     return data
 
-def compile_changes(inclusion_settings):
-    # Need to have a way of selectively compiling changes... 
-    # Maybe this function is not the right things...
-    change_list = []
+# def compile_changes(inclusion_settings):
+#     # Need to have a way of selectively compiling changes... 
+#     # Maybe this function is not the right things...
+#     change_list = []
 
-    # Quality of Life
-    if inclusion_settings['qol'] != '':
-        qol_list = inclusion_settings['qol'].split(':')
-        for qol_item in qol_list:
-            # Text Speeeeeeeeed
-            if qol_item[:1] == 'T': 
-                for text_setting in qol.TEXT_SCROLL:
-                    speed_change = {
-                        'address': text_setting['address'],
-                        'value': text_setting['speed'][qol_item[1:]]
-                    }
-                    change_list.append(speed_change)
+#     # Quality of Life
+#     if inclusion_settings['qol'] != '':
+#         qol_list = inclusion_settings['qol'].split(':')
+#         for qol_item in qol_list:
+#             # Text Speeeeeeeeed
+#             if qol_item[:1] == 'T': 
+#                 for text_setting in qol.TEXT_SCROLL:
+#                     speed_change = {
+#                         'address': text_setting['address'],
+#                         'value': text_setting['speed'][qol_item[1:]]
+#                     }
+#                     change_list.append(speed_change)
         
 
-    # change_list_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'change_list.json')
-    if inclusion_settings['randomize']:
+#     # change_list_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'change_list.json')
+#     if inclusion_settings['randomize']:
 
-        for item in text.TITLE_TEXT:
-            change_list.append(item)
+#         for item in text.TITLE_TEXT:
+#             change_list.append(item)
     
-    # Manual Testing
+#     # Manual Testing
     
-    return change_list
+#     return change_list
 
 def check_hash(source_rom_path, debug=False):
     with open(source_rom_path, 'rb') as f:
@@ -266,7 +266,7 @@ if __name__ == '__main__':
     source_rom_path = os.path.join(constants.REPOSITORY_ROOT_DIR, settings_dict['rom_path'])
     target_rom_path = os.path.join(constants.REPOSITORY_ROOT_DIR, settings_dict['target_path'])
 
-    all_changes = compile_changes(settings_dict)
+    # all_changes = compile_changes(settings_dict)
     rom_info = check_hash(source_rom_path)
     if settings_dict['debug']:
         print('DEBUG - ROM INFO')
@@ -276,8 +276,8 @@ if __name__ == '__main__':
     # print(0x13B2B)
     initialize_file(source_rom_path, target_rom_path, rom_info['headered'])
 
-    result_path = modify_rom_data(target_rom_path, all_changes)
-    print(result_path)
+    # result_path = modify_rom_data(target_rom_path, all_changes)
+    # print(result_path)
 
     # with open(target_rom_path, 'wb') as f:
     #     f.write(rom_content)
