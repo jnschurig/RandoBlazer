@@ -392,3 +392,11 @@ NPC_ITEM_ADDRESSES = [
     0xFA4BB, # Seabed crystal near Blester 
     0xFA4EB, # Seabed crystal near Durean 
 ]
+
+ITEM_TEXT_CORECTION = [
+    {
+        'address': 0x000000,
+        'value': b'',
+        'note': 'Replace elemental mail text to say "spike floors"'
+    },
+]
