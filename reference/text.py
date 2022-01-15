@@ -19,57 +19,33 @@ TITLE_TEXT = [
         'value': 'RandoBlazer v' + constants.VERSION_CODE,
         'note': 'First Line on the title screen',
         'length': 19,
-        'pad_value': ' '
-    },
-    {
-        'address': 0x13B52,
-        'value': 'COPYRIGHT 1992 QUINTET/ENIX',
-        'note': 'Second Line on the title screen',
-        'length': 26,
         'pad_value': ' ',
         'pad_dir': 'center'
     },
     {
-        'address': 0x13B6E,
-        'value': "Seed: ${seed}",
-        'note': 'Third Line on the title screen',
-        'length': 22,
-        'pad_dir': 'center',
-        'pad_value': ' '
-    },
-    # {
-    #     'address': 0x143B9,
-    #     'value': b'SEED INFO567890',
-    #     'note': ''
-    # }
-]
-
-OTHER_TEXT = [
-    {
-        'address': 0x143B9,
-        'value': 'SEED ${seed}',
-        'note': 'Shows up in the file select screen.',
-        'length': 22
-    }
-]
-
-FILLER_REPLACEMENT = [
-    {
-        'address': 0x13B3C,
-        'length': 19,
-        'pad_value': ' ',
-        'pad_dir': 'right'
-    },
-    {
         'address': 0x13B52,
-        'length': 27,
+        'value': 'SEED: ${seed}',
+        'note': 'Second Line on the title screen',
+        'length': 28,
         'pad_value': ' ',
-        'pad_dir': 'right'
+        'pad_dir': 'center'
     },
     {
         'address': 0x13B70,
+        'value': "QUINTET/ENIX 1992",
+        'note': 'Third Line on the title screen',
         'length': 20,
+        'pad_dir': 'right',
         'pad_value': ' '
+    },
+]
+
+FILE_SELECT = [
+    {
+        'address': 0x143B9,
+        'value': '${seed_hash}',
+        'note': 'Shows up in the file select screen.',
+        'length': 22
     }
 ]
 

@@ -1,5 +1,5 @@
-import os, sys, getopt
-import rom_writer, random_manager
+import os, sys, getopt#, random
+import rom_writer, random_manager, hash_maker
 from reference import rom_data, text, qol, world, items, lairs, map, constants
 
 valid_args =  "-h                  --help                         | Information about the script. \n"
@@ -46,7 +46,7 @@ def main(argv):
         elif opt in ('-d', '--debug'):
             arguments['debug'] = True
         elif opt in ('-s', '--seed'):
-            arguments['seed'] = arg.strip()
+            arguments['seed'] = arg
     
     if False: # Thank you, I hate it.
         print(args)
@@ -66,6 +66,19 @@ def get_text_changes(settings={}):
                 item['value'] = item['value'].replace('${seed}', settings['seed'])
             else:
                 item['value'] = 'Good luck out there!'
+        rom_edit['value'] = rom_writer.to_bytes(item)
+        rom_edit['address'] = item['address']
+
+        text_changes.append(rom_edit)
+
+    for item in text.FILE_SELECT:
+        rom_edit = {}
+        if type(item['value']) is str:
+            # Check for variable replacements
+            if 'seed_hash' in settings:
+                item['value'] = item['value'].replace('${seed_hash}', settings['seed_hash'])
+            else:
+                item['value'] = 'FILE SELECT'
         rom_edit['value'] = rom_writer.to_bytes(item)
         rom_edit['address'] = item['address']
 
@@ -102,6 +115,24 @@ def randomizer(settings):
         target_rom_path = target_rom_path.replace('.smc', '') + ' Randomizer - ' + str(seed) + '.smc'
 
     # Randomize Stuff
+
+    # Get a seed hash
+    hash_settings = {}
+    for item in text.FILE_SELECT:
+        if item['value'] == '${seed_hash}':
+            hash_settings = item
+            break 
+    
+    seed_hash = ''
+    hash_members = hash_maker.generate_hash_members()
+    while len(seed_hash) < (hash_settings['length'] - 2):
+        idx = random_manager.get_random_int(0, len(hash_members)-1)
+        member = hash_members[idx]
+        if len(seed_hash) + len(member) < hash_settings['length']:
+            seed_hash += member + ' '
+    seed_hash = seed_hash.strip()
+    settings['seed_hash'] = seed_hash
+    if debug: print('Seed Hash:', seed_hash)
 
     # Initialize Rom
     rom_created = rom_writer.initialize_file(source_rom_path, target_rom_path, rom_info['headered'])
