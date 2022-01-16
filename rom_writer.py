@@ -7,7 +7,6 @@ valid_args += "-r <ROM Location>   --rom_path    <ROM Location>   | Path to the 
 valid_args += "-t <Target ROM>     --target_path <Target ROM>     | Path to target ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/output_rom.smc \n"
 valid_args += "-d                  --debug                        | Enable detailed output for debugging. Default is False. \n"
 valid_args += "-z <Setting String> --randomize   <Setting String> | Apply Randomization with settings. \n"
-valid_args += "-q <QOL String>     --qol         <QOL String>     | Quality of Life Settings. Text speed (Tnormal,Tfast,Tfaster,Tinstant) \n"
 
 help_info  = "Help Info: \n"
 help_info += "This script will modify the contents ROM data and replace bits of it with other data. \n"
@@ -18,13 +17,12 @@ def main(argv):
         'rom_path': 'Soul Blazer (U) [!].smc',
         'target_path': 'output_rom.smc',
         'randomize': False,
-        'qol': '',
         'debug': False
     }
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hr:t:z:q:d',['help','rom_path=','target_path=','randomize=','qol=','debug'])
+        opts, args = getopt.getopt(argv,'hr:t:z:d',['help','rom_path=','target_path=','randomize=','debug'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -39,8 +37,6 @@ def main(argv):
             arguments['target_path'] = arg
         elif opt in ('-z', '--randomize'):
             arguments['randomize'] = arg
-        elif opt in ('-q', '--qol'):
-            arguments['qol'] = arg
         elif opt in ('-d', '--debug'):
             arguments['debug'] = True
     
@@ -69,7 +65,6 @@ def modify_rom_data(target_rom_location, change_list):
                 for change_val in value_list:
                     # If I have been good about the data compiler function, data will be 'bytes' or 'bytes-like'
                     f.write(change_val)
-
         
     return target_rom_location
 

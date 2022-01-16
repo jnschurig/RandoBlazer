@@ -1,5 +1,5 @@
 import os, sys, getopt#, random
-import rom_writer, random_manager, hash_maker
+import rom_writer, random_manager, hash_maker, update_rom
 from reference import rom_data, text, qol, world, items, lairs, map, constants
 
 valid_args =  "-h                  --help                         | Information about the script. \n"
@@ -7,7 +7,7 @@ valid_args += "-r <ROM Location>   --rom_path    <ROM Location>   | Path to the 
 valid_args += "-t <Target ROM>     --target_path <Target ROM>     | Path to target ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/output_rom.smc \n"
 valid_args += "-d                  --debug                        | Enable detailed output for debugging. Default is False. \n"
 valid_args += "-z <Setting String> --randomize   <Setting String> | Apply Randomization with settings. \n"
-valid_args += "-q <QOL String>     --qol         <QOL String>     | Quality of Life Settings. Text speed (Tnormal,Tfast,Tfaster,Tinstant) \n"
+valid_args += "-q <QOL String>     --qol         <QOL String>     | Quality of Life Settings. Use colon(:) separated list for QoL items. Text speed (Tnormal,Tfast,Tfaster,Tinstant) \n"
 valid_args += "-s <Seed>           --seed        <Seed>           | The seed used to prime the random number generator. If one is not specified, one will be provided. \n"
 
 help_info  = "Help Info: \n"
@@ -165,7 +165,8 @@ def randomizer(settings):
         # All Randomizations
         if randomize:
             # Text Replacement
-            rom_writer.modify_rom_data(target_rom_path, get_text_changes(settings))
+            # rom_writer.modify_rom_data(target_rom_path, get_text_changes(settings))
+            rom_writer.modify_rom_data(target_rom_path, update_rom.rom_rando_update(settings))
 
 
 

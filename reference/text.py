@@ -49,54 +49,133 @@ FILE_SELECT = [
     }
 ]
 
-MASTER_INTRO_TEXT = [
-    "420 Soul blaze it!",
-    "I`m calling\rSoul Blade in its\rvanilla location.",
-    "Good luck!\rYou`ll need it!",
-    "Are we on\rSpeedGaming yet?",
-    "This run is\rZantetsu-less until\rZantetsu.",
-    "It`s show time!",
-    "Dancing grandmas\r    HYPE!!!!    ",
-    "Thank you so much\rfor playing my game!",
-    "Extra credit if\ryou get sub-2h!",
-    "I`m calling pedestal\rseed on this one.",
-    "Fun fact: there are\rexactly 400 monster\rlairs in this game.",
-    "GLHF!",
-    "Look mom,\rI`m on stream!!!",
-    "Go and bring back\rthe peace!\r.....Or whatever this\rgame is about.",
-    "This is totally\rnot a trolly seed.",
-    "This seed is\rarmor-less until\rWorld of Evil.",
-    "I can`t wait to\rsee the forced\rmagic-less Laynole.",
-    "Break a leg!",
-    "Initializing\rvideogame.....\r     .....complete!",
-    "Super Nintendo is\rthe best console.\rFite me.",
-    "So you think you\rhave what it takes?",
-    "Let`s go!\rYou can do it!",
-    "My PB on this\rseed is 35:37.\rBlindfolded.",
-    "Help me,\rObi-Wan Kenobi.\rYou`re my only hope.",
-    "Phoenix in hype cave.\rI`m calling it.",
-    "Any resemblance with\rActRaiser is purely\rcoincidental."
+MULTI_TYPE_PREFIX = b'\x13'
+
+TEXT_END_MULTI = {
+    "ENDTYPE_52FA": [MULTI_TYPE_PREFIX, b'\x52', b'\xFA'],
+    "ENDTYPE_88B9": [MULTI_TYPE_PREFIX, b'\x88', b'\xB9'],
+    "ENDTYPE_46EC": [MULTI_TYPE_PREFIX, b'\x46', b'\xEC'],
+    "ENDTYPE_1EA5": [MULTI_TYPE_PREFIX, b'\x1E', b'\xA5'],
+    "ENDTYPE_A3BF": [MULTI_TYPE_PREFIX, b'\xA3', b'\xBF'],
+    "ENDTYPE_DFF0": [MULTI_TYPE_PREFIX, b'\xDF', b'\xF0'],
+    "ENDTYPE_44AA": [MULTI_TYPE_PREFIX, b'\x44', b'\xAA'],
+    "ENDTYPE_C5EE": [MULTI_TYPE_PREFIX, b'\xC5', b'\xEE'],
+}
+
+TEXT_ENDING_12 = [
+    b'\x12',
+    b'\x08',
+    b'\x08',
+    b'\x04',
+    b'\x0C',
 ]
 
-MASTER_DEATH_TEXT = [
-    "Ouch! Tough luck :/",
-    "Better luck next time!",
-    "Don`t be patient.\rThis is a speedrun\rafter all.",
-    "Cheer up!\rYou can do it!",
-    "Trolly seed, huh?",
-    "Git gud n00b\rLOL",
-    "Don`t push yourself\rtoo hard.",
-    "That death was\rRNG manipulation.",
-    "I`m sorry for\rmaking this seed...",
-    "Be more careful\rnext time!",
-    "I`m sure this\rwas a deathwarp!\r       .....Right?",
-    "Come on! Let`s go!",
-    "Don`t give up.\rYou got this!"
+TEXT_HERO_FOUND = [
+    b'\x02',
+    b'\x02',
+    b'\xAF',
+    b'\x0D',
 ]
+
+TEXT_HERO_RECEIVED = [ 
+    b'\x02',
+    b'\x02',
+    b'\x20',
+    b'\xD4',
+    b'\x0D',
+]
+
+START_YELLOW_STYLE_TEXT = [ 
+    b'\x03',
+    b'\x24',
+]
+
+END_YELLOW_STYLE_TEXT = [ 
+    b'\x03',
+    b'\x20',
+]
+
+# Some npcs will restore health when they are released. Use this values prior to "delete" values
+# Use with NPC_TO_DISABLE_ADDRESSES
+HEAL_HERO = [ 
+    b'\x37',
+    b'\x02',
+]
+
+# Will remove the "talking" box from releasing npcs
+# Use with NPC_TO_DISABLE_ADDRESSES
+DELETE_RELEASE_TEXT = [ 
+    b'\x86',
+    b'\x6B',
+]
+
+MASTER_INTRO_TEXT = [
+    {
+        "address": 0x7999,
+        "random_value": [
+            "420 Soul blaze it!",
+            "I`m calling\rSoul Blade in its\rvanilla location.",
+            "Good luck!\rYou`ll need it!",
+            "Are we on\rSpeedGaming yet?",
+            "This run is\rZantetsu-less until\rZantetsu.",
+            "It`s show time!",
+            "Dancing grandmas\r    HYPE!!!!    ",
+            "Thank you so much\rfor playing my game!",
+            "Extra credit if\ryou get sub-2h!",
+            "I`m calling pedestal\rseed on this one.",
+            "Fun fact: there are\rexactly 400 monster\rlairs in this game.",
+            "GLHF!",
+            "Look mom,\rI`m on stream!!!",
+            "Go and bring back\rthe peace!\r.....Or whatever this\rgame is about.",
+            "This is totally\rnot a trolly seed.",
+            "This seed is\rarmor-less until\rWorld of Evil.",
+            "I can`t wait to\rsee the forced\rmagic-less Laynole.",
+            "Break a leg!",
+            "Initializing\rvideogame.....\r     .....complete!",
+            "Super Nintendo is\rthe best console.\rFite me.",
+            "So you think you\rhave what it takes?",
+            "Let`s go!\rYou can do it!",
+            "My PB on this\rseed is 35:37.\rBlindfolded.",
+            "Help me,\rObi-Wan Kenobi.\rYou`re my only hope.",
+            "Phoenix in hype cave.\rI`m calling it.",
+            "Any resemblance with\rActRaiser is purely\rcoincidental."
+        ],
+        "value": ["${value}", TEXT_END_MULTI["ENDTYPE_52FA"]]
+    },
+    {
+        "address": 0x7A07,
+        "value": TEXT_END_MULTI["ENDTYPE_52FA"]
+    }
+]
+
+HERO_DEATH_MASTER_TEXT = {
+    "address": 0x786B,
+    "random_value": [
+        "Ouch! Tough luck :/",
+        "Better luck next time!",
+        "Don`t be patient.\rThis is a speedrun\rafter all.",
+        "Cheer up!\rYou can do it!",
+        "Trolly seed, huh?",
+        "Git gud n00b\rLOL",
+        "Don`t push yourself\rtoo hard.",
+        "That death was\rRNG manipulation.",
+        "I`m sorry for\rmaking this seed...",
+        "Be more careful\rnext time!",
+        "I`m sure this\rwas a deathwarp!\r       .....Right?",
+        "Come on! Let`s go!",
+        "Don`t give up.\rYou got this!"
+    ],
+    "value": ["${value}", TEXT_END_MULTI["ENDTYPE_52FA"]]
+}
+
+BROWNSTONE_GET_MASTER_TEXT = {
+    "address": 0x78BC,
+    "value": ["One down,\rfive to go!", TEXT_END_MULTI["ENDTYPE_52FA"]]
+}
 
 DEATH_TOLL_INTRO_TEXT = {
     "address": 0x4EF9,
-    "text_options": [
+    "random_value": [
         "Peekaboo!",
         "Guess who!",
         "Your adventure\rends here.",
@@ -107,12 +186,13 @@ DEATH_TOLL_INTRO_TEXT = {
         "Incoming the game`s\rhardest fight.",
         "So we meet again,\rMr. Bond.",
         "I`ll put an end\rto your misery."
-    ]
+    ],
+    "value": ["${value}"] + TEXT_ENDING_12
 }
 
 TRUE_DEATH_TOLL_INTRO_TEXT = {
     "address": 0x4FB7,
-    "text_options": [
+    "random_value": [
         "This is not even\rmy final form!",
         "All right.\rNow this is\rserious business.",
         "I hope you didn`t\rforget Phoenix!",
@@ -123,30 +203,78 @@ TRUE_DEATH_TOLL_INTRO_TEXT = {
         "Don`t tell me\ryou also got the\rSuper Bracelet!?",
         "And now behold...\rmy true power!",
         "Dang, I hope my next\rphase is better..."
-    ]
+    ],
+    "value": ["${value}"] + TEXT_ENDING_12
 }
 
 VICTORY_TEXT = [
-    "\r         G  G",
-    "Thank you Mario.\rBut our princess\ris in another castle!",
-    "Congratulations!",
-    "Woohoo!!\rYou made it!!!",
-    "Thanks a lot for\rplaying this\rrandomizer.",
-    "Hope you enjoyed\rthis seed!",
-    "A winner is you!",
-    "Dang, I really\rthought this seed was\rtoo trolly for you.",
-    "  ...and this is\rthe end of our story.",
-    "The last Metroid\ris in captivity.\rThe galaxy is\rat peace.",
-    "Well done!\rNow try Hard mode.\r\r   ...just kidding!",
-    "I`m sorry for\rthis seed...",
-    "Hi YouTube!",
-    "This is the end.\rMy only friend,\rthe end.",
-    "You are a true hero!",
-    "Hyrule is saved!\r\r ...Wait, wrong game.",
-    "That`s all folks!",
-    "Well done!\rBut the next seed\rwon`t be that easy!"
+    {
+        "address": 0x5388,
+        "value": b'\x0B',
+        "note": "This changes the text address. Seems like there are two sets of text available."
+    },
+    {
+        "address": 0x53C7,
+        "value": TEXT_ENDING_12,
+        "note": "Need to add certain endings. Probably to close text boxes."
+    },
+    {
+        "address": 0x540C,
+        "random_value": [
+            "\r         G  G",
+            "Thank you Mario.\rBut our princess\ris in another castle!",
+            "Congratulations!",
+            "Woohoo!!\rYou made it!!!",
+            "Thanks a lot for\rplaying this\rrandomizer.",
+            "Hope you enjoyed\rthis seed!",
+            "A winner is you!",
+            "Dang, I really\rthought this seed was\rtoo trolly for you.",
+            "  ...and this is\rthe end of our story.",
+            "The last Metroid\ris in captivity.\rThe galaxy is\rat peace.",
+            "Well done!\rNow try Hard mode.\r\r   ...just kidding!",
+            "I`m sorry for\rthis seed...",
+            "Hi YouTube!",
+            "This is the end.\rMy only friend,\rthe end.",
+            "You are a true hero!",
+            "Hyrule is saved!\r\r ...Wait, wrong game.",
+            "That`s all folks!",
+            "Well done!\rBut the next seed\rwon`t be that easy!"
+    ],
+    "value": ["${value}"] + TEXT_ENDING_12
+    }
 ]
 
+# Some basic fixes to text in the game.
+TYPO_FIXES = [ 
+    {
+        "address": 0x150EC,
+        "value": 're',
+        "note": "Magic Flare text fix"
+    },
+    {
+        "address": 0x1514C,
+        "value": 'G.Leaf',
+        "note": "Greenwood Leaves fix"
+    },
+    {
+        "address": 0x151B2,
+        "value": 'A.Leaf',
+        "note": "Actinidia Leaves fix"
+    },
+    {
+        "address": 0x1621E,
+        "value": 'ei',
+        "note": '"Received" fix'
+    },
+]
+
+# COME BACK HERE! 
+# BEGIN LOOKING AT TextUpdate.cpp Line 841, Old Woman
+# CREATE A NEW SCRIPT FOR DOING TEXT UPDATES. THESE ARE BIG!
+
+
+
+# Text when releasing certain NPCs.
 NPC_TO_DISABLE_ADDRESSES = [ 
     0x1815A, # Old Woman 
     0x184BA, # Tulip next to Village Chief's house 
@@ -243,6 +371,7 @@ NPC_ITEM_TEXT_ADDRESSES = [
 # I'm not sure what 0 means here
 # I think it means to remove text completely
 # Or maybe it means that the text is not to be adjusted.
+# "You already have my item" text. Some things dont't get any.
 NPC_ALREADY_HAVE_ITEM_ADDRESSES = [ 
     0x18429, # Tool shop owner 
     0,       # Emblem A tile 
@@ -306,6 +435,7 @@ NPC_ALREADY_HAVE_ITEM_ADDRESSES = [
     0        # Seabed crystal near Durean 
 ]
 
+# This is how we place items?
 NPC_ITEM_ADDRESSES = [
     0x183AB, # Tool shop owner 
     0x1875E, # Emblem A tile 
