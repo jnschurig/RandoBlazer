@@ -1,8 +1,6 @@
 import os, sys, getopt
 import hashlib
-# import binascii
-# import shutil
-from reference import constants, text, qol
+from reference import constants
 
 valid_args =  "-h                  --help                         | Information about the script. \n"
 valid_args += "-r <ROM Location>   --rom_path    <ROM Location>   | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc \n"
@@ -72,60 +70,6 @@ def modify_rom_data(target_rom_location, change_list):
                     # If I have been good about the data compiler function, data will be 'bytes' or 'bytes-like'
                     f.write(change_val)
 
-            # change = json.loads(change)
-            # if 'value' not in change: # We might want to pad an existing item...
-            #         # change['value'] = ''
-            #         values = ['']
-            # elif type(change['value']) is not list:
-            #     values = [change['value']]
-            # else:
-            #     values = change['value']
-
-            # if 'length' in change: # We need to do some padding...
-            #     for change_val in values:
-            #         change_val = change_val[:change['length']] # truncate to the length, if needed.
-            #         if 'pad_value' not in change:
-            #             change['pad_value'] = ' '
-            #         if 'pad_dir' not in change:
-            #             change['pad_dir'] = 'right'
-            #         if change['pad_dir'] == 'right':
-            #             change_val = change_val.ljust(change['length'], change['pad_value'])
-            #         if change['pad_dir'] == 'left':
-            #             change_val = change_val.rjust(change['length'], change['pad_value'])
-            #         if change['pad_dir'] == 'center':
-            #             change_val = change_val.center(change['length'], change['pad_value'])
-
-            #         # if 'pad_right' not in change:
-            #         #     change['pad_right'] = True
-            #         # if change['pad_right']:
-            #         #     change_val = change_val.ljust(change['length'], change['pad_value'])
-            #         # else:
-            #         #     change_val = change_val.rjust(change['length'], change['pad_value'])
-            
-            # # # if 'value' in change:
-            # # for change_val in values:
-            #         if type(change_val) is str:
-            #             change_val = bytearray(change_val, 'utf-8')
-            #         if type(change_val) is int:
-            #             change_val = bytearray(change_val)
-            #         # else:
-            #             # change['value'] = 0x00
-            #             # change['value'] = ''
-            #             # change += ",'value': ''"
-            #             # pass
-
-
-                # f.seek(change['address'])
-                # for change_val in values:
-                #     if type(change_val) is bytes: # if bytes
-                #         f.write(change_val) # write directly
-                #     elif type(change_val) is str: # if string
-                #         f.write(binascii.hexlify(change_val)) # convert to bytes
-                #     elif type(change_val) is int:
-                #         number_of_bytes = 1
-                #         f.write(change_val.to_bytes(number_of_bytes, 'big'))
-                #     else: # This may be redundant, but it might be good to handle things that aren't strings a little differently.
-                #         f.write(change_val)
         
     return target_rom_location
 
@@ -143,7 +87,6 @@ def to_bytes(data):
             # The default, for when we don't know what is in a dict.
             data = 0x00
         
-    
     if type(data) is list:
         # Use recursion to compile every item in the list.
         # The only case in which the function will return
@@ -187,37 +130,7 @@ def to_bytes(data):
         # this ^ returns a bytearray, which I'm pretty sure is right for strings.
         # data = binascii.hexlify(data)
         # This ^ will convert the bytearray into bytes, which I think is wrong.
-
     return data
-
-# def compile_changes(inclusion_settings):
-#     # Need to have a way of selectively compiling changes... 
-#     # Maybe this function is not the right things...
-#     change_list = []
-
-#     # Quality of Life
-#     if inclusion_settings['qol'] != '':
-#         qol_list = inclusion_settings['qol'].split(':')
-#         for qol_item in qol_list:
-#             # Text Speeeeeeeeed
-#             if qol_item[:1] == 'T': 
-#                 for text_setting in qol.TEXT_SCROLL:
-#                     speed_change = {
-#                         'address': text_setting['address'],
-#                         'value': text_setting['speed'][qol_item[1:]]
-#                     }
-#                     change_list.append(speed_change)
-        
-
-#     # change_list_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'change_list.json')
-#     if inclusion_settings['randomize']:
-
-#         for item in text.TITLE_TEXT:
-#             change_list.append(item)
-    
-#     # Manual Testing
-    
-#     return change_list
 
 def check_hash(source_rom_path, debug=False):
     with open(source_rom_path, 'rb') as f:

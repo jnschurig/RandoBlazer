@@ -86,6 +86,24 @@ def get_text_changes(settings={}):
 
     return text_changes
 
+def get_qol_changes(qol_string):
+    qol_changes = []
+    qol_list = qol_string.split(':')
+    for qol_item in qol_list:
+        # Text Speeeeeeeeed
+        if qol_item[:1] == 'T': 
+            for text_setting in qol.TEXT_SCROLL:
+                speed_change = {
+                    'address': text_setting['address'],
+                    'value': text_setting['speed'][qol_item[1:]]
+                }
+                qol_changes.append(speed_change)
+        if qol_item[:1] == 'PLACEHOLDER':
+            # At the time of this writing we only have on QoL setting.
+            pass
+
+    return qol_changes
+
 def randomizer(settings):
     debug = settings['debug']
     # Check the ROM
@@ -103,19 +121,23 @@ def randomizer(settings):
         return False
 
     # Check settings
-    seed = ''
-    if settings['randomize']:
-        # Start up the rng
-        seed = random_manager.start_randomization(settings['seed'])
-        settings['seed'] = seed
+    # Start up the rng
+    seed = random_manager.start_randomization(settings['seed'])
+    settings['seed'] = seed
     if debug: print('Seed:', seed)
 
-    # 
-    if seed and seed != '':
-        target_rom_path = target_rom_path.replace('.smc', '') + ' Randomizer - ' + str(seed) + '.smc'
+    randomize = False
+    if settings['randomize']:
+        randomize = True
+        target_rom_path = target_rom_path.replace('.smc', '') + ' Randomizer - ' + settings['randomize'] + '-' + str(seed) + '.smc'
+
+    # Initialize Rom
+    rom_created = rom_writer.initialize_file(source_rom_path, target_rom_path, rom_info['headered'])
+    if debug: 
+        print('Output ROM created:', rom_created)
+        print('Output ROM location:', target_rom_path)
 
     # Randomize Stuff
-
     # Get a seed hash
     hash_settings = {}
     for item in text.FILE_SELECT:
@@ -134,19 +156,16 @@ def randomizer(settings):
     settings['seed_hash'] = seed_hash
     if debug: print('Seed Hash:', seed_hash)
 
-    # Initialize Rom
-    rom_created = rom_writer.initialize_file(source_rom_path, target_rom_path, rom_info['headered'])
-    if debug: 
-        print('Output ROM created:', rom_created)
-        print('Output ROM location:', target_rom_path)
+
 
     if rom_created:
-        rom_writer.modify_rom_data(target_rom_path, get_text_changes(settings))
-
-    # Do QOL Replacements
-
-
-    # Generate a seed
+        # Do QOL Replacements
+        if 'qol' in settings and settings['qol'] != '':
+            rom_writer.modify_rom_data(target_rom_path, get_qol_changes(settings['qol']))
+        # All Randomizations
+        if randomize:
+            # Text Replacement
+            rom_writer.modify_rom_data(target_rom_path, get_text_changes(settings))
 
 
 
