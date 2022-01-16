@@ -1,6 +1,6 @@
 import os, sys, getopt#, random
 import rom_writer, random_manager, hash_maker, update_rom
-from reference import rom_data, text, qol, world, items, lairs, map, constants
+from reference import rom_data, qol, text_and_hacks, world, items, lairs, map, constants
 
 valid_args =  "-h                  --help                         | Information about the script. \n"
 valid_args += "-r <ROM Location>   --rom_path    <ROM Location>   | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc \n"
@@ -53,38 +53,38 @@ def main(argv):
 
     return arguments
 
-def get_text_changes(settings={}):
-    text_changes = []
+# def get_text_changes(settings={}):
+#     text_changes = []
 
-    for item in text.TITLE_TEXT:
-        rom_edit = {}
-        if type(item['value']) is str:
-            # Check for variable replacements...
-            if 'race' in settings:
-                item['value'] = "Let the race begin!"
-            elif 'seed' in settings:
-                item['value'] = item['value'].replace('${seed}', settings['seed'])
-            else:
-                item['value'] = 'Good luck out there!'
-        rom_edit['value'] = rom_writer.to_bytes(item)
-        rom_edit['address'] = item['address']
+#     for item in text.TITLE_TEXT:
+#         rom_edit = {}
+#         if type(item['value']) is str:
+#             # Check for variable replacements...
+#             if 'race' in settings:
+#                 item['value'] = "Let the race begin!"
+#             elif 'seed' in settings:
+#                 item['value'] = item['value'].replace('${seed}', settings['seed'])
+#             else:
+#                 item['value'] = 'Good luck out there!'
+#         rom_edit['value'] = rom_writer.to_bytes(item)
+#         rom_edit['address'] = item['address']
 
-        text_changes.append(rom_edit)
+#         text_changes.append(rom_edit)
 
-    for item in text.FILE_SELECT:
-        rom_edit = {}
-        if type(item['value']) is str:
-            # Check for variable replacements
-            if 'seed_hash' in settings:
-                item['value'] = item['value'].replace('${seed_hash}', settings['seed_hash'])
-            else:
-                item['value'] = 'FILE SELECT'
-        rom_edit['value'] = rom_writer.to_bytes(item)
-        rom_edit['address'] = item['address']
+#     for item in text.FILE_SELECT:
+#         rom_edit = {}
+#         if type(item['value']) is str:
+#             # Check for variable replacements
+#             if 'seed_hash' in settings:
+#                 item['value'] = item['value'].replace('${seed_hash}', settings['seed_hash'])
+#             else:
+#                 item['value'] = 'FILE SELECT'
+#         rom_edit['value'] = rom_writer.to_bytes(item)
+#         rom_edit['address'] = item['address']
 
-        text_changes.append(rom_edit)
+#         text_changes.append(rom_edit)
 
-    return text_changes
+#     return text_changes
 
 def get_qol_changes(qol_string):
     qol_changes = []
@@ -140,7 +140,7 @@ def randomizer(settings):
     # Randomize Stuff
     # Get a seed hash
     hash_settings = {}
-    for item in text.FILE_SELECT:
+    for item in text_and_hacks.FILE_SELECT:
         if item['value'] == '${seed_hash}':
             hash_settings = item
             break 

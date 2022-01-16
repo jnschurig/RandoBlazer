@@ -1,5 +1,5 @@
 import rom_writer, random_manager
-from reference import text, constants
+from reference import constants, text_and_hacks
 
 def rom_text_replacement(text_py_member):
     rom_edit_list = []
@@ -21,7 +21,7 @@ def rom_text_replacement(text_py_member):
             for value in entry['value']:
                 if type(value) is str and '${value}' in value: 
                     value = value.replace('${value}', value_replacement)
-            rom_edit['value'].append(rom_writer.to_bytes(value))
+                rom_edit['value'].append(rom_writer.to_bytes(value))
         else:
             rom_edit['value'] += rom_writer.to_bytes(entry['value'])
         rom_edit_list.append(rom_edit)
@@ -30,7 +30,7 @@ def rom_text_replacement(text_py_member):
 def rom_rando_update(settings={}):
     change_list = []
 
-    for item in text.TITLE_TEXT:
+    for item in text_and_hacks.TITLE_TEXT:
         rom_edit = {}
         if type(item['value']) is str:
             # Check for variable replacements...
@@ -45,7 +45,7 @@ def rom_rando_update(settings={}):
 
         change_list.append(rom_edit)
 
-    for item in text.FILE_SELECT:
+    for item in text_and_hacks.FILE_SELECT:
         rom_edit = {}
         if type(item['value']) is str:
             # Check for variable replacements
@@ -58,10 +58,25 @@ def rom_rando_update(settings={}):
 
         change_list.append(rom_edit)
         
-    change_list += rom_text_replacement(text.DEATH_TOLL_INTRO_TEXT)
-    change_list += rom_text_replacement(text.TRUE_DEATH_TOLL_INTRO_TEXT)
-    change_list += rom_text_replacement(text.VICTORY_TEXT)
-    change_list += rom_text_replacement(text.TYPO_FIXES)
+    change_list += rom_text_replacement(text_and_hacks.DEATH_TOLL_INTRO_TEXT)
+    change_list += rom_text_replacement(text_and_hacks.TRUE_DEATH_TOLL_INTRO_TEXT)
+    change_list += rom_text_replacement(text_and_hacks.VICTORY_TEXT)
+    change_list += rom_text_replacement(text_and_hacks.MASTER_INTRO_TEXT)
+    change_list += rom_text_replacement(text_and_hacks.HERO_DEATH_MASTER_TEXT)
+    change_list += rom_text_replacement(text_and_hacks.BROWNSTONE_GET_MASTER_TEXT)
+    change_list += rom_text_replacement(text_and_hacks.TYPO_FIXES)
+    change_list += rom_text_replacement(text_and_hacks.OLD_WOMAN_PLACEMENT_HACK)
+    change_list += rom_text_replacement(text_and_hacks.TOOL_SHOP_OWNER_TEXT)
+    change_list += rom_text_replacement(text_and_hacks.TOOL_SHOP_OWNER_SON_TEXT)
+    change_list += rom_text_replacement(text_and_hacks.BRIDGE_GUARD_TEXT)
+    change_list += rom_text_replacement(text_and_hacks.WATER_MILL_KEEPER)
+    change_list += rom_text_replacement(text_and_hacks.LISA_HACK)
+    change_list += rom_text_replacement(text_and_hacks.TULIP_TEXT)
+    # change_list += rom_text_replacement(text_and_hacks.VILLAGE_CHIEF)
+    change_list += rom_text_replacement(text_and_hacks.LISA_DREAM_TEXT)
+    change_list += rom_text_replacement(text_and_hacks.MAGICIAN_TEXT)
+    change_list += rom_text_replacement(text_and_hacks.UNDERGROUND_CRYSTAL_FAIRY_1)
+    change_list += rom_text_replacement(text_and_hacks.UNDERGROUND_CRYSTAL_FAIRY_2)
 
     # Make a function for this ^ It's way too repetetive and long not to have one.
 
@@ -69,6 +84,6 @@ def rom_rando_update(settings={}):
 
 if __name__ == '__main__':
     # Run this with creds built in.
-    rom_changes = []
+    rom_changes = rom_rando_update()
     print('ROM Changes')
     print(rom_changes)

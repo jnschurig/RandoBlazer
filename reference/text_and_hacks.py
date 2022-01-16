@@ -1,10 +1,10 @@
 # This is a weird compatibility thing.
 # Allows the script to run from different contexts.
 try: 
-    from reference import constants
+    from reference import constants, map
 except:
     try: 
-        import constants
+        import constants, map
     except: 
         pass
 
@@ -49,65 +49,83 @@ FILE_SELECT = [
     }
 ]
 
-MULTI_TYPE_PREFIX = b'\x13'
+# MULTI_TYPE_PREFIX = b'\x13'
 
-TEXT_END_MULTI = {
-    "ENDTYPE_52FA": [MULTI_TYPE_PREFIX, b'\x52', b'\xFA'],
-    "ENDTYPE_88B9": [MULTI_TYPE_PREFIX, b'\x88', b'\xB9'],
-    "ENDTYPE_46EC": [MULTI_TYPE_PREFIX, b'\x46', b'\xEC'],
-    "ENDTYPE_1EA5": [MULTI_TYPE_PREFIX, b'\x1E', b'\xA5'],
-    "ENDTYPE_A3BF": [MULTI_TYPE_PREFIX, b'\xA3', b'\xBF'],
-    "ENDTYPE_DFF0": [MULTI_TYPE_PREFIX, b'\xDF', b'\xF0'],
-    "ENDTYPE_44AA": [MULTI_TYPE_PREFIX, b'\x44', b'\xAA'],
-    "ENDTYPE_C5EE": [MULTI_TYPE_PREFIX, b'\xC5', b'\xEE'],
+TEXT_END_MULTI = { # It's important to use actual byte arrays because ascii characters...
+    "ENDTYPE_52FA": [b'\x13\x52\xFA'], 
+    "ENDTYPE_88B9": [b'\x13\x88\xB9'],
+    "ENDTYPE_46EC": [b'\x13\x46\xEC'],
+    "ENDTYPE_1EA5": [b'\x13\x1E\xA5'],
+    "ENDTYPE_A3BF": [b'\x13\xA3\xBF'],
+    "ENDTYPE_DFF0": [b'\x13\xDF\xF0'],
+    "ENDTYPE_44AA": [b'\x13\x44\xAA'], 
+    "ENDTYPE_C5EE": [b'\x13\xC5\xEE']
 }
 
-TEXT_ENDING_12 = [
-    b'\x12',
-    b'\x08',
-    b'\x08',
-    b'\x04',
-    b'\x0C',
-]
+TEXT_ENDING_12 = [b'\x12\x08\x08\x04\x0C']
 
-TEXT_HERO_FOUND = [
-    b'\x02',
-    b'\x02',
-    b'\xAF',
-    b'\x0D',
-]
+TEXT_HERO_FOUND = [b'\x02\x02\xAF\x0D']
 
-TEXT_HERO_RECEIVED = [ 
-    b'\x02',
-    b'\x02',
-    b'\x20',
-    b'\xD4',
-    b'\x0D',
-]
+TEXT_HERO_RECEIVED = [b'\x02\x02\x20\xD4\x0D']
 
-START_YELLOW_STYLE_TEXT = [ 
-    b'\x03',
-    b'\x24',
-]
+START_YELLOW_STYLE_TEXT = [b'\x03\x24']
 
-END_YELLOW_STYLE_TEXT = [ 
-    b'\x03',
-    b'\x20',
-]
+END_YELLOW_STYLE_TEXT = [b'\x03\x20']
 
 # Some npcs will restore health when they are released. Use this values prior to "delete" values
 # Use with NPC_TO_DISABLE_ADDRESSES
-HEAL_HERO = [ 
-    b'\x37',
-    b'\x02',
-]
+HEAL_HERO = [b'\x37\x02']
 
 # Will remove the "talking" box from releasing npcs
 # Use with NPC_TO_DISABLE_ADDRESSES
-DELETE_RELEASE_TEXT = [ 
-    b'\x86',
-    b'\x6B',
-]
+DELETE_RELEASE_TEXT = [b'\x86\x6B']
+
+# TEXT_ENDING_12 = [
+#     b'\x12',
+#     b'\x08',
+#     b'\x08',
+#     b'\x04',
+#     b'\x0C',
+# ]
+
+# TEXT_HERO_FOUND = [
+#     b'\x02',
+#     b'\x02',
+#     b'\xAF',
+#     b'\x0D',
+# ]
+
+# TEXT_HERO_RECEIVED = [ 
+#     b'\x02',
+#     b'\x02',
+#     b'\x20',
+#     b'\xD4',
+#     b'\x0D',
+# ]
+
+# START_YELLOW_STYLE_TEXT = [ 
+#     b'\x03',
+#     b'\x24',
+# ]
+
+# END_YELLOW_STYLE_TEXT = [ 
+#     b'\x03',
+#     b'\x20',
+# ]
+
+# # Some npcs will restore health when they are released. Use this values prior to "delete" values
+# # Use with NPC_TO_DISABLE_ADDRESSES
+# HEAL_HERO = [ 
+#     b'\x37',
+#     b'\x02',
+# ]
+
+# # Will remove the "talking" box from releasing npcs
+# # Use with NPC_TO_DISABLE_ADDRESSES
+# DELETE_RELEASE_TEXT = [ 
+#     b'\x86',
+#     b'\x6B',
+# ]
 
 MASTER_INTRO_TEXT = [
     {
@@ -140,7 +158,7 @@ MASTER_INTRO_TEXT = [
             "Phoenix in hype cave.\rI`m calling it.",
             "Any resemblance with\rActRaiser is purely\rcoincidental."
         ],
-        "value": ["${value}", TEXT_END_MULTI["ENDTYPE_52FA"]]
+        "value": ["${value}"] + TEXT_END_MULTI["ENDTYPE_52FA"]
     },
     {
         "address": 0x7A07,
@@ -165,12 +183,12 @@ HERO_DEATH_MASTER_TEXT = {
         "Come on! Let`s go!",
         "Don`t give up.\rYou got this!"
     ],
-    "value": ["${value}", TEXT_END_MULTI["ENDTYPE_52FA"]]
+    "value": ["${value}"] + TEXT_END_MULTI["ENDTYPE_52FA"]
 }
 
 BROWNSTONE_GET_MASTER_TEXT = {
     "address": 0x78BC,
-    "value": ["One down,\rfive to go!", TEXT_END_MULTI["ENDTYPE_52FA"]]
+    "value": ["One down,\rfive to go!"] + TEXT_END_MULTI["ENDTYPE_52FA"]
 }
 
 DEATH_TOLL_INTRO_TEXT = {
@@ -266,13 +284,133 @@ TYPO_FIXES = [
         "value": 'ei',
         "note": '"Received" fix'
     },
+    {
+        'address': 0x1591A,
+        'value': 'spike floors',
+        'note': 'Replace elemental mail text from "damage zones" to "spike floors"'
+    },
 ]
 
-# COME BACK HERE! 
-# BEGIN LOOKING AT TextUpdate.cpp Line 841, Old Woman
-# CREATE A NEW SCRIPT FOR DOING TEXT UPDATES. THESE ARE BIG!
+# Moves the old woman to Lisa's house
+OLD_WOMAN_PLACEMENT_HACK = {
+    "address": 0x18121,
+    "value": b'\x3C\x20'
+}
 
+# Tool shop owner text condition
+TOOL_SHOP_OWNER_TEXT = {
+    "address": 0x1839B,
+    "value": map.LOCATION_ID_LOOKUP['ITEM_TOOL_SHOP_OWNER']
+}
 
+TOOL_SHOP_OWNER_SON_TEXT = [ 
+    {
+        "address": 0x1922E,
+        "value": map.LOCATION_ID_LOOKUP['ITEM_TEDDY']
+    },
+    {
+        "address": 0x19256,
+        "value": ['Fancy ', b'\x97\x0D'] 
+                 + START_YELLOW_STYLE_TEXT
+                 + [map.LOCATION_ID_LOOKUP['ITEM_TEDDY']] 
+                 + END_YELLOW_STYLE_TEXT
+                 + ['\rfor a billion dollars?', b'\x0C']
+
+    },
+]
+
+BRIDGE_GUARD_TEXT = {
+    "address": 0x18644,
+    "value": ['Please pass.'] + TEXT_END_MULTI["ENDTYPE_88B9"]
+}
+
+WATER_MILL_KEEPER = [ 
+    {
+        "address": 0x1877C,
+        "value": ['Could you please\rturn this wheel?'] + TEXT_END_MULTI["ENDTYPE_88B9"]
+    },
+    {
+        "address": 0x188B9,
+        "value": TEXT_END_MULTI["ENDTYPE_88B9"]
+    }
+]
+
+LISA_HACK = [ 
+    {
+        "address": 0x18A6F,
+        "value": b'\x00',
+        "note": "Remove requirement to have certain item"
+    },
+    {
+        "address": 0x18A7D,
+        "value": b'\x7F\x8A',
+        "note": "Change pointer when Village Chief is revived"
+    }
+]
+
+# Sleeping tulip (move this text to make room for the Pass tile text)
+TULIP_TEXT = [
+    {
+        "address": 0x1984E,
+        "value": b'\x9A'
+    },
+    {
+        "address": 0x1989A,
+        "value": [b'\x10', 'Hello...']
+    }
+]
+
+# Gourmet Goat Hint See TextUpdate.cpp line 889
+
+VILLAGE_CHIEF = [
+    {
+        "address": 0x1A0C0,
+        "value": b'\x00',
+        "note": 'This should be an "impossible" item id.'
+    },
+    {
+        "address": 0x1A123,
+        "value": b'\x33',
+        "note": 'Change pointer'
+    },
+    {
+        "address": 0x1A125,
+        "note": 'Content',
+        "value": [b'\x02\x01\x91\xA1\x00\x5E'] # Text "Gives item"
+               + [b'\x02\x0A', b'\x00'] # Actually give the item # SECOND MEMBER IS RANDOMIZED ITEM ID.
+               + [b'\x02\x09\x00\x9B\x6B'] # Set flag: item has been given
+               + [b'\x02\x01\x72\xA2\x6B'] # Text when item is already given
+    },
+]
+
+LISA_DREAM_TEXT = [
+    {
+        "address": 0x1A522,
+        "value": [b'\x3C', b'Lisa, you must\rhelp this man.', b'\x3E'] # Closing quotation marks
+               + TEXT_END_MULTI["ENDTYPE_88B9"]
+    },
+    {
+        "address": 0x1A5AF,
+        "value": TEXT_END_MULTI["ENDTYPE_88B9"]
+    }
+]
+
+MAGICIAN_TEXT = {
+    "address": 0x1A914,
+    "value": [b'Good luck and/or\rblame Everhate.'] + TEXT_END_MULTI["ENDTYPE_88B9"]
+}
+
+UNDERGROUND_CRYSTAL_FAIRY_1 = {
+    "address": 0x1AC5B,
+    "value": b'\x00'
+}
+
+UNDERGROUND_CRYSTAL_FAIRY_2 = {
+    "address": 0x1AE14,
+    "value": ["I`ve got nothing\rfor you.", b'\x11\x0C']
+}
+
+# Line 979 in TextUpdate.cpp
 
 # Text when releasing certain NPCs.
 NPC_TO_DISABLE_ADDRESSES = [ 
@@ -499,10 +637,3 @@ NPC_ITEM_ADDRESSES = [
     0xFA4EB, # Seabed crystal near Durean 
 ]
 
-ITEM_TEXT_CORECTION = [
-    {
-        'address': 0x000000,
-        'value': b'',
-        'note': 'Replace elemental mail text to say "spike floors"'
-    },
-]
