@@ -1,3 +1,4 @@
+from email.mime import text
 import rom_writer, random_manager
 from reference import constants, text_and_hacks
 
@@ -56,6 +57,20 @@ def rom_rando_update(settings={}):
         rom_edit['value'] = rom_writer.to_bytes(item)
         rom_edit['address'] = item['address']
 
+        change_list.append(rom_edit)
+
+    for npc in text_and_hacks.NPC_TO_DISABLE_ADDRESSES['addresses']:
+        rom_edit = {
+            "address": npc,
+            "value": text_and_hacks.NPC_TO_DISABLE_ADDRESSES['value']
+        }
+        change_list.append(rom_edit)
+        
+    for npc in text_and_hacks.NPC_TO_HEAL_AND_DISABLE['addresses']:
+        rom_edit = {
+            "address": npc,
+            "value": text_and_hacks.NPC_TO_HEAL_AND_DISABLE['value']
+        }
         change_list.append(rom_edit)
         
     change_list += rom_text_replacement(text_and_hacks.DEATH_TOLL_INTRO_TEXT)

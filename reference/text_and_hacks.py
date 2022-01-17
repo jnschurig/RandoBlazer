@@ -413,35 +413,48 @@ UNDERGROUND_CRYSTAL_FAIRY_2 = {
 # Line 979 in TextUpdate.cpp
 
 # Text when releasing certain NPCs.
-NPC_TO_DISABLE_ADDRESSES = [ 
-    0x1815A, # Old Woman 
-    0x184BA, # Tulip next to Village Chief's house 
-    0x18775, # Water mill keeper 
-    0x18BC4, # Lisa 
-    0x19506, # Old man in Leo's Paintings house 
-    0x1A13A, # Village Chief 
-    0x1AA56, # Tulip next to Underground Castle 
-    0x1CA7F, # Sleeping bird 
-    0x1D532, # Greenwood's Guardian 
-    0x1D869, # Mole (helping soul) 
-    0x22E7F, # Great Door (helping soul) 
-    0x22FF4, # Leo's cat 
-    0x23559, # Marie 
-    0x23FCA, # Soldier next to basement entrance 
-    0x24616, # Singer 
-    0x249D2, # Queen Magridd 
-    0x2521B, # Soldier (helping soul) 
-    0x255E5, # King Magridd 
-    0x25BAF, # Soldier with Leo 
-    0x25FE0, # Dr. Leo (when the two soldiers are not present) 
-    0x26033, # Dr. Leo (when the two soldiers are present) 
-    0xF8109, # Angelfish (helping soul) 
-    0xF87FA, # Mermaid statue (Blester) 
-    0xF8ACF, # Mermaid statue (Rockbird) 
-    0xF8EEA, # Mermaid statue (Durean) 
-    0xF966D, # Mermaid statue (Ghost Ship) 
-    0xF9BF4  # Lue 
-]
+NPC_TO_DISABLE_ADDRESSES = {
+    "value": [b'\x86\x6B'], # End byte to replace text boxes.
+    "addresses": [ 
+        0x1815A, # Old Woman 
+        0x184BA, # Tulip next to Village Chief's house 
+        0x18775, # Water mill keeper 
+        0x18BC4, # Lisa 
+        0x19506, # Old man in Leo's Paintings house 
+        # 0x1A13A, # Village Chief 
+        0x1AA56, # Tulip next to Underground Castle 
+        0x1CA7F, # Sleeping bird 
+        # 0x1D532, # Greenwood's Guardian 
+        0x1D869, # Mole (helping soul) 
+        0x22E7F, # Great Door (helping soul) 
+        0x22FF4, # Leo's cat 
+        # 0x23559, # Marie 
+        0x23FCA, # Soldier next to basement entrance 
+        0x24616, # Singer 
+        0x249D2, # Queen Magridd 
+        0x2521B, # Soldier (helping soul) 
+        # 0x255E5, # King Magridd 
+        0x25BAF, # Soldier with Leo 
+        0x25FE0, # Dr. Leo (when the two soldiers are not present) 
+        0x26033, # Dr. Leo (when the two soldiers are present) 
+        0xF8109, # Angelfish (helping soul) 
+        0xF87FA, # Mermaid statue (Blester) 
+        0xF8ACF, # Mermaid statue (Rockbird) 
+        0xF8EEA, # Mermaid statue (Durean) 
+        0xF966D, # Mermaid statue (Ghost Ship) 
+        0xF9BF4  # Lue 
+    ]
+}
+
+NPC_TO_HEAL_AND_DISABLE = {
+    "value": HEAL_HERO + [b'\x86\x6B'],
+    "addresses": [ 
+        0x1A13A, # Village Chief 
+        0x1D532, # Greenwood's Guardian 
+        0x23559, # Marie 
+        0x255E5, # King Magridd 
+    ]
+}
 
 NPC_ITEM_TEXT_ADDRESSES = [ 
     0x183AE, # Tool shop owner 
