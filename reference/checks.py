@@ -15,7 +15,7 @@ check_list = [
 		"check_id": "ITEM_GOAT_PEN",
 		"item_id": "MEDICAL_HERB",
 		"check_type": "NPC",
-		"requirements": ['bridge guard', 'goat with pen']
+		"requirements": ['bridge guard?', 'goat with pen?']
 	},
 	{
 		"check_id": "ITEM_TEDDY",
@@ -51,7 +51,7 @@ check_list = [
 		"check_id": "ITEM_CRYSTAL_RECOVERY_SWORD",
 		"item_id": "RECOVERY_SWORD",
 		"check_type": "NPC",
-		"requirements": ['recovery sword crystal', 'pass', 'NPC_IVY_RECOVERY_SWORD']
+		"requirements": ['recovery sword crystal?', 'pass?', 'NPC_IVY_RECOVERY_SWORD']
 	},
 	{
 		"check_id": "ITEM_BIRD_RED_HOT_MIRROR",
@@ -71,7 +71,7 @@ check_list = [
 		"check_id": "ITEM_WOODSTIN_TRIO",
 		"item_id": "MEDICAL_HERB",
 		"check_type": "NPC",
-		"requirements": ['game squirrel', 'game dog', 'game deer'],
+		"requirements": ['game squirrel?', 'game dog?', 'game deer?'],
         "ACT": 2
 	},
 	{
@@ -85,26 +85,26 @@ check_list = [
 		"check_id": "ITEM_GREENWOOD_LEAVES",
 		"item_id": "GREENWOOD_LEAF",
 		"check_type": "NPC",
-		"requirements": [],
+		"requirements": ['dream rod?', 'NPC_MOLE', 'NPC_CROCODILE', 'NPC_CROCODILE2', 'NPC_BIRD_GREENWOOD_LEAF'],
         "ACT": 2
 	},
 	{
 		"check_id": "ITEM_MOLE_SHIELD_BRACELET",
 		"item_id": "SHIELD_BRACELET",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_MOLE_SHIELD_BRACELET']
 	},
 	{
 		"check_id": "ITEM_SQUIRREL_PSYCHO_SWORD",
 		"item_id": "PSYCHO_SWORD",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['delicious seeds', 'NPC_SQUIRREL_PSYCHO_SWORD']
 	},
 	{
 		"check_id": "ITEM_SQUIRREL_EMBLEM_C",
 		"item_id": "EMBLEM_C",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_SQUIRREL_EMBLEM_C']
 	},
 	{
 		"check_id": "ITEM_WATER_SHRINE_TILE",
@@ -122,37 +122,37 @@ check_list = [
 		"check_id": "ITEM_MOUNTAIN_KING",
 		"item_id": "PHOENIX",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_DANCING_GRANDMA', 'NPC_DANCING_GRANDMA2', 'king?', 'redhot1?', 'redhot2?', 'redhot3?', 'mushroom boy?', 'grandpa?']
 	},
 	{
 		"check_id": "ITEM_BOY_MUSHROOM_SHOES",
 		"item_id": "MUSHROOM_SHOES",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_BOY_MUSHROOM_SHOES']
 	},
 	{
 		"check_id": "ITEM_NOME",
 		"item_id": "SILVER_STONE",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_NOME', 'mushroom?', 'boy?', 'grandpa?']
 	},
 	{
 		"check_id": "ITEM_SNAIL_EMBLEM_E",
 		"item_id": "EMBLEM_E",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_SNAIL_EMBLEM_E']
 	},
 	{
 		"check_id": "ITEM_EMBLEM_F",
 		"item_id": "EMBLEM_F",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_GRANDPA_LUNE', 'dream rod?', 'lucky blade?', 'one more grandpa?']
 	},
 	{
 		"check_id": "ITEM_EMBLEM_G",
 		"item_id": "EMBLEM_G",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['door1?', 'door2?', 'doorkey?', 'dresser?']
 	},
 	{
 		"check_id": "ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR",
