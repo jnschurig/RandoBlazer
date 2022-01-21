@@ -152,97 +152,97 @@ check_list = [
 		"check_id": "ITEM_EMBLEM_G",
 		"item_id": "EMBLEM_G",
 		"check_type": "NPC",
-		"requirements": ['door1?', 'door2?', 'doorkey?', 'dresser?']
+		"requirements": ['door1?', 'door2?', 'doorkey?', 'NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR']
 	},
 	{
 		"check_id": "ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR",
 		"item_id": "MYSTIC_ARMOR",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['door1?', 'door2?', 'doorkey?', 'NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR', ]
 	},
 	{
 		"check_id": "ITEM_PLANT_HERB",
 		"item_id": "MEDICAL_HERB",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_PLANT_HERB', 'cat1?', 'cat2?', 'mouse?', 'Aleaf?', 'NPC_GREAT_DOOR_ZANTETSU_SWORD']
 	},
 	{
 		"check_id": "ITEM_CAT_DOOR_KEY",
 		"item_id": "DOOR_KEY",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['dream rod?', 'NPC_GREAT_DOOR_MODEL_TOWNS', 'cat?', 'NPC_STEPS_UPSTAIRS']
 	},
 	{
 		"check_id": "ITEM_PLANT_ACTINIDIA_LEAVES",
 		"item_id": "ACTINIDIA_LEAF",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_PLANT_ACTINIDIA_LEAVES', 'NPC_GREAT_DOOR_MODEL_TOWNS', 'NPC_STEPS_UPSTAIRS']
 	},
 	{
 		"check_id": "ITEM_CHEST_OF_DRAWERS_HERB",
 		"item_id": "MEDICAL_HERB",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_CHEST_OF_DRAWERS2', 'NPC_STEPS_MARIE', 'NPC_GREAT_DOOR_MODEL_TOWNS', 'NPC_STEPS_UPSTAIRS']
 	},
 	{
 		"check_id": "ITEM_MARIE",
 		"item_id": "PURPLE_STONE",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_MARIE', 'NPC_STEPS_MARIE', 'NPC_GREAT_DOOR_MODEL_TOWNS', 'NPC_STEPS_UPSTAIRS']
 	},
 	{
 		"check_id": "ITEM_MOUSE_SPARK_BOMB",
 		"item_id": "SPARK_BOMB",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['cat1?', 'cat2?', 'mouse?', 'Aleaf?', 'NPC_GREAT_DOOR_ZANTETSU_SWORD', 'NPC_MOUSE_SPARK_BOMB', ]
 	},
 	{
 		"check_id": "ITEM_SOLDIER_ELEMENTAL_MAIL",
 		"item_id": "ELEMENTAL_MAIL",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_SOLDIER_ELEMENTAL_MAIL', 'dream rod?']
 	},
 	{
 		"check_id": "ITEM_SUPER_BRACELET",
 		"item_id": "SUPER_BRACELET",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_QUEEN_MAGRIDD', 'NPC_DR_LEO', 'NPC_SOLDIER_WITH_LEO', 'NPC_SOLDIER_DOK', 'key?', 'vipcard?', 'NPC_SOLDIER_RIGHT_TOWER']
 	},
 	{
 		"check_id": "ITEM_QUEEN_MAGRIDD",
 		"item_id": "VIP_CARD",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_QUEEN_MAGRIDD']
 	},
 	{
 		"check_id": "ITEM_SOLDIER_PLATINUM_CARD",
 		"item_id": "PLATINUM_CARD",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_SOLDIER_PLATINUM_CARD', 'harp string?', 'NPC_SINGER_CONCERT_HALL']
 	},
 	{
 		"check_id": "ITEM_MAID_HERB",
 		"item_id": "MEDICAL_HERB",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_MAID_HERB']
 	},
 	{
 		"check_id": "ITEM_EMBLEM_H",
 		"item_id": "EMBLEM_H",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_SOLDIER_CASTLE']
 	},
 	{
 		"check_id": "ITEM_KING_MAGRIDD",
 		"item_id": "BLACK_STONE",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_KING_MAGRIDD', 'NPC_SOLDIER_CASTLE']
 	},
 	{
 		"check_id": "ITEM_DR_LEO",
 		"item_id": "MOBILE_KEY",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_SOLDIER_WITH_LEO', 'NPC_DR_LEO', 'NPC_SOLDIER_DOK', 'vip card?', 'NPC_SOLDIER_RIGHT_TOWER']
 	},
 	{
 		"check_id": "ITEM_HARP_STRING",
@@ -260,38 +260,38 @@ check_list = [
 		"check_id": "ITEM_MERMAID_BUBBLE_ARMOR",
 		"item_id": "BUBBLE_ARMOR",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_MERMAID_BUBBLE_ARMOR']
 	},
 	{
 		"check_id": "ITEM_MERMAID_MAGIC_FLARE",
 		"item_id": "MAGIC_FLARE",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_MERMAID_BUBBLE_ARMOR', 'NPC_MERMAID_MAGIC_FLARE']
 	},
 	{
 		"check_id": "ITEM_MERMAID_QUEEN",
 		"item_id": "BLUE_STONE",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_MERMAID_QUEEN']
 	},
 	{
 		"check_id": "ITEM_MERMAID_RED_HOT_STICK",
 		"item_id": "RED_HOT_STICK",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_MERMAID_RED_HOT_STICK', 'NPC_MERMAID_BUBBLE_ARMOR']
 	},
 	{
 		"check_id": "ITEM_LUE",
 		"item_id": "THUNDER_RING",
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_MERMAID_BUBBLE_ARMOR', 'NPC_LUE', 'NPC_DOLPHIN_SAVES_LUE']
 	},
 	{
 		"check_id": "ITEM_CRYSTAL_GRASS_VALLEY",
 		"item_id": "GEMS_EXP",
 		"amount": 80,
 		"check_type": "NPC",
-		"requirements": []
+		"requirements": ['NPC_IVY_CHEST_ROOM', 'NPC_BRIDGE_GUARD']
 	},
 	{
 		"check_id": "ITEM_CRYSTAL_UNDERGROUND_CASTLE",
