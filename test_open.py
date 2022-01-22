@@ -1,5 +1,5 @@
 import os, sys, binascii
-from reference import text
+from reference import text_and_hacks
 
 # print(__file__)
 
@@ -54,7 +54,7 @@ print(type(bytearray(1.1)))
 
 with open(output_rom_location, 'wb') as f:
     f.write(rom_content)
-    for filler in text.FILLER_REPLACEMENT:
+    for filler in text_and_hacks.FILLER_REPLACEMENT:
         f.seek(filler['address'])
         pad_value = ''.ljust(filler['length'], filler['character'])
         pad_value = bytearray(pad_value, 'utf-8')
