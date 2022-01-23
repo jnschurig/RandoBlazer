@@ -1,3 +1,4 @@
 *.smc
 deprecated/
 __pycache__
+.vscode/

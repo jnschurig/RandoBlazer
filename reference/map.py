@@ -250,3 +250,32 @@ NPC_ID = {
     "NPC_SOLDIER11"                     : 402,
     "NPC_KING_MAGRIDD"                  : 405
 }
+
+REGION_LOOKUP = {
+	# Region 0 - Act 1 start, Underground Castle before elevator
+	0: {
+		"checks": [ 
+			{"type": "chest", "name": "sword_of_life_chest?"},
+			{"type": "npc_id", "name": "ITEM_MAGICIAN"},
+			{"type": "lair", "name": "NPC_OLD_WOMAN_LAIR"},
+			{"type": "lair", "name": "NPC_TOOL_SHOP_OWNER_LAIR"},
+			{"type": "lair", "name": "NPC_TULIP_LAIR"},
+			{"type": "lair", "name": "NPC_BRIDGE_GUARD_LAIR"},
+			{"type": "lair", "name": "NPC_IVY_CHEST_ROOM_LAIR"},
+			{"type": "lair", "name": "NPC_WATER_MILL_LAIR"},
+			{"type": "chest", "id": 3},
+			{"type": "chest", "id": 4},
+			{"type": "chest", "name": "CHEST_DREAM_ROD"},
+			{"type": "npc_id", "name": "ITEM_CRYSTAL_UNDERGROUND_CASTLE"},
+		],
+		"requirements": []
+	},
+	1: {},
+	2: {},
+	3: {},
+	4: {},
+	5: {},
+	6: {},
+	7: {},
+	8: {},
+}

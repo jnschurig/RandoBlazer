@@ -1,3 +1,30 @@
+regions = {
+	# Region 0 - Act 1 start, Underground Castle before elevator
+	0: {
+		"checks": [ 
+			{"type": "chest", "name": "sword_of_life_chest?"},
+			{"type": "npc", "name": "ITEM_MAGICIAN"},
+			{"type": "lair", "name": "NPC_OLD_WOMAN_LAIR"},
+			{"type": "lair", "name": "NPC_TOOL_SHOP_OWNER_LAIR"},
+			{"type": "lair", "name": "NPSC_TULIP_LAIR"},
+			{"type": "lair", "name": "NPC_BRIDGE_GUARD_LAIR"},
+			{"type": "lair", "name": "NPC_IVY_CHEST_ROOM_LAIR"},
+			{"type": "lair", "name": "NPC_WATER_MILL_LAIR"},
+		],
+		"requirements": []
+	},
+	1: {},
+	2: {},
+	3: {},
+	4: {},
+	5: {},
+	6: {},
+	7: {},
+	8: {},
+}
+
+
+
 check_list = [
 	{
 		"check_id": "ITEM_TOOL_SHOP_OWNER",
