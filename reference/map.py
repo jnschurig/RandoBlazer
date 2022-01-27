@@ -257,25 +257,154 @@ REGION_LOOKUP = {
 		"checks": [ 
 			{"type": "chest", "name": "sword_of_life_chest?"},
 			{"type": "npc_id", "name": "ITEM_MAGICIAN"},
-			{"type": "lair", "name": "NPC_OLD_WOMAN_LAIR"},
-			{"type": "lair", "name": "NPC_TOOL_SHOP_OWNER_LAIR"},
-			{"type": "lair", "name": "NPC_TULIP_LAIR"},
-			{"type": "lair", "name": "NPC_BRIDGE_GUARD_LAIR"},
-			{"type": "lair", "name": "NPC_IVY_CHEST_ROOM_LAIR"},
-			{"type": "lair", "name": "NPC_WATER_MILL_LAIR"},
-			{"type": "chest", "id": 3},
-			{"type": "chest", "id": 4},
+			{"type": "lair", "name": "NPC_OLD_WOMAN"},
+			{"type": "lair", "name": "NPC_TOOL_SHOP_OWNER"},
+			{"type": "lair", "name": "NPC_TULIP"},
+			{"type": "lair", "name": "NPC_BRIDGE_GUARD"},
+			{"type": "lair", "name": "NPC_IVY_CHEST_ROOM"},
+			{"type": "lair", "name": "NPC_WATER_MILL"},
+			{"type": "chest", "id": 3}, # GEMS_EXP 12
+			{"type": "chest", "id": 4}, # MEDICAL_HERB
 			{"type": "chest", "name": "CHEST_DREAM_ROD"},
 			{"type": "npc_id", "name": "ITEM_CRYSTAL_UNDERGROUND_CASTLE"},
 		],
-		"requirements": []
+		"requirements": [],
+		"act": 1,
+        "is_act_hub": True,
+        "connected_regions": [1, 2, 3, 4, 5]
 	},
-	1: {},
-	2: {},
-	3: {},
-	4: {},
-	5: {},
-	6: {},
-	7: {},
-	8: {},
+    # Region 1 - Underground chest room
+	1: {
+        "checks": [ 
+			{"type": "chest", "id": 1}, # IRON_ARMOR
+			{"type": "chest", "id": 2}, # GEMS_EXP 50
+			{"type": "npc_id", "name": "ITEM_CRYSTAL_GRASS_VALLEY"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
+            {"type": "npc_id", "name": "NPC_IVY_CHEST_ROOM"},
+        ],
+        "act": 1
+    },
+    # Region 2 - Underground Castle after elevator
+	2: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_OLD_MAN2"}, 
+			{"type": "lair", "name": "NPC_GOAT_HERB"},
+			{"type": "lair", "name": "NPC_LISA"}, 
+			{"type": "lair", "name": "NPC_TULIP2"}, 
+			{"type": "lair", "name": "NPC_ARCHITECT"}, 
+			{"type": "lair", "name": "NPC_IVY2"}, 
+			{"type": "lair", "name": "NPC_TEDDY"}, 
+			{"type": "lair", "name": "NPC_GOAT"}, 
+			{"type": "lair", "name": "NPC_TULIP3"}, 
+			{"type": "lair", "name": "NPC_LEOS_HOUSE"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
+            {"type": "npc_id", "name": "NPC_WATER_MILL"},
+        ],
+        "act": 1
+    },
+    # Region 3 - Leo's Paintings
+	3: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_TULIP4"}, 
+			{"type": "lair", "name": "NPC_LONELY_GOAT"}, 
+			{"type": "lair", "name": "NPC_IVY"}, 
+			{"type": "lair", "name": "NPC_GOAT2"}, 
+			{"type": "lair", "name": "NPC_BOY_CABIN"}, 
+			{"type": "lair", "name": "NPC_TULIP_PASS"}, 
+			{"type": "lair", "name": "NPC_BOY_CAVE"}, 
+			{"type": "lair", "name": "NPC_VILLAGE_CHIEF"}, 
+			{"type": "chest", "id": 7}, # MEDICAL_HERB
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
+            {"type": "npc_id", "name": "NPC_ARCHITECT"},
+            {"type": "npc_id", "name": "NPC_LEOS_HOUSE"},
+            {"type": "item", "name": "CHEST_LEOS_BRUSH"},
+        ],
+        "act": 1
+    },
+    # Region 4 - Last part of Underground Castle (originally region 5)
+	4: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_OLD_MAN"}, 
+			{"type": "chest", "name": "CHEST_LEOS_BRUSH"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_LISA"},
+            {"type": "item", "name": "CHEST_DREAM_ROD"},
+        ],
+        "act": 1
+    },
+    # Region 5 - Leo's Paintings Metal Enemies (originally region 6)
+	5: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_IVY_EMBLEM_A"}, 
+			{"type": "lair", "name": "NPC_IVY_RECOVERY_SWORD"}, 
+			{"type": "chest", "id": 8}, # 
+        ],
+        "reqruirements": [ 
+            {"type": "weapon_category", "name": "can_cut_metal"},
+        ],
+        "act": 1
+    },
+    # Removed this section because it is essentially the same as being in the beginning of act 2.
+    # # Region 6 - Final part of Act 1. Get item from mayor and start Act 2.
+	# 6: {
+    #     "checks": [ 
+	# 		{"type": "npc_id", "name": "ITEM_VILLAGE_CHIEF"}, 
+    #     ],
+    #     "reqruirements": [ 
+    #         {"type": "npc_id", "name": "NPC_VILLAGE_CHIEF"},
+    #         {"type": "npc_id", "name": "NPC_OLD_WOMAN"},
+    #     ],
+    #     "act": 1,
+    # },
+    # Region 6 - Act 2 start, Lost Marshes + Water/Fire Shrines (originally region 4)
+	6: {
+        "checks": [ 
+			{"type": "npc_id", "name": "ITEM_VILLAGE_CHIEF"}, 
+			{"type": "lair", "name": "NPC_BIRD"}, 
+			{"type": "lair", "name": "NPC_DOG"}, 
+			{"type": "lair", "name": "NPC_SQUIRREL_PSYCHO_SWORD"}, 
+			{"type": "lair", "name": "NPC_BIRD2"}, 
+			{"type": "lair", "name": "NPC_MOLE_SOUL_OF_LIGHT"}, 
+			{"type": "lair", "name": "NPC_CROCODILE"}, 
+			{"type": "lair", "name": "NPC_SQUIRREL"}, 
+			{"type": "lair", "name": "NPC_MOLE"}, 
+			{"type": "lair", "name": "NPC_DEER"}, 
+			{"type": "lair", "name": "NPC_DOG2"}, 
+			{"type": "lair", "name": "NPC_DOG4"}, 
+			{"type": "lair", "name": "NPC_DOG5"}, 
+			{"type": "lair", "name": "NPC_CROCODILE2"}, 
+			{"type": "lair", "name": "NPC_SQUIRREL_ICE_ARMOR"}, 
+			{"type": "lair", "name": "NPC_MOLE2"}, 
+			{"type": "lair", "name": "NPC_SQUIRREL3"}, 
+			{"type": "lair", "name": "NPC_BIRD_GREENWOOD_LEAF"}, 
+			{"type": "lair", "name": "NPC_MOLE3"}, 
+			{"type": "lair", "name": "NPC_DEER_MAGIC_BELL"}, 
+			{"type": "lair", "name": "NPC_SQUIRREL2"}, 
+			{"type": "chest", "id": 11}, # GEMS_EXP 50
+			{"type": "chest", "id": 12}, # GEMS_EXP 150
+			{"type": "chest", "id": 13}, # MEDICAL_HERB
+			{"type": "chest", "id": 14}, # DELICIOUS_SEEDS
+			{"type": "chest", "id": 15}, # GEMS_EXP 50
+			{"type": "chest", "id": 16}, # MEDICAL_HERB
+			# {"type": "chest", "id": 17}, # NOTHING # WARNING: this (normally empty) chest can disappear!!!
+			{"type": "chest", "id": 19}, # GEMS_EXP 100
+			{"type": "chest", "id": 20}, # GEMS_EXP 60
+			{"type": "chest", "name": "ITEM_CRYSTAL_WATER_SHRINE"}, 
+			{"type": "chest", "name": "ITEM_WATER_SHRINE_TILE"}, 
+			{"type": "chest", "name": "ITEM_CRYSTAL_LIGHT_ARROW"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_VILLAGE_CHIEF"},
+            {"type": "npc_id", "name": "NPC_OLD_WOMAN"},
+        ],
+        "act": 2,
+        "is_act_hub": True
+    },
 }

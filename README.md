@@ -13,9 +13,10 @@ Your original ROM should have the exact name "Soul Blazer (U) [!].smc", so pleas
   - Includes any differences in randomization resulting from different code architecture.
 - Minor differences in flavor text based on personal preference.
 - **TO DO** "Nothing" spots have been replaced with 1 gem. This is to prevent any confusion from item tiles that don't respond because they have nothing.
-- **TO DO** Got the checksum working so that headered or unheadered rom will work, regardless of name.
-- **TO DO** Increase the text scroll speed to match the JP version.
-- **TO DO** Include a hash based on the seed, for security.
+- Got the checksum working so that headered or unheadered rom will work, regardless of name.
+- Added text scroll speed options. Normal, Faster, Fastest, Instant
+- Include a hash based on the seed, for security.
+- **TO DO** Graph-based logic overhaul.
 
 ### Version 0.5b features
 
