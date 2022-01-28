@@ -344,10 +344,10 @@ REGION_LOOKUP = {
         "checks": [ 
 			{"type": "lair", "name": "NPC_IVY_EMBLEM_A"}, 
 			{"type": "lair", "name": "NPC_IVY_RECOVERY_SWORD"}, 
-			{"type": "chest", "id": 8}, # 
+			{"type": "chest", "id": 8}, # TORNADO
         ],
         "reqruirements": [ 
-            {"type": "weapon_category", "name": "can_cut_metal"},
+            {"type": "flag", "name": "can_cut_metal"},
         ],
         "act": 1
     },
@@ -405,6 +405,248 @@ REGION_LOOKUP = {
             {"type": "npc_id", "name": "NPC_OLD_WOMAN"},
         ],
         "act": 2,
-        "is_act_hub": True
+        "is_act_hub": True,
+        "connected_regions": [7, 8, 9, 10, 11]
+    },
+    # Region 7 - Last part of Marshes + Light Shrine
+	7: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_MOLE_SHIELD_BRACELET"}, 
+			{"type": "lair", "name": "NPC_DOG3"}, 
+			{"type": "lair", "name": "NPC_SQUIRREL_EMBLEM_C"}, 
+			{"type": "lair", "name": "NPC_CROCODILE3"}, 
+			{"type": "lair", "name": "NPC_MONMO"}, 
+			{"type": "lair", "name": "NPC_GREENWOODS_GUARDIAN"}, 
+			{"type": "item", "name": "ITEM_CRYSTAL_LOST_MARSH"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "item", "name": "ITEM_GREENWOOD_LEAVES"},
+        ],
+        "act": 2
+    },
+    # Region 8 - Fire Shrine Scorpions
+	8: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_BIRD3"}, 
+			{"type": "chest", "id": 18}, 
+			{"type": "item", "name": "ITEM_CRYSTAL_FIRE_SHRINE"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "flag", "name": "can_cut_metal"},
+        ],
+        "act": 2
+    },
+    # Region 9 - Monmo's Treasure
+	9: {
+        "checks": [ 
+			{"type": "chest", "id": 10}, # MOLES_RIBBON
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MONMO"},
+            {"type": "npc_id", "name": "NPC_MOLE3"},
+        ],
+        "act": 2
+    },
+    # Region 10 - Ice Armor chest
+	10: {
+        "checks": [ 
+			{"type": "chest", "id": 9}, # ICE_ARMOR
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MOLE"},
+            {"type": "npc_id", "name": "NPC_SQUIRREL_ICE_ARMOR"},
+            {"type": "item", "name": "CHEST_DREAM_ROD"},
+        ],
+        "act": 2
+    },
+    # Region 11 - Light Shrine Fire Spirits (previously region 12)
+	11: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_BIRD_RED_HOT_MIRROR"}, 
+			{"type": "chest", "id": 21}, # FLAME_PILLAR
+        ],
+        "reqruirements": [ 
+            {"type": "flag", "name": "can_cut_spirit"},
+            {"type": "item", "name": "ITEM_GREENWOOD_LEAVES"},
+       ],
+        "act": 2
+    },
+    # Region 12 - Act 3 start, Southerta (previously region 11)
+	12: {
+        "checks": [ 
+			{"type": "npc_id", "name": "ITEM_GREENWOODS_GUARDIAN"}, 
+			{"type": "lair", "name": "NPC_DOLPHIN2"}, 
+			{"type": "lair", "name": "NPC_MERMAID4"}, 
+			{"type": "lair", "name": "NPC_MERMAID5"}, 
+			{"type": "lair", "name": "NPC_MERMAID6"}, 
+			{"type": "lair", "name": "NPC_MERMAID_BUBBLE_ARMOR"}, 
+			{"type": "chest", "id": 28}, # MEDICAL_HERB
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_GREENWOODS_GUARDIAN"},
+       ],
+        "act": 3,
+        "is_act_hub": True,
+        "connected_regions": [13, 14, 15, 16, 17, 18, 19, 20, 21]
+    },
+    # Region 13 - Last soul of Southerta
+	13: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_MERMAID_STATUE_ROCKBIRD"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "item", "name": "ITEM_MERMAID_BUBBLE_ARMOR"},
+       ],
+        "act": 3
+    },
+    # Region 14 - Big Pearl chest (previously region 15)
+	14: {
+        "checks": [ 
+			{"type": "chest", "name": "CHEST_BIG_PEARL"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_PEARL"},
+            {"type": "npc_id", "name": "NPC_DOLPHIN_PEARL"},
+       ],
+        "act": 3
+    },
+    # Region 15 - Rockbird (previously region 16)
+	15: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_MERMAID9"}, 
+			{"type": "lair", "name": "NPC_MERMAID_TEARS"}, 
+			{"type": "lair", "name": "NPC_MERMAID_MAGIC_FLARE"}, 
+			{"type": "lair", "name": "NPC_ANGELFISH_SOUL_OF_SHIELD"}, 
+			{"type": "lair", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
+			{"type": "chest", "id": 29}, # MEDICAL_HERB
+			{"type": "chest", "id": 30}, # GEMS_EXP 60
+			{"type": "npc_id", "name": "ITEM_CRYSTAL_ROCKBIRD"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_STATUE_ROCKBIRD"},
+       ],
+        "act": 3
+    },
+    # Region 16 - Blester (previously region 17)
+	16: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_ANGELFISH"}, 
+			{"type": "lair", "name": "NPC_ANGELFISH2"}, 
+			{"type": "lair", "name": "NPC_MERMAID"}, 
+			{"type": "lair", "name": "NPC_MERMAID7"}, 
+			{"type": "lair", "name": "NPC_ANGELFISH4"}, 
+			{"type": "lair", "name": "NPC_MERMAID8"}, 
+			{"type": "lair", "name": "NPC_DOLPHIN_SECRET_CAVE"}, 
+			{"type": "npc_id", "name": "ITEM_CRYSTAL_SEABED_NEAR_BLESTER"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_STATUE_BLESTER"}, 
+       ],
+        "act": 3
+    },
+    # Region 17 - Blester Metal Gorillas (previously region 20)
+	17: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_MERMAID_STATUE_GHOST_SHIP"}, 
+        ],
+        "contains_groups": True,
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_STATUE_BLESTER", "always_required": True}, 
+            {"type": "item", "name": "THUNDER_RING", "req_group": 1}, 
+            {"type": "flag", "name": "can_cut_metal", "req_group": 2}, 
+       ],
+        "act": 3
+    },
+    # Region 18 - Durean
+	18: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_DOLPHIN_PEARL"}, 
+			{"type": "lair", "name": "NPC_LUE"}, 
+			{"type": "lair", "name": "NPC_MERMAID_PEARL"}, 
+			{"type": "lair", "name": "NPC_MERMAID2"}, 
+			{"type": "lair", "name": "NPC_MERMAID_NANA"}, 
+			{"type": "lair", "name": "NPC_DOLPHIN_SAVES_LUE"}, 
+			{"type": "lair", "name": "NPC_MERMAID3"}, 
+			{"type": "lair", "name": "NPC_MERMAID_STATUE_BLESTER"}, 
+			{"type": "chest", "id": 31}, # CRITICAL_SWORD
+			{"type": "chest", "id": 32}, # STRANGE_BOTTLE
+			{"type": "npc_id", "name": "ITEM_CRYSTAL_SEABED_NEAR_DUREAN"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
+       ],
+        "act": 3
+    },
+    # Region 19 - Durean Metal Gorillas (previously region 21)
+	19: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_MERMAID_RED_HOT_STICK"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
+            {"type": "flag", "name": "can_cut_metal"}, 
+       ],
+        "act": 3
+    },
+    # Region 20 - Ghost Ship (previously region 19)
+	20: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_ANGELFISH3"}, 
+			{"type": "lair", "name": "NPC_DOLPHIN"}, 
+			{"type": "lair", "name": "NPC_MERMAID_QUEEN"}, 
+			{"type": "chest", "id": 33}, # GEMS_EXP 1
+			{"type": "chest", "id": 34}, # POWER_BRACELET
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_STATUE_GHOST_SHIP"}, 
+            {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
+       ],
+        "act": 3
+    },
+    # Region 21 - Seabed Secret Cave (previously region 22)
+	21: {
+        "checks": [ 
+			{"type": "chest", "id": 24}, # EMBLEM_D
+			{"type": "chest", "id": 25}, # GEMS_EXP 80
+			{"type": "chest", "id": 26}, # MEDICAL_HERB
+			{"type": "chest", "id": 27}, # NOTHING
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_PEARL"}, 
+            {"type": "npc_id", "name": "NPC_DOLPHIN_SECRET_CAVE"}, 
+            {"type": "npc_id", "name": "NPC_MERMAID_STATUE_GHOST_SHIP"}, 
+            {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
+            {"type": "item", "name": "DREAM_ROD"}, 
+            {"type": "item", "name": "BIG_PEARL"}, 
+       ],
+        "act": 3
+    },
+    # Region 22 - Used to be Mermaid's Tears chest, now useless (previously region 23)
+    # Region ^ was never neaded. I'm leaving a space here JIC.
+    # Region 23 - Act 4 start, Mountain of Souls (previously region 14)
+	23: {
+        "checks": [ 
+			{"type": "npc_id", "name": "ITEM_MERMAID_QUEEN"}, 
+			{"type": "lair", "name": "NPC_GIRL"}, 
+			{"type": "lair", "name": "NPC_GRANDPA"}, 
+			{"type": "lair", "name": "NPC_MUSHROOM"}, 
+			{"type": "lair", "name": "NPC_BOY"}, 
+			{"type": "lair", "name": "NPC_GRANDPA2"}, 
+			{"type": "lair", "name": "NPC_SNAIL_JOCKEY"}, 
+			{"type": "lair", "name": "NPC_BOY_MUSHROOM_SHOES"}, 
+			{"type": "lair", "name": "NPC_GIRL2"}, 
+			{"type": "chest", "id": 35}, 
+			{"type": "chest", "id": 36}, 
+			{"type": "chest", "id": 37}, 
+			{"type": "chest", "id": 38}, 
+			{"type": "chest", "id": 39}, 
+			{"type": "npc_id", "name": "ITEM_CRYSTAL_MOUNTAIN_OF_SOULS"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "item", "name": "ITEM_MERMAID_BUBBLE_ARMOR"},
+       ],
+        "act": 4,
+        "is_act_hub": True,
+        "connected_regions": []
     },
 }
