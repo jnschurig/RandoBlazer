@@ -348,6 +348,10 @@ REGION_LOOKUP = {
         ],
         "reqruirements": [ 
             {"type": "flag", "name": "can_cut_metal"},
+            {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
+            {"type": "npc_id", "name": "NPC_ARCHITECT"},
+            {"type": "npc_id", "name": "NPC_LEOS_HOUSE"},
+            {"type": "item", "name": "CHEST_LEOS_BRUSH"},
         ],
         "act": 1
     },
@@ -643,10 +647,147 @@ REGION_LOOKUP = {
 			{"type": "npc_id", "name": "ITEM_CRYSTAL_MOUNTAIN_OF_SOULS"}, 
         ],
         "reqruirements": [ 
-            {"type": "item", "name": "ITEM_MERMAID_BUBBLE_ARMOR"},
+            {"type": "npc_id", "name": "NPC_MERMAID_QUEEN"},
        ],
         "act": 4,
         "is_act_hub": True,
-        "connected_regions": []
+        "connected_regions": [24, 25]
     },
+    # Region 24 - Mountain of Souls last lair + Laynole
+	24: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_GRANDMA"}, 
+			{"type": "lair", "name": "NPC_MUSHROOM2"}, 
+			{"type": "lair", "name": "NPC_SNAIL_RACER"}, 
+			{"type": "lair", "name": "NPC_SNAIL_RACER2"}, 
+			{"type": "lair", "name": "NPC_GIRL3"}, 
+			{"type": "lair", "name": "NPC_MUSHROOM3"}, 
+			{"type": "lair", "name": "NPC_SNAIL"}, 
+			{"type": "lair", "name": "NPC_GRANDPA3"}, 
+			{"type": "lair", "name": "NPC_GRANDPA4"}, 
+			{"type": "lair", "name": "NPC_GRANDPA_LUNE"}, 
+			{"type": "lair", "name": "NPC_SNAIL2"}, 
+			{"type": "lair", "name": "NPC_GRANDPA5"}, 
+			{"type": "chest", "name": "CHEST_LUCKY_BLADE"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "item", "name": "MUSHROOM_SHOES"},
+       ],
+        "act": 4,
+    },
+    # Region 25 - Last part of Laynole + Lune
+	25: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_BOY2"}, 
+			{"type": "lair", "name": "NPC_NOME"}, 
+			{"type": "lair", "name": "NPC_MUSHROOM_EMBLEM_F"}, 
+			{"type": "lair", "name": "NPC_DANCING_GRANDMA"}, 
+			{"type": "lair", "name": "NPC_DANCING_GRANDMA2"}, 
+			{"type": "lair", "name": "NPC_MOUNTAIN_KING"}, 
+			{"type": "chest", "id": 41}, # STRANGE_BOTTLE
+			{"type": "chest", "id": 42}, # ROTATOR
+			{"type": "npc_id", "name": "ITEM_CRYSTAL_LUNE"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "item", "name": "LUCKY_BLADE"},
+            {"type": "npc_id", "name": "NPC_GIRL3"},
+            {"type": "npc_id", "name": "NPC_GRANDPA4"},
+            {"type": "npc_id", "name": "NPC_GRANDPA_LUNE"},
+       ],
+        "act": 4,
+    },
+    # Region 26 - Act 5 start, first lairs of Leo's Lab Basement
+	26: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_PLANT"}, 
+			{"type": "lair", "name": "NPC_CAT"}, 
+			{"type": "lair", "name": "NPC_GREAT_DOOR_ZANTETSU_SWORD"}, 
+			{"type": "npc_id", "name": "ITEM_NOME"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_GIRL3"},
+            {"type": "npc_id", "name": "NPC_GRANDPA4"},
+            {"type": "npc_id", "name": "NPC_MUSHROOM2"},
+            {"type": "npc_id", "name": "NPC_GRANDPA5"},
+            {"type": "npc_id", "name": "NPC_NOME"},
+            {"type": "npc_id", "name": "NPC_MOUNTAIN_KING"},
+       ],
+        "act": 5,
+         "is_act_hub": True,
+        "connected_regions": []
+   },
+    # Region 27 - Leo's Lab Basement (previously region 28)
+	27: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_PLANT_HERB"}, 
+			{"type": "lair", "name": "NPC_CAT2"}, 
+			{"type": "lair", "name": "NPC_CAT3"}, 
+			{"type": "lair", "name": "NPC_GREAT_DOOR"}, 
+			{"type": "lair", "name": "NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR"}, 
+			{"type": "lair", "name": "NPC_CAT_DOOR_KEY"}, 
+			{"type": "lair", "name": "NPC_STEPS_UPSTAIRS"}, 
+			{"type": "lair", "name": "NPC_MOUSE"}, 
+			{"type": "lair", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"}, 
+			{"type": "lair", "name": "NPC_MODEL_TOWN1"}, 
+			{"type": "npc_id", "name": "ITEM_CRYSTAL_LEOS_LAB_BASEMENT"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "item", "name": "CHEST_ZANTETSU_SWORD"},
+       ],
+        "act": 5,
+   },
+    # Region 28 - Leo's Lab main room (previously region 27)
+	28: {
+        "checks": [ 
+			{"type": "chest", "id": 43}, # ZANTETSU_SWORD
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_GREAT_DOOR_ZANTETSU_SWORD"},
+       ],
+        "act": 5,
+   },
+    # Region 29 - Model Town 1
+	29: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_CHEST_OF_DRAWERS"}, 
+			{"type": "lair", "name": "NPC_PLANT2"}, 
+			{"type": "lair", "name": "NPC_MOUSE2"}, 
+			{"type": "lair", "name": "NPC_MOUSE3"}, 
+			{"type": "lair", "name": "NPC_MOUSE4"}, 
+			{"type": "lair", "name": "NPC_MOUSE_SPARK_BOMB"}, 
+			{"type": "lair", "name": "NPC_GREAT_DOOR_SOUL_OF_DETECTION"}, 
+			{"type": "lair", "name": "NPC_MODEL_TOWN2"}, 
+			{"type": "lair", "name": "NPC_STEPS_MARIE"}, 
+			{"type": "chest", "id": 45}, # GEMS_EXP 50
+			{"type": "chest", "id": 46}, # MEDICAL_HERB
+			{"type": "chest", "id": 47}, # GEMS_EXP 80
+			{"type": "npc_id", "name": "ITEM_CRYSTAL_MODEL_TOWN"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MODEL_TOWN1"},
+            {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
+            {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
+            {"type": "flag", "name": "has_magic"},
+       ],
+        "act": 5,
+   },
+    # Region 30 - Model Town 2
+30: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_CHEST_OF_DRAWERS2"}, 
+			{"type": "lair", "name": "NPC_PLANT_ACTINIDIA_LEAVES"}, 
+			{"type": "lair", "name": "NPC_MOUSE5"}, 
+			{"type": "lair", "name": "NPC_CAT4"}, 
+			{"type": "lair", "name": "NPC_STAIRS_POWER_PLANT"}, 
+			{"type": "chest", "id": 48}, # STRANGE_BOTTLE
+			{"type": "chest", "id": 49}, # MEDICAL_HERB
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MODEL_TOWN2"},
+            {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
+            {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
+            {"type": "flag", "name": "has_magic"},
+       ],
+        "act": 5,
+   },
 }
