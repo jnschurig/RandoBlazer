@@ -271,7 +271,7 @@ REGION_LOOKUP = {
 		"requirements": [],
 		"act": 1,
         "is_act_hub": True,
-        "connected_regions": [1, 2, 3, 4, 5]
+        "connected_regions": [1, 2, 3, 4, 5, 42, 43, 44, 45, 46, 47, 48]
 	},
     # Region 1 - Underground chest room
 	1: {
@@ -713,9 +713,9 @@ REGION_LOOKUP = {
             {"type": "npc_id", "name": "NPC_MOUNTAIN_KING"},
        ],
         "act": 5,
-         "is_act_hub": True,
-        "connected_regions": []
-   },
+        "is_act_hub": True,
+        "connected_regions": [27, 28, 29, 30, 31, 32]
+    },
     # Region 27 - Leo's Lab Basement (previously region 28)
 	27: {
         "checks": [ 
@@ -735,7 +735,7 @@ REGION_LOOKUP = {
             {"type": "item", "name": "CHEST_ZANTETSU_SWORD"},
        ],
         "act": 5,
-   },
+    },
     # Region 28 - Leo's Lab main room (previously region 27)
 	28: {
         "checks": [ 
@@ -745,7 +745,7 @@ REGION_LOOKUP = {
             {"type": "npc_id", "name": "NPC_GREAT_DOOR_ZANTETSU_SWORD"},
        ],
         "act": 5,
-   },
+    },
     # Region 29 - Model Town 1
 	29: {
         "checks": [ 
@@ -770,9 +770,9 @@ REGION_LOOKUP = {
             {"type": "flag", "name": "has_magic"},
        ],
         "act": 5,
-   },
+    },
     # Region 30 - Model Town 2
-30: {
+    30: {
         "checks": [ 
 			{"type": "lair", "name": "NPC_CHEST_OF_DRAWERS2"}, 
 			{"type": "lair", "name": "NPC_PLANT_ACTINIDIA_LEAVES"}, 
@@ -789,5 +789,262 @@ REGION_LOOKUP = {
             {"type": "flag", "name": "has_magic"},
        ],
         "act": 5,
-   },
+    },
+    # Region 31 - Light Armor chest
+    31: {
+        "checks": [ 
+			{"type": "chest", "id": 44}, # LIGHT_ARMOR
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_STAIRS_POWER_PLANT"},
+            {"type": "flag", "name": "can_cut_metal"},
+       ],
+        "act": 5,
+    },
+    # Region 32 - Power Plant
+    32: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_DOLL"}, 
+			{"type": "lair", "name": "NPC_MARIE"}, 
+			{"type": "npc_id", "name": "ITEM_CRYSTAL_POWER_PLANT"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_STAIRS_POWER_PLANT"},
+            {"type": "flag", "name": "can_cut_metal"},
+        ],
+        "act": 5,
+    },
+    # Region 33 - Act 6 start, first lairs of Magridd Castle Basement
+    33: {
+        "checks": [ 
+			{"type": "npc_id", "name": "ITEM_MARIE"}, 
+			{"type": "lair", "name": "NPC_SOLDIER"}, 
+			{"type": "chest", "id": 50}, # GEMS_EXP 80
+			{"type": "chest", "id": 51}, # SPIRIT_SWORD
+			{"type": "tile", "name": "ITEM_HARP_STRING"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MARIE"},
+            {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
+            {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
+        ],
+        "act": 6,
+        "is_act_hub": True,
+        "connected_regions": [34, 35, 36]
+    },
+    # Region 34 - Magridd Castle Basement
+    34: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_SOLDIER2"}, 
+			{"type": "lair", "name": "NPC_SINGER_CONCERT_HALL"}, 
+			{"type": "lair", "name": "NPC_SOLDIER3"}, 
+			{"type": "lair", "name": "NPC_SOLDIER4"}, 
+			{"type": "lair", "name": "NPC_SOLDIER5"}, 
+			{"type": "lair", "name": "NPC_SOLDIER6"}, 
+			{"type": "lair", "name": "NPC_SOLDIER_ELEMENTAL_MAIL"}, 
+			{"type": "lair", "name": "NPC_MAID"}, 
+			{"type": "lair", "name": "NPC_SOLDIER_LEFT_TOWER"}, 
+			{"type": "lair", "name": "NPC_SOLDIER_DOK"}, 
+			{"type": "lair", "name": "NPC_SOLDIER_PLATINUM_CARD"}, 
+			{"type": "lair", "name": "NPC_SINGER"}, 
+			{"type": "chest", "id": 52}, # STRANGE_BOTTLE
+			{"type": "chest", "id": 53}, # MEDICAL_HERB
+			{"type": "chest", "id": 54}, # GEMS_EXP 100
+			{"type": "chest", "id": 55}, # EMBLEM_B
+        ],
+        "reqruirements": [ 
+            {"type": "flag", "name": "can_cut_spirit"},
+        ],
+        "act": 6,
+    },
+    # Region 35 - Magridd Castle Left Tower
+    35: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_SOLDIER_SOUL_OF_REALITY"}, 
+			{"type": "lair", "name": "NPC_QUEEN_MAGRIDD"}, 
+			{"type": "lair", "name": "NPC_MAID2"}, 
+			{"type": "lair", "name": "NPC_SOLDIER_WITH_LEO"}, 
+			{"type": "lair", "name": "NPC_SOLDIER_RIGHT_TOWER"}, 
+			{"type": "lair", "name": "NPC_DR_LEO"}, 
+			{"type": "lair", "name": "NPC_SOLDIER7"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_SOLDIER_LEFT_TOWER"},
+            {"type": "item", "name": "PLATINUM_CARD"},
+        ],
+        "act": 6,
+    },
+    # Region 36 - Magridd Castle Right Tower
+    36: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_MAID_HERB"}, 
+			{"type": "lair", "name": "NPC_SOLDIER8"}, 
+			{"type": "lair", "name": "NPC_SOLDIER_CASTLE"}, 
+			{"type": "lair", "name": "NPC_SOLDIER9"}, 
+			{"type": "lair", "name": "NPC_SOLDIER10"}, 
+			{"type": "lair", "name": "NPC_SOLDIER11"}, 
+			{"type": "chest", "id": 56}, # GEMS_EXP 80
+			{"type": "chest", "id": 57}, # GEMS_EXP 80
+			{"type": "chest", "id": 58}, # GEMS_EXP 100
+			{"type": "chest", "id": 59}, # MEDICAL_HERB
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_SOLDIER_RIGHT_TOWER"},
+            {"type": "item", "name": "VIP_CARD"},
+        ],
+        "act": 6,
+    },
+    # Region 37 - Act 7 start, World of Evil
+    37: {
+        "checks": [ 
+			{"type": "npc_id", "name": "ITEM_KING_MAGRIDD"}, 
+			{"type": "chest", "id": 60}, # MEDICAL_HERB
+			{"type": "chest", "id": 61}, # GEMS_EXP 200
+			{"type": "chest", "name": "CHEST_RED_HOT_BALL"}, 
+			{"type": "chest", "name": "CHEST_SOUL_ARMOR"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_KING_MAGRIDD"},
+            {"type": "npc_id", "name": "NPC_SOLDIER_CASTLE"},
+            {"type": "item", "name": "BROWN_STONE"},
+            {"type": "item", "name": "GREEN_STONE"},
+            {"type": "item", "name": "BLUE_STONE"},
+            {"type": "item", "name": "SILVER_STONE"},
+            {"type": "item", "name": "PURPLE_STONE"},
+            {"type": "item", "name": "BLACK_STONE"},
+        ],
+        "act": 7,
+        "is_act_hub": True,
+        "connected_regions": []
+    },
+    # Region 38 - Dr Leo + Queen Magridd cutscene
+    38: {
+        "checks": [ 
+			{"type": "npc_id", "name": "ITEM_DR_LEO"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_SOLDIER_WITH_LEO"},
+            {"type": "npc_id", "name": "NPC_SOLDIER_DOK"},
+            {"type": "npc_id", "name": "NPC_DR_LEO"},
+        ],
+        "act": 6,
+    },
+    # Region 39 - Dazzling Space
+    39: {
+        "checks": [ 
+			{"type": "chest", "name": "CHEST_SOUL_BLADE"}, 
+			{"type": "chest", "id": 65}, # GEMS_EXP 100
+        ],
+        "reqruirements": [ 
+            {"type": "item", "name": "SOUL_ARMOR"},
+        ],
+        "act": 7,
+    },
+    # Region 40 - Last Lair in Lune
+    40: {
+        "checks": [ 
+			{"type": "lair", "name": "NPC_SNAIL_EMBLEM_E"}, 
+			{"type": "tile", "name": "ITEM_EMBLEM_F"}, 
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MUSHROOM2"},
+            {"type": "npc_id", "name": "NPC_GRANDPA5"},
+            {"type": "npc_id", "name": "NPC_MUSHROOM_EMBLEM_F"},
+            {"type": "item", "name": "DREAM_ROD"},
+        ],
+        "act": 4,
+    },
+    # Region 41 - End of the game (NOTHING here)
+    41: {
+        "checks": [ # No checks, but this area needs to be accessible.
+        ],
+        "reqruirements": [ 
+            {"type": "item", "name": "SOUL_BLADE"},
+            {"type": "item", "name": "SOUL_ARMOR"},
+            {"type": "item", "name": "PHOENIX"},
+        ],
+        "act": 7,
+        "is_end_region": True
+    },
+    # Region 42 - Tool Shop Owner
+    42: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_TOOL_SHOP_OWNER"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_TOOL_SHOP_OWNER"},
+        ],
+        "act": 1
+    },
+    # Region 43 - Tool Shop Owner's son Teddy
+    43: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_TEDDY"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_TEDDY"},
+        ],
+        "act": 1
+    },
+    # Region 44 - Emblem A tile
+    44: {
+        "checks": [
+            {"type": "tile", "name": "ITEM_EMBLEM_A"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
+            {"type": "npc_id", "name": "NPC_WATER_MILL"},
+            {"type": "npc_id", "name": "NPC_IVY"},
+            {"type": "npc_id", "name": "NPC_IVY_EMBLEM_A"},
+        ],
+        "act": 1
+    },
+    # Region 45 - Secret Cave pass
+    45: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_PASS"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
+            {"type": "npc_id", "name": "NPC_IVY"},
+            {"type": "npc_id", "name": "NPC_TULIP_PASS"},
+        ],
+        "act": 1
+    },
+    # Region 46 - Goat pen corner tile
+    46: {
+        "checks": [
+            {"type": "tile", "name": "ITEM_GOAT_PEN"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
+            {"type": "npc_id", "name": "NPC_GOAT_HERB"},
+        ],
+        "act": 1
+    },
+    # Region 47 - Secret Cave
+    47: {
+        "checks": [
+            {"type": "tile", "name": "ITEM_SECRET_CAVE_TILE"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
+            {"type": "npc_id", "name": "NPC_BOY_CAVE"},
+            {"type": "item", "name": "ITEM_PASS"},
+        ],
+        "act": 1
+    },
+    # Region 48 - Recovery Sword crystal
+    48: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_CRYSTAL_RECOVERY_SWORD"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
+            {"type": "npc_id", "name": "NPC_BOY_CAVE"},
+            {"type": "item", "name": "ITEM_PASS"},
+            {"type": "npc_id", "name": "NPC_IVY_RECOVERY_SWORD"},
+        ],
+        "act": 1
+    },
 }
