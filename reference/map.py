@@ -410,7 +410,7 @@ REGION_LOOKUP = {
         ],
         "act": 2,
         "is_act_hub": True,
-        "connected_regions": [7, 8, 9, 10, 11]
+        "connected_regions": [7, 8, 9, 10, 11, 49, 50, 51, 52, 53, 54]
     },
     # Region 7 - Last part of Marshes + Light Shrine
 	7: {
@@ -491,7 +491,7 @@ REGION_LOOKUP = {
        ],
         "act": 3,
         "is_act_hub": True,
-        "connected_regions": [13, 14, 15, 16, 17, 18, 19, 20, 21]
+        "connected_regions": [13, 14, 15, 16, 17, 18, 19, 20, 21, 55, 56, 57, 58, 59]
     },
     # Region 13 - Last soul of Southerta
 	13: {
@@ -499,7 +499,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_MERMAID_STATUE_ROCKBIRD"}, 
         ],
         "reqruirements": [ 
-            {"type": "item", "name": "ITEM_MERMAID_BUBBLE_ARMOR"},
+            {"type": "item", "name": "BUBBLE_ARMOR"},
        ],
         "act": 3
     },
@@ -511,6 +511,7 @@ REGION_LOOKUP = {
         "reqruirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_PEARL"},
             {"type": "npc_id", "name": "NPC_DOLPHIN_PEARL"},
+            {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
        ],
         "act": 3
     },
@@ -528,6 +529,7 @@ REGION_LOOKUP = {
         ],
         "reqruirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_ROCKBIRD"},
+            {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
        ],
         "act": 3
     },
@@ -545,6 +547,7 @@ REGION_LOOKUP = {
         ],
         "reqruirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_BLESTER"}, 
+            {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
        ],
         "act": 3
     },
@@ -558,6 +561,7 @@ REGION_LOOKUP = {
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_BLESTER", "always_required": True}, 
             {"type": "item", "name": "THUNDER_RING", "req_group": 1}, 
             {"type": "flag", "name": "can_cut_metal", "req_group": 2}, 
+            {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
        ],
         "act": 3
     },
@@ -578,6 +582,7 @@ REGION_LOOKUP = {
         ],
         "reqruirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
+            {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
        ],
         "act": 3
     },
@@ -589,6 +594,7 @@ REGION_LOOKUP = {
         "reqruirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
             {"type": "flag", "name": "can_cut_metal"}, 
+            {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
        ],
         "act": 3
     },
@@ -604,6 +610,7 @@ REGION_LOOKUP = {
         "reqruirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_GHOST_SHIP"}, 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
+            {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
        ],
         "act": 3
     },
@@ -622,6 +629,7 @@ REGION_LOOKUP = {
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
             {"type": "item", "name": "DREAM_ROD"}, 
             {"type": "item", "name": "BIG_PEARL"}, 
+            {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
        ],
         "act": 3
     },
@@ -651,7 +659,7 @@ REGION_LOOKUP = {
        ],
         "act": 4,
         "is_act_hub": True,
-        "connected_regions": [24, 25]
+        "connected_regions": [24, 25, 60, 61, 62]
     },
     # Region 24 - Mountain of Souls last lair + Laynole
 	24: {
@@ -827,6 +835,7 @@ REGION_LOOKUP = {
             {"type": "npc_id", "name": "NPC_MARIE"},
             {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
             {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
+            {"type": "npc_id", "name": "NPC_STEPS_MARIE"},
         ],
         "act": 6,
         "is_act_hub": True,
@@ -1046,5 +1055,368 @@ REGION_LOOKUP = {
             {"type": "npc_id", "name": "NPC_IVY_RECOVERY_SWORD"},
         ],
         "act": 1
+    },
+    # Region 49 - Red-Hot Mirror bird
+    49: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_BIRD_RED_HOT_MIRROR"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_BIRD_RED_HOT_MIRROR"},
+        ],
+        "act": 2
+    },
+    # Region 50 - Magic Bell crystal
+    50: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_CRYSTAL_MAGIC_BELL"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_DEER_MAGIC_BELL"},
+            {"type": "npc_id", "name": "NPC_CROCODILE3"},
+            {"type": "item", "name": "EMBLEM_A"},
+            {"type": "item", "name": "EMBLEM_B"},
+            {"type": "item", "name": "EMBLEM_C"},
+            {"type": "item", "name": "EMBLEM_D"},
+            {"type": "item", "name": "EMBLEM_E"},
+            {"type": "item", "name": "EMBLEM_F"},
+            {"type": "item", "name": "EMBLEM_G"},
+            {"type": "item", "name": "EMBLEM_H"},
+        ],
+        "act": 2
+    },
+    # Region 51 - Woodstin Trio
+    51: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_WOODSTIN_TRIO"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_DEER"},
+            {"type": "npc_id", "name": "NPC_SQUIRREL3"},
+            {"type": "npc_id", "name": "NPC_DOG3"},
+        ],
+        "act": 2
+    },
+    # Region 52 - Shield Bracelet mole
+    52: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_MOLE_SHIELD_BRACELET"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MOLE"},
+            {"type": "npc_id", "name": "NPC_MOLE_SHIELD_BRACELET"},
+            {"type": "item", "name": "MOLES_RIBBON"},
+        ],
+        "act": 2
+    },
+    # Region 53 - Psycho Sword squirrel
+    53: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_SQUIRREL_PSYCHO_SWORD"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_SQUIRREL_PSYCHO_SWORD"},
+            {"type": "item", "name": "DELICIOUS_SEEDS"},
+        ],
+        "act": 2
+    },
+    # Region 54 - Emblem C squirrel
+    54: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_SQUIRREL_EMBLEM_C"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_SQUIRREL_PSYCHO_SWORD"},
+            {"type": "npc_id", "name": "NPC_SQUIRREL_EMBLEM_C"},
+        ],
+        "act": 2
+    },
+    # Region 55 - Medical Herb mermaid (north-eastern house of St Elles)
+    55: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_MERMAID_HERB"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_DOLPHIN2"},
+            {"type": "npc_id", "name": "NPC_MERMAID"},
+        ],
+        "act": 3
+    },
+    # Region 56 - Common Mermaid house
+    56: {
+        "checks": [
+            {"type": "chest", "id": 22}, # MERMAIDS_TEARS /* WARNING: I hope this chest is safe */
+            {"type": "npc_id", "name": "ITEM_MERMAID_BUBBLE_ARMOR"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
+        ],
+        "act": 3
+    },
+    # Region 57 - Magic Flare mermaid
+    57: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_MERMAID_MAGIC_FLARE"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_MAGIC_FLARE"},
+            {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
+        ],
+        "act": 3
+    },
+    # Region 58 - Red-Hot Stick mermaid
+    58: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_MERMAID_RED_HOT_STICK"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_RED_HOT_STICK"},
+            {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
+        ],
+        "act": 3
+    },
+    # Region 59 - Lue
+    59: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_LUE"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_PEARL"},
+            {"type": "npc_id", "name": "NPC_LUE"},
+            {"type": "npc_id", "name": "NPC_DOLPHIN_SAVES_LUE"},
+        ],
+        "act": 3
+    },
+    # Region 60 - Emblem E snail
+    60: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_SNAIL_EMBLEM_E"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_SNAIL_EMBLEM_E"},
+        ],
+        "act": 4
+    },
+    # Region 61 - Mushroom Shoes boy
+    61: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_BOY_MUSHROOM_SHOES"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_BOY_MUSHROOM_SHOES"},
+        ],
+        "act": 4
+    },
+    # Region 62 - Mountain King's item + Deathtoll appears!
+    62: {
+        "checks": [
+            {"type": "npc_id", "name": "ITEM_MOUNTAIN_KING"}
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_BOY_MUSHROOM_SHOES"},
+            {"type": "npc_id", "name": "NPC_BOY"},
+            {"type": "npc_id", "name": "NPC_GRANDPA3"},
+            {"type": "npc_id", "name": "NPC_DANCING_GRANDMA"},
+            {"type": "npc_id", "name": "NPC_DANCING_GRANDMA2"},
+            {"type": "npc_id", "name": "NPC_MOUNTAIN_KING"},
+            {"type": "item", "name": "RED_HOT_BALL"},
+            {"type": "item", "name": "RED_HOT_MIRROR"},
+            {"type": "item", "name": "RED_HOT_STICK"},
+        ],
+        "act": 4
+    },
+    # Region 63 - Locked dining room
+    63: {
+        "checks": [
+            {"type": "item", "name": "ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR"},
+            {"type": "item", "name": "ITEM_EMBLEM_G"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_GREAT_DOOR"},
+            {"type": "npc_id", "name": "NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR"},
+            {"type": "item", "name": "ITEM_CAT_DOOR_KEY"},
+        ],
+        "act": 5
+    },
+    # Region 64 - Spark Magic mouse
+    64: {
+        "checks": [
+            {"type": "item", "name": "ITEM_MOUSE_SPARK_BOMB"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_GREAT_DOOR"},
+            {"type": "npc_id", "name": "NPC_CAT"},
+            {"type": "npc_id", "name": "NPC_CAT2"},
+            {"type": "npc_id", "name": "NPC_MOUSE"},
+            {"type": "npc_id", "name": "NPC_MOUSE_SPARK_BOMB"},
+            {"type": "item", "name": "ITEM_PLANT_ACTINIDIA_LEAVES"},
+        ],
+        "act": 5
+    },
+    # Region 65 - Medical Herb plant
+    65: {
+        "checks": [
+            {"type": "item", "name": "ITEM_PLANT_HERB"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_GREAT_DOOR"},
+            {"type": "npc_id", "name": "NPC_CAT"},
+            {"type": "npc_id", "name": "NPC_CAT2"},
+            {"type": "npc_id", "name": "NPC_MOUSE"},
+            {"type": "npc_id", "name": "NPC_PLANT_HERB"},
+            {"type": "item", "name": "ITEM_PLANT_ACTINIDIA_LEAVES"},
+        ],
+        "act": 5
+    },
+    # Region 66 - Model Town room (deprecated...)
+    # 66: {
+    #     "checks": [],
+    #     "reqruirements": [ 
+    #         {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
+    #         {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
+    #     ],
+    #     "act": 5
+    # },
+    # Region 67 - Leo's Cat
+    67: {
+        "checks": [
+            {"type": "item", "name": "ITEM_CAT_DOOR_KEY"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
+            {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
+            {"type": "npc_id", "name": "NPC_CAT_DOOR_KEY"},
+            {"type": "item", "name": "DREAM_ROD"},
+        ],
+        "act": 5
+    },
+    # Region 68 - Actinidia Plant
+    68: {
+        "checks": [
+            {"type": "item", "name": "ITEM_PLANT_ACTINIDIA_LEAVES"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
+            {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
+            {"type": "npc_id", "name": "NPC_PLANT_ACTINIDIA_LEAVES"},
+        ],
+        "act": 5
+    },
+    # Region 69 - Elemental Mail soldier
+    69: {
+        "checks": [
+            {"type": "item", "name": "ITEM_SOLDIER_ELEMENTAL_MAIL"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_SOLDIER_ELEMENTAL_MAIL"},
+            {"type": "item", "name": "DREAM_ROD"},
+        ],
+        "act": 6
+    },
+    # Region 70 - Queen Magridd WARNING: this item can be lost if the Queen is already dead
+    # 70: {
+    #     "checks": [
+    #         {"type": "item", "name": "ITEM_QUEEN_MAGRIDD"},
+    #     ],
+    #     "reqruirements": [ 
+    #         {"type": "npc_id", "name": "NPC_QUEEN_MAGRIDD"},
+    #     ],
+    #     "act": 6
+    # },
+    # Region 71 - Platinum Card soldier
+    71: {
+        "checks": [
+            {"type": "item", "name": "ITEM_SOLDIER_PLATINUM_CARD"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_SINGER_CONCERT_HALL"},
+            {"type": "npc_id", "name": "NPC_SOLDIER_PLATINUM_CARD"},
+            {"type": "item", "name": "HARP_STRING"},
+        ],
+        "act": 6
+    },
+    # Region 72 - Medical Herb maid
+    72: {
+        "checks": [
+            {"type": "item", "name": "ITEM_MAID_HERB"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_MAID_HERB"},
+        ],
+        "act": 6
+    },
+    # Region 73 - Magridd Castle + Emblem H tile
+    73: {
+        "checks": [
+            {"type": "item", "name": "ITEM_EMBLEM_H"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_SOLDIER_CASTLE"},
+        ],
+        "act": 6
+    },
+    # Region 74 - Super Bracelet tile
+    74: {
+        "checks": [
+            {"type": "item", "name": "ITEM_SUPER_BRACELET"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_QUEEN_MAGRIDD"},
+            {"type": "npc_id", "name": "NPC_SOLDIER_WITH_LEO"},
+            {"type": "npc_id", "name": "NPC_SOLDIER_DOK"},
+            {"type": "npc_id", "name": "NPC_DR_LEO"},
+        ],
+        "act": 6
+    },
+    # Region 75 - Greenwood Leaf tile
+    75: {
+        "checks": [
+            {"type": "item", "name": "ITEM_GREENWOOD_LEAVES"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_CROCODILE"},
+            {"type": "npc_id", "name": "NPC_CROCODILE2"},
+            {"type": "npc_id", "name": "NPC_BIRD_GREENWOOD_LEAF"},
+            {"type": "npc_id", "name": "NPC_MOLE_SOUL_OF_LIGHT"},
+            {"type": "item", "name": "DREAM_ROD"},
+        ],
+        "act": 6
+    },
+    # Region 76 - Demon Bird's lair
+    76: {
+        "checks": [
+            {"type": "lair", "name": "NPC_KING_MAGRIDD"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_SOLDIER_RIGHT_TOWER"},
+            {"type": "item", "name": "VIP_CARD"},
+            {"type": "item", "name": "MOBILE_KEY"},
+        ],
+        "act": 6
+    },
+    # Region 77 - Leo's Lab Attic (Deprecated...)
+    # 77: {
+    #     "checks": [
+    #         {"type": "lair", "name": "NPC_KING_MAGRIDD"},
+    #     ],
+    #     "reqruirements": [ 
+    #         {"type": "npc_id", "name": "NPC_SOLDIER_RIGHT_TOWER"},
+    #         {"type": "item", "name": "VIP_CARD"},
+    #         {"type": "item", "name": "MOBILE_KEY"},
+    #     ],
+    #     "act": 6
+    # },
+    # Region 78 - Chest of Drawers in Attic
+    78: {
+        "checks": [
+            {"type": "item", "name": "ITEM_CHEST_OF_DRAWERS_HERB"},
+        ],
+        "reqruirements": [ 
+            {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
+            {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
+            {"type": "npc_id", "name": "NPC_STEPS_MARIE"},
+            {"type": "npc_id", "name": "NPC_CHEST_OF_DRAWERS2"},
+        ],
+        "act": 6
     },
 }
