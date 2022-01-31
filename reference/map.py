@@ -251,7 +251,7 @@ NPC_ID = {
     "NPC_KING_MAGRIDD"                  : 405
 }
 
-REGION_LOOKUP = {
+REGIONS = {
 	# Region 0 - Act 1 start, Underground Castle before elevator
 	0: {
 		"checks": [ 
@@ -280,7 +280,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 2}, # GEMS_EXP 50
 			{"type": "item", "name": "ITEM_CRYSTAL_GRASS_VALLEY"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_IVY_CHEST_ROOM"},
         ],
@@ -300,7 +300,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_TULIP3"}, 
 			{"type": "lair", "name": "NPC_LEOS_HOUSE"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_WATER_MILL"},
         ],
@@ -319,7 +319,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_VILLAGE_CHIEF"}, 
 			{"type": "chest", "id": 7}, # MEDICAL_HERB
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_ARCHITECT"},
             {"type": "npc_id", "name": "NPC_LEOS_HOUSE"},
@@ -333,7 +333,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_OLD_MAN"}, 
 			{"type": "chest", "name": "CHEST_LEOS_BRUSH"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_LISA"},
             {"type": "item", "name": "CHEST_DREAM_ROD"},
         ],
@@ -346,7 +346,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_IVY_RECOVERY_SWORD"}, 
 			{"type": "chest", "id": 8}, # TORNADO
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "flag", "name": "can_cut_metal"},
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_ARCHITECT"},
@@ -361,7 +361,7 @@ REGION_LOOKUP = {
     #     "checks": [ 
 	# 		{"type": "npc_id", "name": "ITEM_VILLAGE_CHIEF"}, 
     #     ],
-    #     "reqruirements": [ 
+    #     "requirements": [ 
     #         {"type": "npc_id", "name": "NPC_VILLAGE_CHIEF"},
     #         {"type": "npc_id", "name": "NPC_OLD_WOMAN"},
     #     ],
@@ -404,7 +404,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "name": "ITEM_WATER_SHRINE_TILE"}, 
 			{"type": "chest", "name": "ITEM_CRYSTAL_LIGHT_ARROW"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_VILLAGE_CHIEF"},
             {"type": "npc_id", "name": "NPC_OLD_WOMAN"},
         ],
@@ -423,7 +423,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_GREENWOODS_GUARDIAN"}, 
 			{"type": "item", "name": "ITEM_CRYSTAL_LOST_MARSH"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "item", "name": "ITEM_GREENWOOD_LEAVES"},
         ],
         "act": 2
@@ -435,7 +435,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 18}, 
 			{"type": "item", "name": "ITEM_CRYSTAL_FIRE_SHRINE"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "flag", "name": "can_cut_metal"},
         ],
         "act": 2
@@ -445,7 +445,7 @@ REGION_LOOKUP = {
         "checks": [ 
 			{"type": "chest", "id": 10}, # MOLES_RIBBON
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MONMO"},
             {"type": "npc_id", "name": "NPC_MOLE3"},
         ],
@@ -456,7 +456,7 @@ REGION_LOOKUP = {
         "checks": [ 
 			{"type": "chest", "id": 9}, # ICE_ARMOR
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MOLE"},
             {"type": "npc_id", "name": "NPC_SQUIRREL_ICE_ARMOR"},
             {"type": "item", "name": "CHEST_DREAM_ROD"},
@@ -469,7 +469,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_BIRD_RED_HOT_MIRROR"}, 
 			{"type": "chest", "id": 21}, # FLAME_PILLAR
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "flag", "name": "can_cut_spirit"},
             {"type": "item", "name": "ITEM_GREENWOOD_LEAVES"},
        ],
@@ -486,7 +486,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_MERMAID_BUBBLE_ARMOR"}, 
 			{"type": "chest", "id": 28}, # MEDICAL_HERB
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_GREENWOODS_GUARDIAN"},
        ],
         "act": 3,
@@ -498,7 +498,7 @@ REGION_LOOKUP = {
         "checks": [ 
 			{"type": "lair", "name": "NPC_MERMAID_STATUE_ROCKBIRD"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "item", "name": "BUBBLE_ARMOR"},
        ],
         "act": 3
@@ -508,7 +508,7 @@ REGION_LOOKUP = {
         "checks": [ 
 			{"type": "chest", "name": "CHEST_BIG_PEARL"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_PEARL"},
             {"type": "npc_id", "name": "NPC_DOLPHIN_PEARL"},
             {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
@@ -527,7 +527,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 30}, # GEMS_EXP 60
 			{"type": "item", "name": "ITEM_CRYSTAL_ROCKBIRD"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_ROCKBIRD"},
             {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
        ],
@@ -545,7 +545,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_DOLPHIN_SECRET_CAVE"}, 
 			{"type": "item", "name": "ITEM_CRYSTAL_SEABED_NEAR_BLESTER"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_BLESTER"}, 
             {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
        ],
@@ -557,7 +557,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_MERMAID_STATUE_GHOST_SHIP"}, 
         ],
         "contains_groups": True,
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_BLESTER", "always_required": True}, 
             {"type": "item", "name": "THUNDER_RING", "req_group": 1}, 
             {"type": "flag", "name": "can_cut_metal", "req_group": 2}, 
@@ -580,7 +580,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 32}, # STRANGE_BOTTLE
 			{"type": "item", "name": "ITEM_CRYSTAL_SEABED_NEAR_DUREAN"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
             {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
        ],
@@ -591,7 +591,7 @@ REGION_LOOKUP = {
         "checks": [ 
 			{"type": "lair", "name": "NPC_MERMAID_RED_HOT_STICK"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
             {"type": "flag", "name": "can_cut_metal"}, 
             {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
@@ -607,7 +607,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 33}, # GEMS_EXP 1
 			{"type": "chest", "id": 34}, # POWER_BRACELET
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_GHOST_SHIP"}, 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
             {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
@@ -622,7 +622,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 26}, # MEDICAL_HERB
 			{"type": "chest", "id": 27}, # NOTHING
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_PEARL"}, 
             {"type": "npc_id", "name": "NPC_DOLPHIN_SECRET_CAVE"}, 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_GHOST_SHIP"}, 
@@ -654,7 +654,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 39}, 
 			{"type": "item", "name": "ITEM_CRYSTAL_MOUNTAIN_OF_SOULS"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_QUEEN"},
        ],
         "act": 4,
@@ -678,7 +678,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_GRANDPA5"}, 
 			{"type": "chest", "name": "CHEST_LUCKY_BLADE"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "item", "name": "MUSHROOM_SHOES"},
        ],
         "act": 4,
@@ -696,7 +696,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 42}, # ROTATOR
 			{"type": "item", "name": "ITEM_CRYSTAL_LUNE"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "item", "name": "LUCKY_BLADE"},
             {"type": "npc_id", "name": "NPC_GIRL3"},
             {"type": "npc_id", "name": "NPC_GRANDPA4"},
@@ -712,7 +712,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_GREAT_DOOR_ZANTETSU_SWORD"}, 
 			{"type": "item", "name": "ITEM_NOME"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_GIRL3"},
             {"type": "npc_id", "name": "NPC_GRANDPA4"},
             {"type": "npc_id", "name": "NPC_MUSHROOM2"},
@@ -739,7 +739,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_MODEL_TOWN1"}, 
 			{"type": "item", "name": "ITEM_CRYSTAL_LEOS_LAB_BASEMENT"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "item", "name": "CHEST_ZANTETSU_SWORD"},
        ],
         "act": 5,
@@ -749,7 +749,7 @@ REGION_LOOKUP = {
         "checks": [ 
 			{"type": "chest", "id": 43}, # ZANTETSU_SWORD
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_GREAT_DOOR_ZANTETSU_SWORD"},
        ],
         "act": 5,
@@ -771,7 +771,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 47}, # GEMS_EXP 80
 			{"type": "item", "name": "ITEM_CRYSTAL_MODEL_TOWN"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MODEL_TOWN1"},
             {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
             {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
@@ -790,7 +790,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 48}, # STRANGE_BOTTLE
 			{"type": "chest", "id": 49}, # MEDICAL_HERB
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MODEL_TOWN2"},
             {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
             {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
@@ -803,7 +803,7 @@ REGION_LOOKUP = {
         "checks": [ 
 			{"type": "chest", "id": 44}, # LIGHT_ARMOR
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_STAIRS_POWER_PLANT"},
             {"type": "flag", "name": "can_cut_metal"},
        ],
@@ -816,7 +816,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_MARIE"}, 
 			{"type": "item", "name": "ITEM_CRYSTAL_POWER_PLANT"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_STAIRS_POWER_PLANT"},
             {"type": "flag", "name": "can_cut_metal"},
         ],
@@ -831,7 +831,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 51}, # SPIRIT_SWORD
 			{"type": "item", "name": "ITEM_HARP_STRING"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MARIE"},
             {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
             {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
@@ -861,7 +861,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 54}, # GEMS_EXP 100
 			{"type": "chest", "id": 55}, # EMBLEM_B
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "flag", "name": "can_cut_spirit"},
         ],
         "act": 6,
@@ -877,7 +877,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_DR_LEO"}, 
 			{"type": "lair", "name": "NPC_SOLDIER7"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_SOLDIER_LEFT_TOWER"},
             {"type": "item", "name": "PLATINUM_CARD"},
         ],
@@ -897,7 +897,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "id": 58}, # GEMS_EXP 100
 			{"type": "chest", "id": 59}, # MEDICAL_HERB
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_SOLDIER_RIGHT_TOWER"},
             {"type": "item", "name": "VIP_CARD"},
         ],
@@ -912,7 +912,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "name": "CHEST_RED_HOT_BALL"}, 
 			{"type": "chest", "name": "CHEST_SOUL_ARMOR"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_KING_MAGRIDD"},
             {"type": "npc_id", "name": "NPC_SOLDIER_CASTLE"},
             {"type": "item", "name": "BROWN_STONE"},
@@ -931,7 +931,7 @@ REGION_LOOKUP = {
         "checks": [ 
 			{"type": "item", "name": "ITEM_DR_LEO"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_SOLDIER_WITH_LEO"},
             {"type": "npc_id", "name": "NPC_SOLDIER_DOK"},
             {"type": "npc_id", "name": "NPC_DR_LEO"},
@@ -944,7 +944,7 @@ REGION_LOOKUP = {
 			{"type": "chest", "name": "CHEST_SOUL_BLADE"}, 
 			{"type": "chest", "id": 65}, # GEMS_EXP 100
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "item", "name": "SOUL_ARMOR"},
         ],
         "act": 7,
@@ -955,7 +955,7 @@ REGION_LOOKUP = {
 			{"type": "lair", "name": "NPC_SNAIL_EMBLEM_E"}, 
 			{"type": "item", "name": "ITEM_EMBLEM_F"}, 
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MUSHROOM2"},
             {"type": "npc_id", "name": "NPC_GRANDPA5"},
             {"type": "npc_id", "name": "NPC_MUSHROOM_EMBLEM_F"},
@@ -967,7 +967,7 @@ REGION_LOOKUP = {
     41: {
         "checks": [ # No checks, but this area needs to be accessible.
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "item", "name": "SOUL_BLADE"},
             {"type": "item", "name": "SOUL_ARMOR"},
             {"type": "item", "name": "PHOENIX"},
@@ -980,7 +980,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_TOOL_SHOP_OWNER"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_TOOL_SHOP_OWNER"},
         ],
         "act": 1
@@ -990,7 +990,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_TEDDY"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_TEDDY"},
         ],
         "act": 1
@@ -1000,7 +1000,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_EMBLEM_A"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_WATER_MILL"},
             {"type": "npc_id", "name": "NPC_IVY"},
@@ -1013,7 +1013,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_PASS"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_IVY"},
             {"type": "npc_id", "name": "NPC_TULIP_PASS"},
@@ -1025,7 +1025,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_GOAT_PEN"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_GOAT_HERB"},
         ],
@@ -1036,7 +1036,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_SECRET_CAVE_TILE"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_BOY_CAVE"},
             {"type": "item", "name": "ITEM_PASS"},
@@ -1048,7 +1048,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_CRYSTAL_RECOVERY_SWORD"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_BOY_CAVE"},
             {"type": "item", "name": "ITEM_PASS"},
@@ -1061,7 +1061,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_BIRD_RED_HOT_MIRROR"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "item", "name": "NPC_BIRD_RED_HOT_MIRROR"},
         ],
         "act": 2
@@ -1071,7 +1071,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_CRYSTAL_MAGIC_BELL"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_DEER_MAGIC_BELL"},
             {"type": "npc_id", "name": "NPC_CROCODILE3"},
             {"type": "item", "name": "EMBLEM_A"},
@@ -1090,7 +1090,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_WOODSTIN_TRIO"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_DEER"},
             {"type": "npc_id", "name": "NPC_SQUIRREL3"},
             {"type": "npc_id", "name": "NPC_DOG3"},
@@ -1102,7 +1102,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_MOLE_SHIELD_BRACELET"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MOLE"},
             {"type": "npc_id", "name": "NPC_MOLE_SHIELD_BRACELET"},
             {"type": "item", "name": "MOLES_RIBBON"},
@@ -1114,7 +1114,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_SQUIRREL_PSYCHO_SWORD"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_SQUIRREL_PSYCHO_SWORD"},
             {"type": "item", "name": "DELICIOUS_SEEDS"},
         ],
@@ -1125,7 +1125,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_SQUIRREL_EMBLEM_C"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_SQUIRREL_PSYCHO_SWORD"},
             {"type": "npc_id", "name": "NPC_SQUIRREL_EMBLEM_C"},
         ],
@@ -1136,7 +1136,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_MERMAID_HERB"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_DOLPHIN2"},
             {"type": "npc_id", "name": "NPC_MERMAID"},
         ],
@@ -1148,7 +1148,7 @@ REGION_LOOKUP = {
             {"type": "chest", "id": 22}, # MERMAIDS_TEARS /* WARNING: I hope this chest is safe */
             {"type": "item", "name": "ITEM_MERMAID_BUBBLE_ARMOR"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
         ],
         "act": 3
@@ -1158,7 +1158,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_MERMAID_MAGIC_FLARE"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_MAGIC_FLARE"},
             {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
         ],
@@ -1169,7 +1169,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_MERMAID_RED_HOT_STICK"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_RED_HOT_STICK"},
             {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
         ],
@@ -1180,7 +1180,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_LUE"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_PEARL"},
             {"type": "npc_id", "name": "NPC_LUE"},
             {"type": "npc_id", "name": "NPC_DOLPHIN_SAVES_LUE"},
@@ -1192,7 +1192,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_SNAIL_EMBLEM_E"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_SNAIL_EMBLEM_E"},
         ],
         "act": 4
@@ -1202,7 +1202,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_BOY_MUSHROOM_SHOES"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_BOY_MUSHROOM_SHOES"},
         ],
         "act": 4
@@ -1212,7 +1212,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_MOUNTAIN_KING"}
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_BOY_MUSHROOM_SHOES"},
             {"type": "npc_id", "name": "NPC_BOY"},
             {"type": "npc_id", "name": "NPC_GRANDPA3"},
@@ -1231,7 +1231,7 @@ REGION_LOOKUP = {
             {"type": "item", "name": "ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR"},
             {"type": "item", "name": "ITEM_EMBLEM_G"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_GREAT_DOOR"},
             {"type": "npc_id", "name": "NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR"},
             {"type": "item", "name": "ITEM_CAT_DOOR_KEY"},
@@ -1243,7 +1243,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_MOUSE_SPARK_BOMB"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_GREAT_DOOR"},
             {"type": "npc_id", "name": "NPC_CAT"},
             {"type": "npc_id", "name": "NPC_CAT2"},
@@ -1258,7 +1258,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_PLANT_HERB"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_GREAT_DOOR"},
             {"type": "npc_id", "name": "NPC_CAT"},
             {"type": "npc_id", "name": "NPC_CAT2"},
@@ -1271,7 +1271,7 @@ REGION_LOOKUP = {
     # Region 66 - Model Town room (deprecated...)
     # 66: {
     #     "checks": [],
-    #     "reqruirements": [ 
+    #     "requirements": [ 
     #         {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
     #         {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
     #     ],
@@ -1282,7 +1282,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_CAT_DOOR_KEY"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
             {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
             {"type": "npc_id", "name": "NPC_CAT_DOOR_KEY"},
@@ -1295,7 +1295,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_PLANT_ACTINIDIA_LEAVES"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
             {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
             {"type": "npc_id", "name": "NPC_PLANT_ACTINIDIA_LEAVES"},
@@ -1307,7 +1307,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_SOLDIER_ELEMENTAL_MAIL"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_SOLDIER_ELEMENTAL_MAIL"},
             {"type": "item", "name": "DREAM_ROD"},
         ],
@@ -1318,7 +1318,7 @@ REGION_LOOKUP = {
     #     "checks": [
     #         {"type": "item", "name": "ITEM_QUEEN_MAGRIDD"},
     #     ],
-    #     "reqruirements": [ 
+    #     "requirements": [ 
     #         {"type": "npc_id", "name": "NPC_QUEEN_MAGRIDD"},
     #     ],
     #     "act": 6
@@ -1328,7 +1328,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_SOLDIER_PLATINUM_CARD"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_SINGER_CONCERT_HALL"},
             {"type": "npc_id", "name": "NPC_SOLDIER_PLATINUM_CARD"},
             {"type": "item", "name": "HARP_STRING"},
@@ -1340,7 +1340,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_MAID_HERB"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_MAID_HERB"},
         ],
         "act": 6
@@ -1350,7 +1350,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_EMBLEM_H"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_SOLDIER_CASTLE"},
         ],
         "act": 6
@@ -1360,7 +1360,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_SUPER_BRACELET"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_QUEEN_MAGRIDD"},
             {"type": "npc_id", "name": "NPC_SOLDIER_WITH_LEO"},
             {"type": "npc_id", "name": "NPC_SOLDIER_DOK"},
@@ -1373,7 +1373,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_GREENWOOD_LEAVES"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_CROCODILE"},
             {"type": "npc_id", "name": "NPC_CROCODILE2"},
             {"type": "npc_id", "name": "NPC_BIRD_GREENWOOD_LEAF"},
@@ -1387,7 +1387,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "lair", "name": "NPC_KING_MAGRIDD"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_SOLDIER_RIGHT_TOWER"},
             {"type": "item", "name": "VIP_CARD"},
             {"type": "item", "name": "MOBILE_KEY"},
@@ -1399,7 +1399,7 @@ REGION_LOOKUP = {
     #     "checks": [
     #         {"type": "lair", "name": "NPC_KING_MAGRIDD"},
     #     ],
-    #     "reqruirements": [ 
+    #     "requirements": [ 
     #         {"type": "npc_id", "name": "NPC_SOLDIER_RIGHT_TOWER"},
     #         {"type": "item", "name": "VIP_CARD"},
     #         {"type": "item", "name": "MOBILE_KEY"},
@@ -1411,7 +1411,7 @@ REGION_LOOKUP = {
         "checks": [
             {"type": "item", "name": "ITEM_CHEST_OF_DRAWERS_HERB"},
         ],
-        "reqruirements": [ 
+        "requirements": [ 
             {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
             {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
             {"type": "npc_id", "name": "NPC_STEPS_MARIE"},
