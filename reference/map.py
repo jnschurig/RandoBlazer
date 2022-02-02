@@ -2,6 +2,21 @@
 
 # NUMBER_OF_GOALS = 78
 
+FLAGS = {
+    'can_cut_metal': ['ZANTETSU_SWORD', 'SOUL_BLADE'],
+    'can_cut_spirit': ['SPIRIT_SWORD', 'SOUL_BLADE'],
+    'has_magic': [
+        'FLAME_BALL',
+        'LIGHT_ARROW',
+        'MAGIC_FLARE',
+        'ROTATOR',
+        'SPARK_BOMB',
+        'FLAME_PILLAR',
+        'TORNADO',
+    ],
+    'has_thunder': ['THUNDER_RING', 'ZANTETSU_SWORD', 'SOUL_BLADE'],
+}
+
 LOCATION_ID_LOOKUP = {
     "CHEST_SWORD_OF_LIFE"               : 0,
     "CHEST_DREAM_ROD"                   : 5,
@@ -558,9 +573,8 @@ REGIONS = {
         ],
         "contains_groups": True,
         "requirements": [ 
-            {"type": "npc_id", "name": "NPC_MERMAID_STATUE_BLESTER", "always_required": True}, 
-            {"type": "item", "name": "THUNDER_RING", "req_group": 1}, 
-            {"type": "flag", "name": "can_cut_metal", "req_group": 2}, 
+            {"type": "npc_id", "name": "NPC_MERMAID_STATUE_BLESTER"}, 
+            {"type": "flag", "name": "has_thunder"}, 
             {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
        ],
         "act": 3
@@ -740,7 +754,7 @@ REGIONS = {
 			{"type": "item", "name": "ITEM_CRYSTAL_LEOS_LAB_BASEMENT"}, 
         ],
         "requirements": [ 
-            {"type": "item", "name": "CHEST_ZANTETSU_SWORD"},
+            {"type": "flag", "name": "can_cut_metal"},
        ],
         "act": 5,
     },
