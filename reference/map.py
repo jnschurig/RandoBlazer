@@ -17,6 +17,12 @@ FLAGS = {
     'has_thunder': ['THUNDER_RING', 'ZANTETSU_SWORD', 'SOUL_BLADE'],
 }
 
+CHECK_TYPE_LOOKUP = {
+    'npc_id': ['lair'],
+    'item': ['chest', 'item'],
+    'flag': ['chest', 'item']
+}
+
 LOCATION_ID_LOOKUP = {
     "CHEST_SWORD_OF_LIFE"               : 0,
     "CHEST_DREAM_ROD"                   : 5,
