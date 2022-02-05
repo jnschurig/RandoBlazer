@@ -90,9 +90,9 @@ def randomize_map():
         next_hub_reqs = []
         if 'next_hub_region' in hub:
             # 3. Get the 'next' hub region.
-            if hub['next_hub_region'] not in valid_regions:
-                valid_regions.append(hub['next_hub_region'])
-            current_neighbors.append(hub['next_hub_region'])
+            # if hub['next_hub_region'] not in valid_regions:
+            #     valid_regions.append(hub['next_hub_region'])
+            # current_neighbors.append(hub['next_hub_region'])
             next_hub_reqs = region_map[hub['next_hub_region']]['requirements']
 
         valid_regions += hub['sub_regions']
@@ -103,27 +103,36 @@ def randomize_map():
                 valid_neighbors.append(neighbor)
 
         # 4. Combine all known requirements for "accessible" areas.
-        local_reqs = []
+        local_reqs = next_hub_reqs
         local_checks = []
         for local_region in valid_neighbors:
+            # We can use requirements from next hub region, but not checks.
             local_reqs += region_map[local_region]['requirements']
-            local_checks += region_map[local_region]['checks']
+            # if 'next_hub_region' in hub and local_region != hub['next_hub_region']:
+            for local_check in region_map[local_region]['checks']:
+                # all_check_reqs = []
+                # for check_req in region_map[local_region]['requirements']:
+                #     if
+                local_check['check_requirements'] = region_map[local_region]['requirements']
+                local_checks.append(local_check)
+            # local_checks += region_map[local_region]['checks']
         valid_neighbors = random_manager.shuffle_list(valid_neighbors)
         
         local_reqs = distinctify(local_reqs)
         # Remove completed requirements from the current local list of reqs.
         for completed in fulfilled_reqs:
-            # del local_reqs[completed]
-            local_reqs.remove(completed)
+            if completed in local_reqs:
+                local_reqs.remove(completed)
         # all_reqs += local_reqs
 
-        # Remoe used checks from local checks.
+        # Remove used checks from local checks.
         for completed in placed_checks:
             # del local_checks[completed]
             local_checks.remove(completed)
-        
+
         # 5. Pick a requirement at random and fulfill it in a random region which does NOT require it.
         local_reqs = random_manager.shuffle_list(local_reqs)
+        local_checks = random_manager.shuffle_list(local_checks)
 
         for current_req in local_reqs:
         # next_hub_available = False
@@ -136,126 +145,102 @@ def randomize_map():
             # for proposed_region in valid_neighbors:
             #     if current_req not in region_map[proposed_region]['requirements']:
             #         return current_req
+            use_check = {}
+            for check in local_checks:
+                if check_is_compatible(current_req, check):
+                    use_check = check
 
-            # Returns false if there are no compatible regions. 
-            # Returns a region if there is at least one.
-            target_region = get_compatible_region(current_req, valid_neighbors)
-            if target_region:
-                compatible_checks = get_compatible_checks(current_req, target_region)
-                # Make sure there ARE compatible checks
-                if compatible_checks:
-                    for check in placed_checks:
-                        # print(compatible_checks)
-                        if check in compatible_checks:
-                            # del compatible_checks[check]
-                            compatible_checks.remove(check)
-                    
-                    if len(compatible_checks) > 0:
-                        target_check = random_manager.get_random_list_member(compatible_checks)
-                        placed_checks.append(target_check)
-                        fulfilled_reqs.append(current_req)
-                        # COME HERE! FIND OUT IF THE CHECK IS A FLAG!
-                        # IF IT IS, WE MUST PICK AN ITEM TO ASSIGN!
-                        if current_req['type'] == 'flag':
-                            flag_items = map.FLAGS[current_req['name']]
-                            flag_items = random_manager.shuffle_list(flag_items)
-                            for item in flag_items:
-                                if item not in placed_items:
-                                    placed_items.append(item)
-                                    current_req['item'] = item
-                                    break
-                            # Some flag items can fulfill multiple flags.
-                            # Cycle through the possible flags based on the item.
-                            for alt_flag in map.ITEM_TO_FLAGS[current_req['item']]:
-                                flag_req_dict = {'type': 'flag', 'name': alt_flag}
-                                if flag_req_dict not in fulfilled_reqs:
-                                    fulfilled_reqs.append(flag_req_dict)
-                        elif current_req['type'] == 'item':
-                            placed_items.append(current_req['name'])
+            if use_check != {}: # There was at least one compatible check. Proceed.
+                if current_req['type'] == 'flag':
+                    flag_items = map.FLAGS[current_req['name']]
+                    flag_items = random_manager.shuffle_list(flag_items)
+                    for item in flag_items:
+                        if item not in placed_items:
+                            placed_items.append(item)
+                            current_req['item'] = item
+                            break
+                    # Some flag items can fulfill multiple flags.
+                    # Cycle through the possible flags based on the item.
+                    for alt_flag in map.ITEM_TO_FLAGS[current_req['item']]:
+                        flag_req_dict = {'type': 'flag', 'name': alt_flag}
+                        if flag_req_dict not in fulfilled_reqs:
+                            fulfilled_reqs.append(flag_req_dict)
+                    # print(fulfilled_reqs)
+                elif current_req['type'] == 'item':
+                    placed_items.append(current_req['name'])
+                
+                use_check.pop('check_requirements')
+                spoiler_log.append(
+                    {
+                        'act': hub['act'],
+                        'check': use_check,
+                        'requirement': current_req
+                    }
+                )
+            
 
-                        spoiler_log.append(
-                            {
-                                'check': target_check,
-                                'requirement': current_req
-                            }
-                        )
+            # # Returns false if there are no compatible regions. 
+            # # Returns a region if there is at least one.
+            # target_region = get_compatible_region(current_req, valid_neighbors)
+            # if target_region:
+            #     compatible_checks = get_compatible_checks(current_req, target_region)
+            #     # Make sure there ARE compatible checks
+            #     if compatible_checks:
+            #         for check in placed_checks:
+            #             # print(compatible_checks)
+            #             if check in compatible_checks:
+            #                 # del compatible_checks[check]
+            #                 compatible_checks.remove(check)
+            #         print(len(compatible_checks))
+            #         print(compatible_checks)
+            #         if len(compatible_checks) > 0:
+            #             target_check = random_manager.get_random_list_member(compatible_checks)
+            #             placed_checks.append(target_check)
+            #             fulfilled_reqs.append(current_req)
 
-            if all(elem in fulfilled_reqs for elem in next_hub_reqs):
+            #             # Check if this is a flag requirement.
+            #             # We need to pick an item that fulfills the flag requirement and place it.
+            #             if current_req['type'] == 'flag':
+            #                 flag_items = map.FLAGS[current_req['name']]
+            #                 flag_items = random_manager.shuffle_list(flag_items)
+            #                 for item in flag_items:
+            #                     if item not in placed_items:
+            #                         placed_items.append(item)
+            #                         current_req['item'] = item
+            #                         break
+            #                 # Some flag items can fulfill multiple flags.
+            #                 # Cycle through the possible flags based on the item.
+            #                 for alt_flag in map.ITEM_TO_FLAGS[current_req['item']]:
+            #                     flag_req_dict = {'type': 'flag', 'name': alt_flag}
+            #                     if flag_req_dict not in fulfilled_reqs:
+            #                         fulfilled_reqs.append(flag_req_dict)
+            #                 # print(fulfilled_reqs)
+            #             elif current_req['type'] == 'item':
+            #                 placed_items.append(current_req['name'])
+
+            #             spoiler_log.append(
+            #                 {
+            #                     'check': target_check,
+            #                     'requirement': current_req
+            #                 }
+            #             )
+
+            if all(elem in next_hub_reqs for elem in fulfilled_reqs):
                 # next_hub_available = True
+                print('Finished placing act:', hub['act'])
                 break
             
-            # sys.exit('temp breaking point')
-            # req_fulfilled = False
-            # while not req_fulfilled:
-            #     # Pick a random region in the valid_neighboars
-            #     target_region = random_manager.get_random_list_member(valid_neighbors)
-            #     if current_req not in fulfilled_reqs and current_req not in region_map[target_region]['requirements']:
-            #         # Place the item!
-            #         valid_checks = []
-            #         for check in region_map[target_region]['checks']:
-            #             if check not in placed_checks and check['type'] in map.CHECK_TYPE_LOOKUP[current_req['type']]:
-            #                 valid_checks.append(check)
-            #         use_check = random_manager.get_random_list_member(valid_checks)
-
-            #         if current_req['type'] in ['flag', 'item']:
-            #             item_fulfilled = False
-            #             while not item_fulfilled:
-            #                 # Pick a random item from one of the FLAGS
-            #                 if current_req['type'] == 'flag':
-            #                     to_use_item = random_manager.get_random_list_member(map.FLAGS['flags'][current_req['name']])
-            #                 else:
-            #                     to_use_item = current_req['name']
-
-            #                 if to_use_item not in used_items:
-            #                     used_items.append(to_use_item)
-            #                     item_fulfilled = True
-            #             spoiler_log.append(
-            #                 {
-            #                     'check': current_req,
-            #                     'result': to_use_item
-            #                 }
-            #             ) 
-            #         elif current_req['type'] == 'npc_id':
-            #             spoiler_log.append(
-            #                 {
-            #                     'check': current_req,
-            #                     'result': use_check['name']
-            #                 }
-            #             ) 
-
-            #         placed_checks.append(use_check)
-            #         fulfilled_reqs.append(current_req)
-            #         req_fulfilled = True
-
-                    # if current_req['type'] == 'npc_id':
-                    #     # pick a lair location from checks.
-                    #     pass 
-                    # if current_req['type'] == 'item':
-                    #     # Check to see if item already obtained.
-                    #     # If not, pick a chest or item location from checks.
-                    #     # Add item to items allocated list.
-                    #     pass 
-                    # if current_req['type'] == 'flag':
-                    #     # Check to see if flag already fulfilled
-                    #     # Pick a random item from one of the FLAGS
-                    #     # Put it in a random item or chest location from checks.
-                    #     # Add item to items obtained list.
-                    #     pass
-                    # else:
-                    #     # No place to put it. Do another loop
-                    #     pass
-                # Temp line to break the loop.
-                
-
-            # Check to see if the next hub is available based on fulfilled requirements.
-            # if all(elem in fulfilled_reqs for elem in next_hub_reqs):
-            #     # next_hub_available = True
-            #     break
-
-        # print(local_reqs)
-    # 6. Check to see if latest 'hub' requirement is met. If so, add new regions and recompile requirements.
 
     return spoiler_log
+
+def check_is_compatible(requirement, check):
+    if 'check_requirements' in check and requirement in check['check_requirements']:
+        return False
+    if requirement['type'] in ['item', 'flag'] and check['type'] in ['chest', 'item']:
+        return True 
+    elif requirement['type'] in ['npc_id'] and check['type'] in ['lair']:
+        return True
+    return False
 
 def get_compatible_region(requirement_to_place, region_list):
     for proposed_region in random_manager.shuffle_list(region_list):
@@ -281,42 +266,42 @@ def get_compatible_checks(requirement_to_place, target_region):
         return compatible_checks
     return False
 
-def fulfill_requirement(requirement, target_region_reqs):
-    if requirement not in target_region_reqs:
-        # Loop through checks randomly until a compatible one is found.
-        idx = 0
-        random_check = False
-        while True:
-            # pass
-            random_check = random_manager.get_random_list_member(target_region_reqs['checks'])
-            if random_check['type'] in map.CHECK_TYPE_LOOKUP[requirement['type']]:
-                break
-            idx += 1
-            if idx >= constants.MAX_LOOPS: 
-                # After so many loops, we need to break and try a different region.
-                return False
-        # So far so good.
-        if requirement['type'] == 'npc_id':
-            # pick a lair location from checks.
-            pass 
-        if requirement['type'] == 'item':
-            # Check to see if item already obtained.
-            # If not, pick a chest or item location from checks.
-            # Add item to items allocated list.
-            pass 
-        if requirement['type'] == 'flag':
-            # Check to see if flag already fulfilled
-            # Pick a random item from one of the FLAGS
-            # Put it in a random item or chest location from checks.
-            # Add item to items obtained list.
-            pass
-        else:
-            # No place to put it. Do another loop
-            return False
-    else:
-        return False
+# def fulfill_requirement(requirement, target_region_reqs):
+#     if requirement not in target_region_reqs:
+#         # Loop through checks randomly until a compatible one is found.
+#         idx = 0
+#         random_check = False
+#         while True:
+#             # pass
+#             random_check = random_manager.get_random_list_member(target_region_reqs['checks'])
+#             if random_check['type'] in map.CHECK_TYPE_LOOKUP[requirement['type']]:
+#                 break
+#             idx += 1
+#             if idx >= constants.MAX_LOOPS: 
+#                 # After so many loops, we need to break and try a different region.
+#                 return False
+#         # So far so good.
+#         if requirement['type'] == 'npc_id':
+#             # pick a lair location from checks.
+#             pass 
+#         if requirement['type'] == 'item':
+#             # Check to see if item already obtained.
+#             # If not, pick a chest or item location from checks.
+#             # Add item to items allocated list.
+#             pass 
+#         if requirement['type'] == 'flag':
+#             # Check to see if flag already fulfilled
+#             # Pick a random item from one of the FLAGS
+#             # Put it in a random item or chest location from checks.
+#             # Add item to items obtained list.
+#             pass
+#         else:
+#             # No place to put it. Do another loop
+#             return False
+#     else:
+#         return False
 
-    return True
+#     return True
 
 # Input a list which may or may not be unique.
 # Output a list which is definitely unique.
@@ -350,4 +335,7 @@ if __name__ == '__main__':
     # Run this with creds built in.
     random_manager.start_randomization('hi')
     randomize_result = randomize_map()
-    print(json.dumps(randomize_result, indent = 4))
+    output_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'check_spoiler.json')
+    with open(output_file, 'w') as f:
+        f.write(json.dumps(randomize_result, indent = 4))
+    # print(json.dumps(randomize_result, indent = 4))
