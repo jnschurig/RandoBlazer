@@ -1,4 +1,4 @@
-# import os
+import os, json
 # import random
 import sys
 import networkx as nx
@@ -10,10 +10,10 @@ def randomize_map():
     region_id_list = list(region_map.keys())
     act_hubs = []
 
-    available_items = list(rom_data.ITEMS.keys())
+    # available_items = list(rom_data.ITEMS.keys())
     
     # 0. Initialize fulilled requirements and placed items...
-    all_reqs = []
+    # all_reqs = []
     fulfilled_reqs = []
     placed_checks = []
     valid_regions = []
@@ -21,7 +21,7 @@ def randomize_map():
     spoiler_log = []
 
     # Identify region hubs
-    print(region_id_list)
+    # print(region_id_list)
     for region_id in region_id_list:
         if 'is_act_hub' in region_map[region_id] and region_map[region_id]['is_act_hub']:
             act_hub = {
@@ -49,7 +49,7 @@ def randomize_map():
                 if act['hub_region'] != region_id:
                     act['sub_regions'].append(region_id)
 
-    print(act_hubs)
+    # print(act_hubs)
 
     # Build a randomized directional graph for determining eligible areas 
     # for requirement fulfillment (placing checks)
@@ -113,12 +113,14 @@ def randomize_map():
         local_reqs = distinctify(local_reqs)
         # Remove completed requirements from the current local list of reqs.
         for completed in fulfilled_reqs:
-            del local_reqs[completed]
-        all_reqs += local_reqs
+            # del local_reqs[completed]
+            local_reqs.remove(completed)
+        # all_reqs += local_reqs
 
         # Remoe used checks from local checks.
         for completed in placed_checks:
-            del local_checks[completed]
+            # del local_checks[completed]
+            local_checks.remove(completed)
         
         # 5. Pick a requirement at random and fulfill it in a random region which does NOT require it.
         local_reqs = random_manager.shuffle_list(local_reqs)
@@ -128,8 +130,8 @@ def randomize_map():
         # while not next_hub_available:
             # Fulfill at least one requirement from the list.
             # current_req = random_manager.get_random_list_member(local_reqs)
-            print(current_req)
-            print(valid_neighbors)
+            # print(current_req)
+            # print(valid_neighbors)
 
             # for proposed_region in valid_neighbors:
             #     if current_req not in region_map[proposed_region]['requirements']:
@@ -140,32 +142,43 @@ def randomize_map():
             target_region = get_compatible_region(current_req, valid_neighbors)
             if target_region:
                 compatible_checks = get_compatible_checks(current_req, target_region)
-                for check in placed_checks:
-                    if check in compatible_checks:
-                        del compatible_checks[check]
-                
-                if len(compatible_checks) > 0:
-                    target_check = random_manager.get_random_list_member(compatible_checks)
-                    placed_checks.append(target_check)
-                    fulfilled_reqs.append(current_req)
-                    # COME HERE! FIND OUT IF THE CHECK IS A FLAG!
-                    # IF IT IS, WE MUST PICK AN ITEM TO ASSIGN!
-                    if current_req['type'] == 'flag':
-                        flag_items = map.FLAGS[current_req['name']]
-                        flag_items = random_manager.shuffle_list(flag_items)
-                        for item in flag_items:
-                            if item not in placed_items:
-                                placed_items.append(item)
-                                current_req['item'] = item
-                    elif current_req['type'] == 'item':
-                        placed_items.append(current_req['name'])
+                # Make sure there ARE compatible checks
+                if compatible_checks:
+                    for check in placed_checks:
+                        # print(compatible_checks)
+                        if check in compatible_checks:
+                            # del compatible_checks[check]
+                            compatible_checks.remove(check)
+                    
+                    if len(compatible_checks) > 0:
+                        target_check = random_manager.get_random_list_member(compatible_checks)
+                        placed_checks.append(target_check)
+                        fulfilled_reqs.append(current_req)
+                        # COME HERE! FIND OUT IF THE CHECK IS A FLAG!
+                        # IF IT IS, WE MUST PICK AN ITEM TO ASSIGN!
+                        if current_req['type'] == 'flag':
+                            flag_items = map.FLAGS[current_req['name']]
+                            flag_items = random_manager.shuffle_list(flag_items)
+                            for item in flag_items:
+                                if item not in placed_items:
+                                    placed_items.append(item)
+                                    current_req['item'] = item
+                                    break
+                            # Some flag items can fulfill multiple flags.
+                            # Cycle through the possible flags based on the item.
+                            for alt_flag in map.ITEM_TO_FLAGS[current_req['item']]:
+                                flag_req_dict = {'type': 'flag', 'name': alt_flag}
+                                if flag_req_dict not in fulfilled_reqs:
+                                    fulfilled_reqs.append(flag_req_dict)
+                        elif current_req['type'] == 'item':
+                            placed_items.append(current_req['name'])
 
-                    spoiler_log.append(
-                        {
-                            'check': target_check,
-                            'requirement': current_req
-                        }
-                    )
+                        spoiler_log.append(
+                            {
+                                'check': target_check,
+                                'requirement': current_req
+                            }
+                        )
 
             if all(elem in fulfilled_reqs for elem in next_hub_reqs):
                 # next_hub_available = True
@@ -337,4 +350,4 @@ if __name__ == '__main__':
     # Run this with creds built in.
     random_manager.start_randomization('hi')
     randomize_result = randomize_map()
-    print(randomize_result)
+    print(json.dumps(randomize_result, indent = 4))

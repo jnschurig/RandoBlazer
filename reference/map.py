@@ -17,6 +17,20 @@ FLAGS = {
     'has_thunder': ['THUNDER_RING', 'ZANTETSU_SWORD', 'SOUL_BLADE'],
 }
 
+ITEM_TO_FLAGS = {
+    'ZANTETSU_SWORD': ['can_cut_metal', 'has_thunder'],
+    'SOUL_BLADE': ['can_cut_metal', 'has_thunder', 'can_cut_spirit'],
+    'SPIRIT_SWORD': ['can_cut_spirit'],
+    'THUNDER_RING': ['has_thunder'],
+    'FLAME_BALL': ['has_magic'],
+    'LIGHT_ARROW': ['has_magic'],
+    'MAGIC_FLARE': ['has_magic'],
+    'ROTATOR': ['has_magic'],
+    'SPARK_BOMB': ['has_magic'],
+    'FLAME_PILLAR': ['has_magic'],
+    'TORNADO': ['has_magic'],
+}
+
 CHECK_TYPE_LOOKUP = {
     'npc_id': ['lair'],
     'item': ['chest', 'item'],
