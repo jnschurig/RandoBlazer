@@ -113,7 +113,7 @@ def randomize_map():
                 # all_check_reqs = []
                 # for check_req in region_map[local_region]['requirements']:
                 #     if
-                local_check['check_requirements'] = region_map[local_region]['requirements']
+                # local_check['check_requirements'] = region_map[local_region]['requirements']
                 local_checks.append(local_check)
             # local_checks += region_map[local_region]['checks']
         valid_neighbors = random_manager.shuffle_list(valid_neighbors)
@@ -169,7 +169,12 @@ def randomize_map():
                 elif current_req['type'] == 'item':
                     placed_items.append(current_req['name'])
                 
-                use_check.pop('check_requirements')
+                # If the current requirement goes into a check,
+                # the check requirements are now also required for next hub access.
+                if current_req in next_hub_reqs:
+                    next_hub_reqs += get_check_requirements(use_check)
+                    next_hub_reqs = distinctify(next_hub_reqs)
+
                 spoiler_log.append(
                     {
                         'act': hub['act'],
@@ -224,17 +229,43 @@ def randomize_map():
             #                     'requirement': current_req
             #                 }
             #             )
-
-            if all(elem in next_hub_reqs for elem in fulfilled_reqs):
-                # next_hub_available = True
-                print('Finished placing act:', hub['act'])
+            hub_reqs_met = []
+            for hub_req in next_hub_reqs:
+                if hub_req in fulfilled_reqs:
+                    hub_reqs_met.append(True)
+                else:
+                    hub_reqs_met.append(False)
+            if all(hub_reqs_met):
+                print(next_hub_reqs)
                 break
+
+            # if all(elem in next_hub_reqs for elem in fulfilled_reqs):
+            #     # next_hub_available = True
+            #     print('Finished placing act:', hub['act'])
+            #     break
             
 
     return spoiler_log
 
+def get_check_requirements(check):
+    for region_id in map.REGIONS.keys():
+        if check in map.REGIONS[region_id]['checks']:
+            return map.REGIONS[region_id]['requirements']
+
+    # Default state if no requirements are found.
+    return []
+
+# def get_check_region(check):
+#     for region_id in map.REGIONS.keys():
+#         if check in map.REGIONS[region_id]['checks']:
+#             return map.REGIONS[region_id]['requirements']
+
+#     # Default state if no requirements are found.
+#     return []
+
+
 def check_is_compatible(requirement, check):
-    if 'check_requirements' in check and requirement in check['check_requirements']:
+    if requirement in get_check_requirements(check):
         return False
     if requirement['type'] in ['item', 'flag'] and check['type'] in ['chest', 'item']:
         return True 
@@ -249,22 +280,22 @@ def get_compatible_region(requirement_to_place, region_list):
 
     return False
 
-def get_compatible_checks(requirement_to_place, target_region):
-    if requirement_to_place['type'] in ['flag', 'item']:
-        target_type = ['item', 'chest']
-    elif requirement_to_place['type'] in ['npc_id']:
-        target_type = ['lair']
-    else:
-        return False 
+# def get_compatible_checks(requirement_to_place, target_region):
+#     if requirement_to_place['type'] in ['flag', 'item']:
+#         target_type = ['item', 'chest']
+#     elif requirement_to_place['type'] in ['npc_id']:
+#         target_type = ['lair']
+#     else:
+#         return False 
 
-    compatible_checks = []
-    for check in map.REGIONS[target_region]['checks']:
-        if check['type'] in target_type:
-            compatible_checks.append(check)
+#     compatible_checks = []
+#     for check in map.REGIONS[target_region]['checks']:
+#         if check['type'] in target_type:
+#             compatible_checks.append(check)
     
-    if len(compatible_checks) > 0:
-        return compatible_checks
-    return False
+#     if len(compatible_checks) > 0:
+#         return compatible_checks
+#     return False
 
 # def fulfill_requirement(requirement, target_region_reqs):
 #     if requirement not in target_region_reqs:
