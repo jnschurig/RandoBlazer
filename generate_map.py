@@ -1,11 +1,54 @@
 import os, json
 # import random
-import sys
+import sys, getopt
 import networkx as nx
 from reference import map, constants, rom_data
 import random_manager
 
-def randomize_map():
+valid_args =  "-h        --help                 | Information about the script. \n"
+valid_args += "-s <Seed> --seed <Seed>          | The seed used to prime the random number generator. If one is not specified, one will be provided. \n"
+valid_args += "-w        --weapon               | Randomize starting weapon. If set, a random sword will be in the starting chest. Otherwise it will be Sword of Life. \n"
+valid_args += "-m <ITEM> --magician_item <ITEM> | Choose what the magician will drop. Use 'has_magic' for a random spell. Leave blank for random item. \n"
+
+help_info  = "Help Info: \n"
+help_info += "This script handles item placement througout the world. \n"
+help_info += "The arguments are intended to be used for testing by running this script all by itself. \n"
+
+def main(argv):
+    arguments = {
+        'seed': None,
+        'weapon': False,
+        'magician_item': '',
+        'debug': False,
+    }
+
+    # get arguments
+    try:
+        opts, args = getopt.getopt(argv,'hs:wm:d',['help','seed=','weapon','magician_item=','debug'])
+    except getopt.GetoptError:
+        print('Unknown argument. Valid arguments: ' + valid_args)
+        sys.exit(2)
+    for opt, arg in opts: # Set the arguments as usable variables.
+        if opt in ('-h', '--help'): # Print the usage when receiving -h
+            print('Valid arguments: \n' + valid_args)
+            print(help_info)
+            sys.exit()
+        elif opt in ('-s', '--seed'):
+            arguments['seed'] = arg.strip()
+        elif opt in ('-w', '--weapon'):
+            arguments['weapon'] = True
+        elif opt in ('-m', '--magician_item'):
+            arguments['magician_item'] = arg.strip()
+        elif opt in ('-d', '--debug'):
+            arguments['debug'] = True
+    
+    if False: # Thank you, I hate it.
+        print(args)
+
+    return arguments
+    # End main
+
+def randomize_map(settings={'weapon': False, 'magician_item': '',}):
     region_map = map.REGIONS
     region_id_list = list(region_map.keys())
     act_hubs = []
@@ -16,7 +59,7 @@ def randomize_map():
     # all_reqs = []
     fulfilled_reqs = []
     placed_checks = []
-    valid_regions = []
+    # valid_regions = []
     placed_items = []
     spoiler_log = []
 
@@ -54,18 +97,24 @@ def randomize_map():
     # Build a randomized directional graph for determining eligible areas 
     # for requirement fulfillment (placing checks)
     world_graph = nx.DiGraph()
+    reference_graph = nx.DiGraph()
 
     # Connect hubs...
     previous_node = None 
     used_regions = []
 
-    # Hubs need to be chronilogical, not random.
+    # Hubs need to be chronological, not random.
     for hub in act_hubs:
         if previous_node is not None:
             world_graph.add_edge(hub['hub_region'], previous_node['hub_region'])
+            reference_graph.add_edge(hub['hub_region'], previous_node['hub_region'])
             pass
         previous_node = hub
         used_regions.append(hub['hub_region'])
+        # Connect sub regions for reference graph.
+        # Used in determining valid regions later.
+        for sub_region in hub['sub_regions']:
+            reference_graph.add_edge(hub['hub_region'], sub_region)
 
     # Randomly connect all other regions...
     for region in region_id_list:
@@ -75,11 +124,8 @@ def randomize_map():
             world_graph.add_edge(source_node, region)
             used_regions.append(region)
 
-    # print(world_graph)
-
-    # all_neighbors = get_all_neighbors(world_graph, 6)
-    # print(all_neighbors)
-    # print(list(world_graph.neighbors(0)))
+    # # Connect sub regions to reference graph
+    # for region in region_id_list
 
     # Discover the "next" hub region and record it in the current act.
     # 1. Go to first hub area.
@@ -89,46 +135,33 @@ def randomize_map():
         current_neighbors = get_all_neighbors(world_graph, hub['hub_region'])
         next_hub_reqs = []
         if 'next_hub_region' in hub:
-            # 3. Get the 'next' hub region.
-            # if hub['next_hub_region'] not in valid_regions:
-            #     valid_regions.append(hub['next_hub_region'])
-            # current_neighbors.append(hub['next_hub_region'])
+            # 3. Get the 'next' hub region requirements.
             next_hub_reqs = region_map[hub['next_hub_region']]['requirements']
 
-        valid_regions += hub['sub_regions']
-        # Trim current_neighbors down to only valid regions.
-        valid_neighbors = []
+        valid_neighbors = [hub['hub_region']]
+        all_neighbors = get_all_neighbors(reference_graph, hub['hub_region'])
         for neighbor in current_neighbors:
-            if neighbor in valid_regions:
+            if neighbor in all_neighbors:
                 valid_neighbors.append(neighbor)
 
-        # 4. Combine all known requirements for "accessible" areas.
-        local_reqs = next_hub_reqs
+        # 4. Get all known checks and requirements in neighboring regions.
+        # We can use requirements from next hub region, but not checks.
+        local_reqs = next_hub_reqs 
         local_checks = []
         for local_region in valid_neighbors:
-            # We can use requirements from next hub region, but not checks.
             local_reqs += region_map[local_region]['requirements']
-            # if 'next_hub_region' in hub and local_region != hub['next_hub_region']:
-            for local_check in region_map[local_region]['checks']:
-                # all_check_reqs = []
-                # for check_req in region_map[local_region]['requirements']:
-                #     if
-                # local_check['check_requirements'] = region_map[local_region]['requirements']
-                local_checks.append(local_check)
-            # local_checks += region_map[local_region]['checks']
-        valid_neighbors = random_manager.shuffle_list(valid_neighbors)
+            local_checks += region_map[local_region]['checks']
         
         local_reqs = distinctify(local_reqs)
         # Remove completed requirements from the current local list of reqs.
         for completed in fulfilled_reqs:
             if completed in local_reqs:
                 local_reqs.remove(completed)
-        # all_reqs += local_reqs
 
         # Remove used checks from local checks.
         for completed in placed_checks:
-            # del local_checks[completed]
-            local_checks.remove(completed)
+            if completed in local_checks:
+                local_checks.remove(completed)
 
         # 5. Pick a requirement at random and fulfill it in a random region which does NOT require it.
         local_reqs = random_manager.shuffle_list(local_reqs)
@@ -147,8 +180,9 @@ def randomize_map():
             #         return current_req
             use_check = {}
             for check in local_checks:
-                if check_is_compatible(current_req, check):
+                if check_is_compatible(current_req, check) and is_check_ok(check, fulfilled_reqs) and check not in placed_checks:
                     use_check = check
+                    break
 
             if use_check != {}: # There was at least one compatible check. Proceed.
                 if current_req['type'] == 'flag':
@@ -160,14 +194,14 @@ def randomize_map():
                             current_req['item'] = item
                             break
                     # Some flag items can fulfill multiple flags.
-                    # Cycle through the possible flags based on the item.
+                    # Cycle through the possible flags based on the item and "fulfill" as needed.
                     for alt_flag in map.ITEM_TO_FLAGS[current_req['item']]:
                         flag_req_dict = {'type': 'flag', 'name': alt_flag}
                         if flag_req_dict not in fulfilled_reqs:
                             fulfilled_reqs.append(flag_req_dict)
                     # print(fulfilled_reqs)
                 elif current_req['type'] == 'item':
-                    placed_items.append(current_req['name'])
+                    placed_items.append(current_req['name'])                    
                 
                 # If the current requirement goes into a check,
                 # the check requirements are now also required for next hub access.
@@ -175,6 +209,7 @@ def randomize_map():
                     next_hub_reqs += get_check_requirements(use_check)
                     next_hub_reqs = distinctify(next_hub_reqs)
 
+                placed_checks.append(use_check)
                 spoiler_log.append(
                     {
                         'act': hub['act'],
@@ -182,53 +217,7 @@ def randomize_map():
                         'requirement': current_req
                     }
                 )
-            
 
-            # # Returns false if there are no compatible regions. 
-            # # Returns a region if there is at least one.
-            # target_region = get_compatible_region(current_req, valid_neighbors)
-            # if target_region:
-            #     compatible_checks = get_compatible_checks(current_req, target_region)
-            #     # Make sure there ARE compatible checks
-            #     if compatible_checks:
-            #         for check in placed_checks:
-            #             # print(compatible_checks)
-            #             if check in compatible_checks:
-            #                 # del compatible_checks[check]
-            #                 compatible_checks.remove(check)
-            #         print(len(compatible_checks))
-            #         print(compatible_checks)
-            #         if len(compatible_checks) > 0:
-            #             target_check = random_manager.get_random_list_member(compatible_checks)
-            #             placed_checks.append(target_check)
-            #             fulfilled_reqs.append(current_req)
-
-            #             # Check if this is a flag requirement.
-            #             # We need to pick an item that fulfills the flag requirement and place it.
-            #             if current_req['type'] == 'flag':
-            #                 flag_items = map.FLAGS[current_req['name']]
-            #                 flag_items = random_manager.shuffle_list(flag_items)
-            #                 for item in flag_items:
-            #                     if item not in placed_items:
-            #                         placed_items.append(item)
-            #                         current_req['item'] = item
-            #                         break
-            #                 # Some flag items can fulfill multiple flags.
-            #                 # Cycle through the possible flags based on the item.
-            #                 for alt_flag in map.ITEM_TO_FLAGS[current_req['item']]:
-            #                     flag_req_dict = {'type': 'flag', 'name': alt_flag}
-            #                     if flag_req_dict not in fulfilled_reqs:
-            #                         fulfilled_reqs.append(flag_req_dict)
-            #                 # print(fulfilled_reqs)
-            #             elif current_req['type'] == 'item':
-            #                 placed_items.append(current_req['name'])
-
-            #             spoiler_log.append(
-            #                 {
-            #                     'check': target_check,
-            #                     'requirement': current_req
-            #                 }
-            #             )
             hub_reqs_met = []
             for hub_req in next_hub_reqs:
                 if hub_req in fulfilled_reqs:
@@ -236,34 +225,28 @@ def randomize_map():
                 else:
                     hub_reqs_met.append(False)
             if all(hub_reqs_met):
-                print(next_hub_reqs)
+                # print(next_hub_reqs)
                 break
 
             # if all(elem in next_hub_reqs for elem in fulfilled_reqs):
             #     # next_hub_available = True
             #     print('Finished placing act:', hub['act'])
             #     break
+        # if hub['act'] == 2: 
+        #     print(valid_neighbors)
+        #     sys.exit('act 3 start...')
             
 
     return spoiler_log
 
+# Returns a list of requirements associated with a given check.
 def get_check_requirements(check):
     for region_id in map.REGIONS.keys():
         if check in map.REGIONS[region_id]['checks']:
             return map.REGIONS[region_id]['requirements']
-
-    # Default state if no requirements are found.
     return []
 
-# def get_check_region(check):
-#     for region_id in map.REGIONS.keys():
-#         if check in map.REGIONS[region_id]['checks']:
-#             return map.REGIONS[region_id]['requirements']
-
-#     # Default state if no requirements are found.
-#     return []
-
-
+# Returns bool stating that a requirement is compatible with a check or not.
 def check_is_compatible(requirement, check):
     if requirement in get_check_requirements(check):
         return False
@@ -273,66 +256,16 @@ def check_is_compatible(requirement, check):
         return True
     return False
 
-def get_compatible_region(requirement_to_place, region_list):
-    for proposed_region in random_manager.shuffle_list(region_list):
-        if requirement_to_place not in map.REGIONS[proposed_region]['requirements']:
-            return proposed_region
+# Returns bool stating whether a check's requirements are all fulfilled or not.
+def is_check_ok(check, fulfilled_reqs):
+    completed_reqs = []
+    for check_req in get_check_requirements(check):
+        if check_req in fulfilled_reqs:
+            completed_reqs.append(True)
+        else:
+            completed_reqs.append(False)
+    return all(completed_reqs)
 
-    return False
-
-# def get_compatible_checks(requirement_to_place, target_region):
-#     if requirement_to_place['type'] in ['flag', 'item']:
-#         target_type = ['item', 'chest']
-#     elif requirement_to_place['type'] in ['npc_id']:
-#         target_type = ['lair']
-#     else:
-#         return False 
-
-#     compatible_checks = []
-#     for check in map.REGIONS[target_region]['checks']:
-#         if check['type'] in target_type:
-#             compatible_checks.append(check)
-    
-#     if len(compatible_checks) > 0:
-#         return compatible_checks
-#     return False
-
-# def fulfill_requirement(requirement, target_region_reqs):
-#     if requirement not in target_region_reqs:
-#         # Loop through checks randomly until a compatible one is found.
-#         idx = 0
-#         random_check = False
-#         while True:
-#             # pass
-#             random_check = random_manager.get_random_list_member(target_region_reqs['checks'])
-#             if random_check['type'] in map.CHECK_TYPE_LOOKUP[requirement['type']]:
-#                 break
-#             idx += 1
-#             if idx >= constants.MAX_LOOPS: 
-#                 # After so many loops, we need to break and try a different region.
-#                 return False
-#         # So far so good.
-#         if requirement['type'] == 'npc_id':
-#             # pick a lair location from checks.
-#             pass 
-#         if requirement['type'] == 'item':
-#             # Check to see if item already obtained.
-#             # If not, pick a chest or item location from checks.
-#             # Add item to items allocated list.
-#             pass 
-#         if requirement['type'] == 'flag':
-#             # Check to see if flag already fulfilled
-#             # Pick a random item from one of the FLAGS
-#             # Put it in a random item or chest location from checks.
-#             # Add item to items obtained list.
-#             pass
-#         else:
-#             # No place to put it. Do another loop
-#             return False
-#     else:
-#         return False
-
-#     return True
 
 # Input a list which may or may not be unique.
 # Output a list which is definitely unique.
@@ -363,9 +296,11 @@ def get_all_neighbors(graph, node):
 
 
 if __name__ == '__main__':
-    # Run this with creds built in.
+    settings_dict = main(sys.argv[1:])
+    print('Seed:', settings_dict['seed'])
+
     random_manager.start_randomization('hi')
-    randomize_result = randomize_map()
+    randomize_result = randomize_map(settings_dict)
     output_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'check_spoiler.json')
     with open(output_file, 'w') as f:
         f.write(json.dumps(randomize_result, indent = 4))

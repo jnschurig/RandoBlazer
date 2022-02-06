@@ -17,6 +17,17 @@ FLAGS = {
     'has_thunder': ['THUNDER_RING', 'ZANTETSU_SWORD', 'SOUL_BLADE'],
 }
 
+SWORDS = [
+    'SWORD_OF_LIFE',
+    'PSYCHO_SWORD',
+    'CRITICAL_SWORD',
+    'LUCKY_BLADE',
+    'ZANTETSU_SWORD',
+    'SPIRIT_SWORD',
+    'RECOVERY_SWORD',
+    'SOUL_BLADE',
+]
+
 ITEM_TO_FLAGS = {
     'ZANTETSU_SWORD': ['can_cut_metal', 'has_thunder'],
     'SOUL_BLADE': ['can_cut_metal', 'has_thunder', 'can_cut_spirit'],
@@ -1096,7 +1107,7 @@ REGIONS = {
             {"type": "item", "name": "ITEM_BIRD_RED_HOT_MIRROR"}
         ],
         "requirements": [ 
-            {"type": "item", "name": "NPC_BIRD_RED_HOT_MIRROR"},
+            {"type": "item", "name": "RED_HOT_MIRROR"},
         ],
         "act": 2
     },
