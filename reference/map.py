@@ -369,7 +369,7 @@ REGIONS = {
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_ARCHITECT"},
             {"type": "npc_id", "name": "NPC_LEOS_HOUSE"},
-            {"type": "item", "name": "CHEST_LEOS_BRUSH"},
+            {"type": "item", "name": "LEOS_BRUSH"},
         ],
         "act": 1
     },
@@ -381,7 +381,7 @@ REGIONS = {
         ],
         "requirements": [ 
             {"type": "npc_id", "name": "NPC_LISA"},
-            {"type": "item", "name": "CHEST_DREAM_ROD"},
+            {"type": "item", "name": "DREAM_ROD"},
         ],
         "act": 1
     },
@@ -397,7 +397,7 @@ REGIONS = {
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_ARCHITECT"},
             {"type": "npc_id", "name": "NPC_LEOS_HOUSE"},
-            {"type": "item", "name": "CHEST_LEOS_BRUSH"},
+            {"type": "item", "name": "LEOS_BRUSH"},
         ],
         "act": 1
     },
@@ -470,7 +470,7 @@ REGIONS = {
 			{"type": "item", "name": "ITEM_CRYSTAL_LOST_MARSH"}, 
         ],
         "requirements": [ 
-            {"type": "item", "name": "ITEM_GREENWOOD_LEAVES"},
+            {"type": "item", "name": "GREENWOOD_LEAF"},
         ],
         "act": 2
     },

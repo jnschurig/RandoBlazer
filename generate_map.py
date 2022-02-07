@@ -49,11 +49,13 @@ def main(argv):
     # End main
 
 def randomize_map(settings={'weapon': False, 'magician_item': '',}):
+    debug = False
+    if 'debug' in settings and settings['debug']: debug = True
     region_map = map.REGIONS
     region_id_list = list(region_map.keys())
     act_hubs = []
 
-    # available_items = list(rom_data.ITEMS.keys())
+    if debug: print('Starting item randomization...')
     
     # 0. Initialize fulilled requirements and placed items...
     # all_reqs = []
@@ -62,6 +64,34 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
     # valid_regions = []
     placed_items = []
     spoiler_log = []
+
+    # Starting weapon check.
+    sword_of_life_check = map.REGIONS[0]['checks'][0]
+    if settings['weapon']: # Randomize the starting weapon
+        start_weapon = random_manager.get_random_list_member(map.SWORDS)
+        # COME BACK HERE!
+        # SET A FLAG IF THE SWORD IS SPECIAL...
+        # OR JUST DON"T ALLOW FLAG SWORDS AS STARTERS...
+    else:
+        start_weapon = map.SWORDS[0] # Sword of Life
+    spoiler_log.append(
+        {
+            'act': 0,
+            'check': sword_of_life_check,
+            'req': {'type': 'item', 'name': start_weapon}
+        }
+    )
+    placed_items.append(start_weapon)
+    placed_checks.append(sword_of_life_check)
+
+    if settings['magician_item'] != '': # Do something I guess
+        magician_item_check = map.REGIONS[0]['checks'][1]
+        # I don't feel like doing this right now.
+        # Check if the magician item is a flag.
+        # if it's not a flag, it should be a specific item. 
+        # Place the item in the magician spot.
+        # Add the requirement based on the item.
+        # Add the 
 
     # Identify region hubs
     # print(region_id_list)
@@ -130,6 +160,7 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
     # Discover the "next" hub region and record it in the current act.
     # 1. Go to first hub area.
     for hub in act_hubs:
+        if debug: print('  Starting act', hub['act'])
         # Determine valid regions
         # 2. Get list of all "connected" regions in the graph to that hub area.
         current_neighbors = get_all_neighbors(world_graph, hub['hub_region'])
@@ -138,11 +169,17 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
             # 3. Get the 'next' hub region requirements.
             next_hub_reqs = region_map[hub['next_hub_region']]['requirements']
 
-        valid_neighbors = [hub['hub_region']]
+        if debug: print('    Next Hub Requirements:', next_hub_reqs)
+
+        valid_neighbors = []#[hub['hub_region']]
         all_neighbors = get_all_neighbors(reference_graph, hub['hub_region'])
         for neighbor in current_neighbors:
             if neighbor in all_neighbors:
                 valid_neighbors.append(neighbor)
+
+        if debug: 
+            print('    Valid Neighbor Count:', len(valid_neighbors))
+            print('    Valid Neighbor List:', valid_neighbors)
 
         # 4. Get all known checks and requirements in neighboring regions.
         # We can use requirements from next hub region, but not checks.
@@ -167,9 +204,12 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
         local_reqs = random_manager.shuffle_list(local_reqs)
         local_checks = random_manager.shuffle_list(local_checks)
 
+        if debug: print('    Total local requirements:', len(local_reqs))
+
         for current_req in local_reqs:
-        # next_hub_available = False
-        # while not next_hub_available:
+            if debug: print('      Placing requirement:', current_req)
+            # hub_requirements_met = False
+            # while not next_hub_available:
             # Fulfill at least one requirement from the list.
             # current_req = random_manager.get_random_list_member(local_reqs)
             # print(current_req)
@@ -182,6 +222,7 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
             for check in local_checks:
                 if check_is_compatible(current_req, check) and is_check_ok(check, fulfilled_reqs) and check not in placed_checks:
                     use_check = check
+                    if debug: print('      In check:', use_check)
                     break
 
             if use_check != {}: # There was at least one compatible check. Proceed.
@@ -198,6 +239,7 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
                     for alt_flag in map.ITEM_TO_FLAGS[current_req['item']]:
                         flag_req_dict = {'type': 'flag', 'name': alt_flag}
                         if flag_req_dict not in fulfilled_reqs:
+                            if debug: print('    Alt Flag Enabled:', flag_req_dict)
                             fulfilled_reqs.append(flag_req_dict)
                     # print(fulfilled_reqs)
                 elif current_req['type'] == 'item':
@@ -206,6 +248,8 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
                 # If the current requirement goes into a check,
                 # the check requirements are now also required for next hub access.
                 if current_req in next_hub_reqs:
+                    # print(current_req)
+                    # print(next_hub_reqs)
                     next_hub_reqs += get_check_requirements(use_check)
                     next_hub_reqs = distinctify(next_hub_reqs)
 
@@ -219,14 +263,20 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
                 )
 
             hub_reqs_met = []
+            # print(len(next_hub_reqs))
             for hub_req in next_hub_reqs:
                 if hub_req in fulfilled_reqs:
                     hub_reqs_met.append(True)
                 else:
                     hub_reqs_met.append(False)
+            # print(len(hub_reqs_met))
+            # print(all(hub_reqs_met))
             if all(hub_reqs_met):
                 # print(next_hub_reqs)
+                print('    Hub requirements met')
+                # hub_requirements_met = True
                 break
+
 
             # if all(elem in next_hub_reqs for elem in fulfilled_reqs):
             #     # next_hub_available = True
@@ -298,6 +348,9 @@ def get_all_neighbors(graph, node):
 if __name__ == '__main__':
     settings_dict = main(sys.argv[1:])
     print('Seed:', settings_dict['seed'])
+    print('Randomize Starting Weapon:', settings_dict['weapon'])
+    print('Magician Item:', settings_dict['magician_item'])
+    print('Debug:', settings_dict['debug'])
 
     random_manager.start_randomization('hi')
     randomize_result = randomize_map(settings_dict)
