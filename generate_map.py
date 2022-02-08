@@ -9,6 +9,7 @@ valid_args =  "-h        --help                 | Information about the script. 
 valid_args += "-s <Seed> --seed <Seed>          | The seed used to prime the random number generator. If one is not specified, one will be provided. \n"
 valid_args += "-w        --weapon               | Randomize starting weapon. If set, a random sword will be in the starting chest. Otherwise it will be Sword of Life. \n"
 valid_args += "-m <ITEM> --magician_item <ITEM> | Choose what the magician will drop. Use 'has_magic' for a random spell. Leave blank for random item. \n"
+valid_args += "-a        --advanced_world       | Uses graph logic to eliminate certain areas from having early require progression. \n"
 
 help_info  = "Help Info: \n"
 help_info += "This script handles item placement througout the world. \n"
@@ -19,12 +20,13 @@ def main(argv):
         'seed': None,
         'weapon': False,
         'magician_item': '',
+        'advanced_world': False,
         'debug': False,
     }
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hs:wm:d',['help','seed=','weapon','magician_item=','debug'])
+        opts, args = getopt.getopt(argv,'hs:wm:ad',['help','seed=','weapon','magician_item=','advanced_world','debug'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -39,14 +41,69 @@ def main(argv):
             arguments['weapon'] = True
         elif opt in ('-m', '--magician_item'):
             arguments['magician_item'] = arg.strip()
+        elif opt in ('-a', '--advanced_world'):
+            arguments['advanced_world'] = True
         elif opt in ('-d', '--debug'):
             arguments['debug'] = True
     
-    if False: # Thank you, I hate it.
-        print(args)
+    if False: print(args) # Thank you, I hate it.
 
     return arguments
     # End main
+
+# Returns a list of requirements associated with a given check.
+def get_check_requirements(check):
+    for region_id in map.REGIONS.keys():
+        if check in map.REGIONS[region_id]['checks']:
+            return map.REGIONS[region_id]['requirements']
+    return []
+
+# Returns bool stating that a requirement is compatible with a check or not.
+def check_is_compatible(requirement, check):
+    if requirement in get_check_requirements(check):
+        return False
+    if requirement['type'] in ['item', 'flag'] and check['type'] in ['chest', 'item']:
+        return True 
+    elif requirement['type'] in ['npc_id'] and check['type'] in ['lair']:
+        return True
+    return False
+
+# Returns bool stating whether a check's requirements are all fulfilled or not.
+def is_check_ok(check, fulfilled_reqs):
+    completed_reqs = []
+    for check_req in get_check_requirements(check):
+        if check_req in fulfilled_reqs:
+            completed_reqs.append(True)
+        else:
+            completed_reqs.append(False)
+    return all(completed_reqs)
+
+
+# Input a list which may or may not be unique.
+# Output a list which is definitely unique.
+# If input is not a list type, return the same thing without changes.
+def distinctify(non_unique_list):
+    if type(non_unique_list) is not list:
+        return non_unique_list
+    else:
+        unique_list = []
+        for item in non_unique_list:
+            if item not in unique_list:
+                unique_list.append(item)
+    return unique_list
+
+def get_all_neighbors(graph, node):
+    # neighbor_list should also include self, in case there are unfulfilled reqs there.
+    neighbor_list = [node]
+    for neighbor in graph.neighbors(node):
+        neighbor_list.append(neighbor)
+        neighbor_list += get_all_neighbors(graph, neighbor)
+    return distinctify(neighbor_list)
+
+def item_to_flag_reqs(item_name):
+    if item_name in map.ITEM_TO_FLAGS:
+        return map.ITEM_TO_FLAGS[item_name]
+    return []
 
 def randomize_map(settings={'weapon': False, 'magician_item': '',}):
     debug = False
@@ -69,29 +126,42 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
     sword_of_life_check = map.REGIONS[0]['checks'][0]
     if settings['weapon']: # Randomize the starting weapon
         start_weapon = random_manager.get_random_list_member(map.SWORDS)
-        # COME BACK HERE!
-        # SET A FLAG IF THE SWORD IS SPECIAL...
-        # OR JUST DON"T ALLOW FLAG SWORDS AS STARTERS...
+        for alt_flag in item_to_flag_reqs(start_weapon):
+            fulfilled_reqs.append({'type': 'flag', 'name': alt_flag})
     else:
         start_weapon = map.SWORDS[0] # Sword of Life
     spoiler_log.append(
         {
-            'act': 0,
+            'phase': 1,
             'check': sword_of_life_check,
-            'req': {'type': 'item', 'name': start_weapon}
+            'requirement': {'type': 'item', 'name': start_weapon}
         }
     )
     placed_items.append(start_weapon)
     placed_checks.append(sword_of_life_check)
 
+    # Magician item check (if specified)
     if settings['magician_item'] != '': # Do something I guess
         magician_item_check = map.REGIONS[0]['checks'][1]
-        # I don't feel like doing this right now.
-        # Check if the magician item is a flag.
-        # if it's not a flag, it should be a specific item. 
-        # Place the item in the magician spot.
-        # Add the requirement based on the item.
-        # Add the 
+        magician_item = None
+        if settings['magician_item'] in map.FLAGS:
+            # This is a flag of some kind.
+            magician_item = random_manager.get_random_list_member(map.FLAGS[settings['magician_item']])
+            for alt_flag in item_to_flag_reqs(magician_item):
+                fulfilled_reqs.append({'type': 'flag', 'name': alt_flag})
+        elif settings['magician_item'] in list(rom_data.ITEMS.keys()):
+            magician_item = settings['magician_item']
+        
+        if magician_item != None:
+            spoiler_log.append(
+                {
+                    'phase': 1,
+                    'check': magician_item_check,
+                    'requirement': {'type': 'item', 'name': magician_item}
+                }
+            )
+            placed_items.append(magician_item)
+            placed_checks.append(magician_item_check)
 
     # Identify region hubs
     # print(region_id_list)
@@ -122,8 +192,6 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
                 if act['hub_region'] != region_id:
                     act['sub_regions'].append(region_id)
 
-    # print(act_hubs)
-
     # Build a randomized directional graph for determining eligible areas 
     # for requirement fulfillment (placing checks)
     world_graph = nx.DiGraph()
@@ -143,19 +211,20 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
         used_regions.append(hub['hub_region'])
         # Connect sub regions for reference graph.
         # Used in determining valid regions later.
+        # reference_graph = world_graph
         for sub_region in hub['sub_regions']:
             reference_graph.add_edge(hub['hub_region'], sub_region)
 
-    # Randomly connect all other regions...
-    for region in region_id_list:
-        if region not in used_regions:
-            # It's safe to add this region to the network.
-            source_node = random_manager.get_random_list_member(used_regions)
-            world_graph.add_edge(source_node, region)
-            used_regions.append(region)
-
-    # # Connect sub regions to reference graph
-    # for region in region_id_list
+    # In the event we do an "advanced" world.
+    if settings['advanced_world']:
+        # Randomly connect all other regions...
+        for region in region_id_list:
+            if region not in used_regions: # It's safe to add this region to the network.
+                source_node = random_manager.get_random_list_member(used_regions)
+                world_graph.add_edge(source_node, region)
+                used_regions.append(region)
+    else:
+        world_graph = reference_graph
 
     # Discover the "next" hub region and record it in the current act.
     # 1. Go to first hub area.
@@ -208,23 +277,15 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
 
         for current_req in local_reqs:
             if debug: print('      Placing requirement:', current_req)
-            # hub_requirements_met = False
-            # while not next_hub_available:
-            # Fulfill at least one requirement from the list.
-            # current_req = random_manager.get_random_list_member(local_reqs)
-            # print(current_req)
-            # print(valid_neighbors)
 
-            # for proposed_region in valid_neighbors:
-            #     if current_req not in region_map[proposed_region]['requirements']:
-            #         return current_req
+            # Find a valid check to use.
             use_check = {}
             for check in local_checks:
                 if check_is_compatible(current_req, check) and is_check_ok(check, fulfilled_reqs) and check not in placed_checks:
                     use_check = check
                     if debug: print('      In check:', use_check)
                     break
-
+            
             if use_check != {}: # There was at least one compatible check. Proceed.
                 if current_req['type'] == 'flag':
                     flag_items = map.FLAGS[current_req['name']]
@@ -232,6 +293,7 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
                     for item in flag_items:
                         if item not in placed_items:
                             placed_items.append(item)
+                            fulfilled_reqs.append({'type': 'item','name': item})
                             current_req['item'] = item
                             break
                     # Some flag items can fulfill multiple flags.
@@ -248,111 +310,60 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
                 # If the current requirement goes into a check,
                 # the check requirements are now also required for next hub access.
                 if current_req in next_hub_reqs:
-                    # print(current_req)
-                    # print(next_hub_reqs)
                     next_hub_reqs += get_check_requirements(use_check)
                     next_hub_reqs = distinctify(next_hub_reqs)
+                    # if debug: print('        Expanding Next Hub Requirements...')
 
                 placed_checks.append(use_check)
+                fulfilled_reqs.append(current_req)
                 spoiler_log.append(
                     {
-                        'act': hub['act'],
+                        'phase': hub['act'],
                         'check': use_check,
                         'requirement': current_req
                     }
                 )
 
             hub_reqs_met = []
-            # print(len(next_hub_reqs))
             for hub_req in next_hub_reqs:
                 if hub_req in fulfilled_reqs:
                     hub_reqs_met.append(True)
                 else:
                     hub_reqs_met.append(False)
-            # print(len(hub_reqs_met))
-            # print(all(hub_reqs_met))
             if all(hub_reqs_met):
-                # print(next_hub_reqs)
                 print('    Hub requirements met')
-                # hub_requirements_met = True
                 break
 
+    # Phase 2. Place all the other items in remaining checks.
+    all_checks = []
+    all_lair_checks = [] 
+    all_item_checks = []
+    for region in list(region_map.keys()):
+        for check in region_map[region]['checks']:
+            all_checks.append(check)
+            if check['type'] == 'lair': all_lair_checks.append(check)
+            if check['type'] in ['item', 'chest']: all_item_checks.append(check)
 
-            # if all(elem in next_hub_reqs for elem in fulfilled_reqs):
-            #     # next_hub_available = True
-            #     print('Finished placing act:', hub['act'])
-            #     break
-        # if hub['act'] == 2: 
-        #     print(valid_neighbors)
-        #     sys.exit('act 3 start...')
+    if debug:
+        print('  Total Checks:', len(all_checks))
+        print('  Checks Placed:', len(placed_checks))
+        print('  Item Checks:', len(all_item_checks))
+        print('  Items Placed:', len(placed_items))
+        print('  Lair Checks:', len(all_lair_checks))
+        print('  Lairs Placed:', len(placed_checks) - len(placed_items))
             
 
     return spoiler_log
 
-# Returns a list of requirements associated with a given check.
-def get_check_requirements(check):
-    for region_id in map.REGIONS.keys():
-        if check in map.REGIONS[region_id]['checks']:
-            return map.REGIONS[region_id]['requirements']
-    return []
-
-# Returns bool stating that a requirement is compatible with a check or not.
-def check_is_compatible(requirement, check):
-    if requirement in get_check_requirements(check):
-        return False
-    if requirement['type'] in ['item', 'flag'] and check['type'] in ['chest', 'item']:
-        return True 
-    elif requirement['type'] in ['npc_id'] and check['type'] in ['lair']:
-        return True
-    return False
-
-# Returns bool stating whether a check's requirements are all fulfilled or not.
-def is_check_ok(check, fulfilled_reqs):
-    completed_reqs = []
-    for check_req in get_check_requirements(check):
-        if check_req in fulfilled_reqs:
-            completed_reqs.append(True)
-        else:
-            completed_reqs.append(False)
-    return all(completed_reqs)
-
-
-# Input a list which may or may not be unique.
-# Output a list which is definitely unique.
-# If input is not a list type, return the same thing without changes.
-def distinctify(non_unique_list):
-    if type(non_unique_list) is not list:
-        return non_unique_list
-    else:
-        unique_list = []
-        for item in non_unique_list:
-            if item not in unique_list:
-                unique_list.append(item)
-    return unique_list
-
-def get_all_neighbors(graph, node):
-    # neighbor_list should also include self, in case there are unfulfilled reqs there.
-    neighbor_list = [node]
-    for neighbor in graph.neighbors(node):
-        neighbor_list.append(neighbor)
-        neighbor_list += get_all_neighbors(graph, neighbor)
-
-    # unique_list = []
-    # for member in neighbor_list:
-    #     if member not in unique_list:
-    #         unique_list.append(member)
-    # return unique_list
-    return distinctify(neighbor_list)
-
-
 if __name__ == '__main__':
     settings_dict = main(sys.argv[1:])
+    settings_dict['seed'] = random_manager.start_randomization(settings_dict['seed'])
     print('Seed:', settings_dict['seed'])
     print('Randomize Starting Weapon:', settings_dict['weapon'])
     print('Magician Item:', settings_dict['magician_item'])
+    print('Advanced World:', settings_dict['advanced_world'])
     print('Debug:', settings_dict['debug'])
 
-    random_manager.start_randomization('hi')
     randomize_result = randomize_map(settings_dict)
     output_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'check_spoiler.json')
     with open(output_file, 'w') as f:
