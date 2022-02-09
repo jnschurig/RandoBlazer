@@ -505,7 +505,7 @@ REGIONS = {
         "requirements": [ 
             {"type": "npc_id", "name": "NPC_MOLE"},
             {"type": "npc_id", "name": "NPC_SQUIRREL_ICE_ARMOR"},
-            {"type": "item", "name": "CHEST_DREAM_ROD"},
+            {"type": "item", "name": "DREAM_ROD"},
         ],
         "act": 2
     },
@@ -517,7 +517,7 @@ REGIONS = {
         ],
         "requirements": [ 
             {"type": "flag", "name": "can_cut_spirit"},
-            {"type": "item", "name": "ITEM_GREENWOOD_LEAVES"},
+            {"type": "item", "name": "GREENWOOD_LEAVES"},
        ],
         "act": 2
     },
@@ -1084,7 +1084,7 @@ REGIONS = {
         "requirements": [ 
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_BOY_CAVE"},
-            {"type": "item", "name": "ITEM_PASS"},
+            {"type": "item", "name": "PASS"},
         ],
         "act": 1
     },
@@ -1096,7 +1096,7 @@ REGIONS = {
         "requirements": [ 
             {"type": "npc_id", "name": "NPC_BRIDGE_GUARD"},
             {"type": "npc_id", "name": "NPC_BOY_CAVE"},
-            {"type": "item", "name": "ITEM_PASS"},
+            {"type": "item", "name": "PASS"},
             {"type": "npc_id", "name": "NPC_IVY_RECOVERY_SWORD"},
         ],
         "act": 1
@@ -1279,7 +1279,7 @@ REGIONS = {
         "requirements": [ 
             {"type": "npc_id", "name": "NPC_GREAT_DOOR"},
             {"type": "npc_id", "name": "NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR"},
-            {"type": "item", "name": "ITEM_CAT_DOOR_KEY"},
+            {"type": "item", "name": "DOOR_KEY"},
         ],
         "act": 5
     },
@@ -1294,7 +1294,7 @@ REGIONS = {
             {"type": "npc_id", "name": "NPC_CAT2"},
             {"type": "npc_id", "name": "NPC_MOUSE"},
             {"type": "npc_id", "name": "NPC_MOUSE_SPARK_BOMB"},
-            {"type": "item", "name": "ITEM_PLANT_ACTINIDIA_LEAVES"},
+            {"type": "item", "name": "ACTINIDIA_LEAF"},
         ],
         "act": 5
     },
@@ -1309,7 +1309,7 @@ REGIONS = {
             {"type": "npc_id", "name": "NPC_CAT2"},
             {"type": "npc_id", "name": "NPC_MOUSE"},
             {"type": "npc_id", "name": "NPC_PLANT_HERB"},
-            {"type": "item", "name": "ITEM_PLANT_ACTINIDIA_LEAVES"},
+            {"type": "item", "name": "ACTINIDIA_LEAF"},
         ],
         "act": 5
     },
@@ -1465,3 +1465,649 @@ REGIONS = {
         "act": 6
     },
 }
+
+NON_KEY_NPCS = [ 
+    "NPC_TULIP",
+    "NPC_TULIP2",
+    "NPC_GOAT",
+    "NPC_TULIP3",
+    "NPC_LONELY_GOAT",
+    "NPC_BOY_CABIN",
+    "NPC_OLD_MAN",
+    "NPC_OLD_MAN2",
+    "NPC_IVY2",
+    "NPC_TULIP4",
+    "NPC_GOAT2",
+    "NPC_BIRD",
+    "NPC_DOG",
+    "NPC_DOG2",
+    "NPC_BIRD2",
+    "NPC_SQUIRREL",
+    "NPC_DOG4",
+    "NPC_SQUIRREL2",
+    "NPC_DOG5",
+    "NPC_MOLE2",
+    "NPC_BIRD3",
+    "NPC_DOLPHIN",
+    "NPC_ANGELFISH",
+    "NPC_ANGELFISH2",
+    "NPC_MERMAID2",
+    "NPC_MERMAID3",
+    "NPC_MERMAID_NANA",
+    "NPC_MERMAID4",
+    "NPC_MERMAID5",
+    "NPC_MERMAID6",
+    "NPC_MERMAID_TEARS",
+    "NPC_ANGELFISH3",
+    "NPC_ANGELFISH_SOUL_OF_SHIELD",
+    "NPC_MERMAID7",
+    "NPC_ANGELFISH4",
+    "NPC_MERMAID8",
+    "NPC_MERMAID9",
+    "NPC_GRANDPA",
+    "NPC_GIRL",
+    "NPC_MUSHROOM",
+    "NPC_GRANDPA2",
+    "NPC_SNAIL_JOCKEY",
+    "NPC_BOY2",
+    "NPC_GRANDMA",
+    "NPC_GIRL2",
+    "NPC_SNAIL_RACER",
+    "NPC_SNAIL_RACER2",
+    "NPC_MUSHROOM3",
+    "NPC_SNAIL",
+    "NPC_SNAIL2",
+    "NPC_PLANT",
+    "NPC_CAT3",
+    "NPC_DOLL",
+    "NPC_CHEST_OF_DRAWERS",
+    "NPC_PLANT2",
+    "NPC_MOUSE2",
+    "NPC_MOUSE3",
+    "NPC_GREAT_DOOR_SOUL_OF_DETECTION",
+    "NPC_MOUSE4",
+    "NPC_MOUSE5",
+    "NPC_CAT4",
+    "NPC_SOLDIER",
+    "NPC_SOLDIER2",
+    "NPC_SOLDIER3",
+    "NPC_SOLDIER4",
+    "NPC_SOLDIER5",
+    "NPC_SOLDIER6",
+    "NPC_MAID",
+    "NPC_SINGER",
+    "NPC_SOLDIER_SOUL_OF_REALITY",
+    "NPC_MAID2",
+    "NPC_SOLDIER7",
+    "NPC_SOLDIER8",
+    "NPC_SOLDIER9",
+    "NPC_SOLDIER10",
+    "NPC_SOLDIER11",
+]
+
+NPC_ITEMS = [
+	{
+		"npc_id": "ITEM_TOOL_SHOP_OWNER",
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"npc_id": "ITEM_EMBLEM_A",
+		"item_id": "EMBLEM_A"
+	},
+	{
+		"npc_id": "ITEM_GOAT_PEN",
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"npc_id": "ITEM_TEDDY",
+		"item_id": "GOATS_FOOD"
+	},
+	{
+		"npc_id": "ITEM_PASS",
+		"item_id": "PASS"
+	},
+	{
+		"npc_id": "ITEM_SECRET_CAVE_TILE",
+		"item_id": "STRANGE_BOTTLE"
+	},
+	{
+		"npc_id": "ITEM_VILLAGE_CHIEF",
+		"item_id": "BROWN_STONE"
+	},
+	{
+		"npc_id": "ITEM_MAGICIAN",
+		"item_id": "FLAME_BALL"
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_RECOVERY_SWORD",
+		"item_id": "RECOVERY_SWORD"
+	},
+	{
+		"npc_id": "ITEM_BIRD_RED_HOT_MIRROR",
+		"item_id": "RED_HOT_MIRROR"
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_MAGIC_BELL",
+		"item_id": "MAGIC_BELL"
+	},
+	{
+		"npc_id": "ITEM_WOODSTIN_TRIO",
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"npc_id": "ITEM_GREENWOODS_GUARDIAN",
+		"item_id": "GREEN_STONE"
+	},
+	{
+		"npc_id": "ITEM_GREENWOOD_LEAVES",
+		"item_id": "GREENWOOD_LEAF"
+	},
+	{
+		"npc_id": "ITEM_MOLE_SHIELD_BRACELET",
+		"item_id": "SHIELD_BRACELET"
+	},
+	{
+		"npc_id": "ITEM_SQUIRREL_PSYCHO_SWORD",
+		"item_id": "PSYCHO_SWORD"
+	},
+	{
+		"npc_id": "ITEM_SQUIRREL_EMBLEM_C",
+		"item_id": "EMBLEM_C"
+	},
+	{
+		"npc_id": "ITEM_WATER_SHRINE_TILE",
+		"item_id": "STRANGE_BOTTLE"
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_LIGHT_ARROW",
+		"item_id": "LIGHT_ARROW"
+	},
+	{
+		"npc_id": "ITEM_MOUNTAIN_KING",
+		"item_id": "PHOENIX"
+	},
+	{
+		"npc_id": "ITEM_BOY_MUSHROOM_SHOES",
+		"item_id": "MUSHROOM_SHOES"
+	},
+	{
+		"npc_id": "ITEM_NOME",
+		"item_id": "SILVER_STONE"
+	},
+	{
+		"npc_id": "ITEM_SNAIL_EMBLEM_E",
+		"item_id": "EMBLEM_E"
+	},
+	{
+		"npc_id": "ITEM_EMBLEM_F",
+		"item_id": "EMBLEM_F"
+	},
+	{
+		"npc_id": "ITEM_EMBLEM_G",
+		"item_id": "EMBLEM_G"
+	},
+	{
+		"npc_id": "ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR",
+		"item_id": "MYSTIC_ARMOR"
+	},
+	{
+		"npc_id": "ITEM_PLANT_HERB",
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"npc_id": "ITEM_CAT_DOOR_KEY",
+		"item_id": "DOOR_KEY"
+	},
+	{
+		"npc_id": "ITEM_PLANT_ACTINIDIA_LEAVES",
+		"item_id": "ACTINIDIA_LEAF"
+	},
+	{
+		"npc_id": "ITEM_CHEST_OF_DRAWERS_HERB",
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"npc_id": "ITEM_MARIE",
+		"item_id": "PURPLE_STONE"
+	},
+	{
+		"npc_id": "ITEM_MOUSE_SPARK_BOMB",
+		"item_id": "SPARK_BOMB"
+	},
+	{
+		"npc_id": "ITEM_SOLDIER_ELEMENTAL_MAIL",
+		"item_id": "ELEMENTAL_MAIL"
+	},
+	{
+		"npc_id": "ITEM_SUPER_BRACELET",
+		"item_id": "SUPER_BRACELET"
+	},
+	{
+		"npc_id": "ITEM_QUEEN_MAGRIDD",
+		"item_id": "VIP_CARD"
+	},
+	{
+		"npc_id": "ITEM_SOLDIER_PLATINUM_CARD",
+		"item_id": "PLATINUM_CARD"
+	},
+	{
+		"npc_id": "ITEM_MAID_HERB",
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"npc_id": "ITEM_EMBLEM_H",
+		"item_id": "EMBLEM_H"
+	},
+	{
+		"npc_id": "ITEM_KING_MAGRIDD",
+		"item_id": "BLACK_STONE"
+	},
+	{
+		"npc_id": "ITEM_DR_LEO",
+		"item_id": "MOBILE_KEY"
+	},
+	{
+		"npc_id": "ITEM_HARP_STRING",
+		"item_id": "HARP_STRING"
+	},
+	{
+		"npc_id": "ITEM_MERMAID_HERB",
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"npc_id": "ITEM_MERMAID_BUBBLE_ARMOR",
+		"item_id": "BUBBLE_ARMOR"
+	},
+	{
+		"npc_id": "ITEM_MERMAID_MAGIC_FLARE",
+		"item_id": "MAGIC_FLARE"
+	},
+	{
+		"npc_id": "ITEM_MERMAID_QUEEN",
+		"item_id": "BLUE_STONE"
+	},
+	{
+		"npc_id": "ITEM_MERMAID_RED_HOT_STICK",
+		"item_id": "RED_HOT_STICK"
+	},
+	{
+		"npc_id": "ITEM_LUE",
+		"item_id": "THUNDER_RING"
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_GRASS_VALLEY",
+		"item_id": "GEMS_EXP",
+		"amount": 80
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_UNDERGROUND_CASTLE",
+		"item_id": "GEMS_EXP",
+		"amount": 30
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_LOST_MARSH",
+		"item_id": "GEMS_EXP",
+		"amount": 150
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_WATER_SHRINE",
+		"item_id": "GEMS_EXP",
+		"amount": 180
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_FIRE_SHRINE",
+		"item_id": "GEMS_EXP",
+		"amount": 1
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_MOUNTAIN_OF_SOULS",
+		"item_id": "GEMS_EXP",
+		"amount": 300
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_LUNE",
+		"item_id": "GEMS_EXP",
+		"amount": 400
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_LEOS_LAB_BASEMENT",
+		"item_id": "GEMS_EXP",
+		"amount": 300
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_MODEL_TOWN",
+		"item_id": "GEMS_EXP",
+		"amount": 300
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_POWER_PLANT",
+		"item_id": "GEMS_EXP",
+		"amount": 300
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_ROCKBIRD",
+		"item_id": "GEMS_EXP",
+		"amount": 200
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_SEABED_NEAR_BLESTER",
+		"item_id": "GEMS_EXP",
+		"amount": 300
+	},
+	{
+		"npc_id": "ITEM_CRYSTAL_SEABED_NEAR_DUREAN",
+		"item_id": "GEMS_EXP",
+		"amount": 250
+	}
+]
+
+# List of chest contents:
+# 
+#      - Medical Herb x13         - Mole's Ribbon
+#      - Strange Bottle x5        - Big Pearl
+#      - Sword of Life            - Mermaid's Tears
+#      - Critical Sword           - Delicious Seeds
+#      - Lucky Blade              - Emblem B
+#      - Zantetsu Sword           - Emblem D
+#      - Spirit Sword             - Red-Hot Ball
+#      - Soul Blade               - Power Bracelet
+#      - Iron Armor               - 1 Gem
+#      - Ice Armor                - 12 Gems
+#      - Magic Armor              - 40 Gems
+#      - Light Armor              - 50 Gems x5
+#      - Soul Armor               - 60 Gems x2
+#      - Rotator                  - 80 Gems x5
+#      - Flame Pillar             - 100 Gems x4
+#      - Tornado                  - 150 Gems
+#      - Dream Rod                - 200 Gems
+#      - Leo's Brush              - Nothing x3
+# 
+#     Total: 66 chests
+
+CHEST_ITEMS = [
+	{
+		"chest_id": 0,
+		"item_id": "SWORD_OF_LIFE"
+	},
+	{
+		"chest_id": 1,
+		"item_id": "IRON_ARMOR"
+	},
+	{
+		"chest_id": 2,
+		"item_id": "GEMS_EXP",
+		"amount": 50
+	},
+	{
+		"chest_id": 3,
+		"item_id": "GEMS_EXP",
+		"amount": 12
+	},
+	{
+		"chest_id": 4,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 5,
+		"item_id": "DREAM_ROD"
+	},
+	{
+		"chest_id": 6,
+		"item_id": "LEOS_BRUSH"
+	},
+	{
+		"chest_id": 7,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 8,
+		"item_id": "TORNADO"
+	},
+	{
+		"chest_id": 9,
+		"item_id": "ICE_ARMOR"
+	},
+	{
+		"chest_id": 10,
+		"item_id": "MOLES_RIBBON"
+	},
+	{
+		"chest_id": 11,
+		"item_id": "GEMS_EXP",
+		"amount": 50
+	},
+	{
+		"chest_id": 12,
+		"item_id": "GEMS_EXP",
+		"amount": 150
+	},
+	{
+		"chest_id": 13,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 14,
+		"item_id": "DELICIOUS_SEEDS"
+	},
+	{
+		"chest_id": 15,
+		"item_id": "GEMS_EXP",
+		"amount": 50
+	},
+	{
+		"chest_id": 16,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 17,
+		"item_id": "NOTHING"
+	},
+	{
+		"chest_id": 18,
+		"item_id": "STRANGE_BOTTLE"
+	},
+	{
+		"chest_id": 19,
+		"item_id": "GEMS_EXP",
+		"amount": 100
+	},
+	{
+		"chest_id": 20,
+		"item_id": "GEMS_EXP",
+		"amount": 60
+	},
+	{
+		"chest_id": 21,
+		"item_id": "FLAME_PILLAR"
+	},
+	{
+		"chest_id": 22,
+		"item_id": "MERMAIDS_TEARS"
+	},
+	{
+		"chest_id": 23,
+		"item_id": "BIG_PEARL"
+	},
+	{
+		"chest_id": 24,
+		"item_id": "EMBLEM_D"
+	},
+	{
+		"chest_id": 25,
+		"item_id": "GEMS_EXP",
+		"amount": 80
+	},
+	{
+		"chest_id": 26,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 27,
+		"item_id": "NOTHING"
+	},
+	{
+		"chest_id": 28,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 29,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 30,
+		"item_id": "GEMS_EXP",
+		"amount": 60
+	},
+	{
+		"chest_id": 31,
+		"item_id": "CRITICAL_SWORD"
+	},
+	{
+		"chest_id": 32,
+		"item_id": "STRANGE_BOTTLE"
+	},
+	{
+		"chest_id": 33,
+		"item_id": "GEMS_EXP",
+		"amount": 1
+	},
+	{
+		"chest_id": 34,
+		"item_id": "POWER_BRACELET"
+	},
+	{
+		"chest_id": 35,
+		"item_id": "GEMS_EXP",
+		"amount": 40
+	},
+	{
+		"chest_id": 36,
+		"item_id": "MAGIC_ARMOR"
+	},
+	{
+		"chest_id": 37,
+		"item_id": "NOTHING"
+	},
+	{
+		"chest_id": 38,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 39,
+		"item_id": "GEMS_EXP",
+		"amount": 50
+	},
+	{
+		"chest_id": 40,
+		"item_id": "LUCKY_BLADE"
+	},
+	{
+		"chest_id": 41,
+		"item_id": "STRANGE_BOTTLE"
+	},
+	{
+		"chest_id": 42,
+		"item_id": "ROTATOR"
+	},
+	{
+		"chest_id": 43,
+		"item_id": "ZANTETSU_SWORD"
+	},
+	{
+		"chest_id": 44,
+		"item_id": "LIGHT_ARMOR"
+	},
+	{
+		"chest_id": 45,
+		"item_id": "GEMS_EXP",
+		"amount": 50
+	},
+	{
+		"chest_id": 46,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 47,
+		"item_id": "GEMS_EXP",
+		"amount": 80
+	},
+	{
+		"chest_id": 48,
+		"item_id": "STRANGE_BOTTLE"
+	},
+	{
+		"chest_id": 49,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 50,
+		"item_id": "GEMS_EXP",
+		"amount": 80
+	},
+	{
+		"chest_id": 51,
+		"item_id": "SPIRIT_SWORD"
+	},
+	{
+		"chest_id": 52,
+		"item_id": "STRANGE_BOTTLE"
+	},
+	{
+		"chest_id": 53,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 54,
+		"item_id": "GEMS_EXP",
+		"amount": 100
+	},
+	{
+		"chest_id": 55,
+		"item_id": "EMBLEM_B"
+	},
+	{
+		"chest_id": 56,
+		"item_id": "GEMS_EXP",
+		"amount": 80
+	},
+	{
+		"chest_id": 57,
+		"item_id": "GEMS_EXP",
+		"amount": 80
+	},
+	{
+		"chest_id": 58,
+		"item_id": "GEMS_EXP",
+		"amount": 100
+	},
+	{
+		"chest_id": 59,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 60,
+		"item_id": "MEDICAL_HERB"
+	},
+	{
+		"chest_id": 61,
+		"item_id": "GEMS_EXP",
+		"amount": 200
+	},
+	{
+		"chest_id": 62,
+		"item_id": "RED_HOT_BALL"
+	},
+	{
+		"chest_id": 63,
+		"item_id": "SOUL_ARMOR"
+	},
+	{
+		"chest_id": 64,
+		"item_id": "SOUL_BLADE"
+	},
+	{
+		"chest_id": 65,
+		"item_id": "GEMS_EXP",
+		"amount": 100
+	}
+]

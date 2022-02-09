@@ -5,11 +5,12 @@ import networkx as nx
 from reference import map, constants, rom_data
 import random_manager
 
-valid_args =  "-h        --help                 | Information about the script. \n"
-valid_args += "-s <Seed> --seed <Seed>          | The seed used to prime the random number generator. If one is not specified, one will be provided. \n"
-valid_args += "-w        --weapon               | Randomize starting weapon. If set, a random sword will be in the starting chest. Otherwise it will be Sword of Life. \n"
-valid_args += "-m <ITEM> --magician_item <ITEM> | Choose what the magician will drop. Use 'has_magic' for a random spell. Leave blank for random item. \n"
-valid_args += "-a        --advanced_world       | Uses graph logic to eliminate certain areas from having early require progression. \n"
+valid_args =  "-h         --help                 | Information about the script. \n"
+valid_args += "-s <Seed>  --seed <Seed>          | The seed used to prime the random number generator. If one is not specified, one will be provided. \n"
+valid_args += "-w         --weapon               | Randomize starting weapon. If set, a random sword will be in the starting chest. Otherwise it will be Sword of Life. \n"
+valid_args += "-m <ITEM>  --magician_item <ITEM> | Choose what the magician will drop. Use 'has_magic' for a random spell. Leave blank for random item. \n"
+valid_args += "-a         --advanced_world       | Uses graph logic to eliminate certain areas from having early require progression. \n"
+valid_args += "-t <ITEM>  --all_trash <ITEM>     | Replaces all optional items with the trash item of your choosing. \n"
 
 help_info  = "Help Info: \n"
 help_info += "This script handles item placement througout the world. \n"
@@ -21,12 +22,13 @@ def main(argv):
         'weapon': False,
         'magician_item': '',
         'advanced_world': False,
+        'all_trash': '',
         'debug': False,
     }
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hs:wm:ad',['help','seed=','weapon','magician_item=','advanced_world','debug'])
+        opts, args = getopt.getopt(argv,'hs:wm:at:d',['help','seed=','weapon','magician_item=','advanced_world','all_trash=','debug'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -43,6 +45,8 @@ def main(argv):
             arguments['magician_item'] = arg.strip()
         elif opt in ('-a', '--advanced_world'):
             arguments['advanced_world'] = True
+        elif opt in ('-t', '--all_trash'):
+            arguments['all_trash'] = arg.strip()
         elif opt in ('-d', '--debug'):
             arguments['debug'] = True
     
@@ -132,7 +136,7 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
         start_weapon = map.SWORDS[0] # Sword of Life
     spoiler_log.append(
         {
-            'phase': 1,
+            'act': 1,
             'check': sword_of_life_check,
             'requirement': {'type': 'item', 'name': start_weapon}
         }
@@ -155,7 +159,7 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
         if magician_item != None:
             spoiler_log.append(
                 {
-                    'phase': 1,
+                    'act': 1,
                     'check': magician_item_check,
                     'requirement': {'type': 'item', 'name': magician_item}
                 }
@@ -318,7 +322,7 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
                 fulfilled_reqs.append(current_req)
                 spoiler_log.append(
                     {
-                        'phase': hub['act'],
+                        'act': hub['act'],
                         'check': use_check,
                         'requirement': current_req
                     }
@@ -334,7 +338,7 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
                 print('    Hub requirements met')
                 break
 
-    # Phase 2. Place all the other items in remaining checks.
+    # Act 8. Place all the other items and NPCs in remaining checks.
     all_checks = []
     all_lair_checks = [] 
     all_item_checks = []
@@ -344,6 +348,77 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
             if check['type'] == 'lair': all_lair_checks.append(check)
             if check['type'] in ['item', 'chest']: all_item_checks.append(check)
 
+    extra_npcs = random_manager.shuffle_list(map.NON_KEY_NPCS)
+    extra_lairs = []
+    for lair in all_lair_checks:
+        if lair not in placed_checks:
+            extra_lairs.append(lair)
+    
+    # print(len(extra_lairs))
+    # print(len(extra_npcs))
+
+    for idx in range(len(extra_npcs)):
+        placed_checks.append(extra_lairs[idx])
+        spoiler_log.append(
+            {
+                'act': 8,
+                'check': extra_lairs[idx],
+                'requirement': {'type': 'npc_id', 'name': extra_npcs[idx]}
+            }
+        )
+    
+    # Hard coding a placement for something in the final lair. 
+    # It will be a duplicate npc, for some reason.
+    placed_checks.append(extra_lairs[-1])
+    spoiler_log.append(
+        {
+                'act': 8,
+                'check': extra_lairs[-1],
+                'requirement': {'type': 'npc_id', 'name': random_manager.get_random_list_member(extra_npcs)},
+                'note': 'This npc was placed as a duplicate because there are more lairs than available NPCs.'
+        }
+    )
+
+    # Place Items
+    remaining_item_checks = []
+    for check in all_item_checks:
+        if check not in placed_checks:
+            remaining_item_checks.append(check)
+    remaining_item_checks = random_manager.shuffle_list(remaining_item_checks)
+    
+    use_all_trash = False
+    if 'all_trash' in settings:
+        if settings['all_trash'] != '':
+            if settings['all_trash'] in list(rom_data.ITEMS.keys()):
+                use_all_trash = True
+
+    if use_all_trash: # Load us up with trash
+        for check in remaining_item_checks:
+            placed_checks.append(check)
+            spoiler_log.append(
+                {
+                    'act': 8,
+                    'check': check,
+                    'requirement': {'type': 'item', 'name': settings['all_trash']}
+                }
+            )
+    else: # Legit place the remaining items.
+        # 85 items to place?
+        remaining_items = []
+        all_items = map.NPC_ITEMS + map.CHEST_ITEMS
+        for item in all_items:
+            if item['item_id'] not in placed_items:
+                # Check to see if it is a gems/xp
+                if item['item_id'] == 'GEMS_EXP':
+                    use_item = {'item_id': item['item_id'], 'amount': item['amount']}
+                else:
+                    use_item = item['item_id']
+                remaining_items.append(use_item)
+        # COME BACK HERE
+        # Figure out how to place too many items in too few locations...
+        print(len(remaining_items))
+        print(len(remaining_item_checks))
+
     if debug:
         print('  Total Checks:', len(all_checks))
         print('  Checks Placed:', len(placed_checks))
@@ -351,8 +426,7 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
         print('  Items Placed:', len(placed_items))
         print('  Lair Checks:', len(all_lair_checks))
         print('  Lairs Placed:', len(placed_checks) - len(placed_items))
-            
-
+    
     return spoiler_log
 
 if __name__ == '__main__':
