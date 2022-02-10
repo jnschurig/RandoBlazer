@@ -26,6 +26,15 @@ SEED_BASE = 36
 
 MAX_LOOPS = 20
 
+RANDOM_GEM_LIMIT = [2, 500] # 2 is the minimum because we already have 1
+
+DEFAULT_TRASH_WEIGHTS = {
+	'MEDICAL_HERB': 13,
+	'STRANGE_BOTTLE': 5,
+	'NOTHING': 3,
+	'GEMS_EXP': 21
+}
+
 BASE_LOOKUP = {
 	0 : '0',
 	1 : '1',

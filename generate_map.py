@@ -11,6 +11,7 @@ valid_args += "-w         --weapon               | Randomize starting weapon. If
 valid_args += "-m <ITEM>  --magician_item <ITEM> | Choose what the magician will drop. Use 'has_magic' for a random spell. Leave blank for random item. \n"
 valid_args += "-a         --advanced_world       | Uses graph logic to eliminate certain areas from having early require progression. \n"
 valid_args += "-t <ITEM>  --all_trash <ITEM>     | Replaces all optional items with the trash item of your choosing. \n"
+valid_args += "-g         --random_gem_amounts   | Randomize the gem amounts on the gem/xp checks. \n"
 
 help_info  = "Help Info: \n"
 help_info += "This script handles item placement througout the world. \n"
@@ -414,8 +415,38 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
                 else:
                     use_item = item['item_id']
                 remaining_items.append(use_item)
+
+        # Put one of each item in remaining checks.
+        for idx in range(len(remaining_item_checks)):
+        
+            for item in list(rom_data.ITEMS.keys()):
+                if item not in placed_items:
+                    placed_items.append(item)
+                    placed_checks.append(remaining_item_checks[idx])
+                    if item == 'GEMS_EXP':
+                        spoiler_log.append(
+                            {
+                                'act': 8,
+                                'check': remaining_item_checks[idx],
+                                'requirement': {'type': 'item', 'name': item, 'amount': 1} # Gotta have the single gem...
+                            }
+                        )
+                    else:
+                        spoiler_log.append(
+                            {
+                                'act': 8,
+                                'check': remaining_item_checks[idx],
+                                'requirement': {'type': 'item', 'name': item}
+                            }
+                        )
+                    break
+        
+        # In still remaining checks, put random distributions of trash until complete.
         # COME BACK HERE
-        # Figure out how to place too many items in too few locations...
+        # Use the weights in constants.DEFAULT_TRASH_WEIGHTS
+
+
+
         print(len(remaining_items))
         print(len(remaining_item_checks))
 
