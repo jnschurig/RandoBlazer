@@ -1,6 +1,5 @@
-import os, json
-# import random
 import sys, getopt
+import os, json
 import networkx as nx
 from reference import map, constants, rom_data
 import random_manager
@@ -16,6 +15,7 @@ valid_args += "-g         --random_gem_amounts   | Randomize the gem amounts on 
 help_info  = "Help Info: \n"
 help_info += "This script handles item placement througout the world. \n"
 help_info += "The arguments are intended to be used for testing by running this script all by itself. \n"
+help_info += "The networkx package is in use to assist with graph creation and traversal. \n"
 
 def main(argv):
     arguments = {
@@ -442,13 +442,51 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
                     break
         
         # In still remaining checks, put random distributions of trash until complete.
-        # COME BACK HERE
         # Use the weights in constants.DEFAULT_TRASH_WEIGHTS
+        trash_list = []
+        trash_weight = constants.DEFAULT_TRASH_WEIGHTS
+        for trash_item in trash_weight.keys():
+            for x in range(trash_weight[trash_item]):
+                trash_list.append(trash_item)
+        
+        trash_list += trash_list + trash_list
+        trash_list = random_manager.shuffle_list(trash_list)
 
+        # Redo the remaining checks.
+        remaining_item_checks = []
+        for check in all_checks:
+            if check not in placed_checks:
+                remaining_item_checks.append(check)
 
-
-        print(len(remaining_items))
-        print(len(remaining_item_checks))
+        idx = 0
+        for use_check in remaining_item_checks:
+            placed_items.append(trash_list[idx])
+            placed_checks.append(use_check)
+            if trash_list[idx] == 'GEMS_EXP':
+                # Add a random amount of gem/exp
+                spoiler_log.append(
+                    {
+                        'act': 8,
+                        'check': use_check,
+                        'requirement': {
+                            'type': 'item', 
+                            'name': trash_list[idx], 
+                            'amount': random_manager.get_random_int(
+                                constants.RANDOM_GEM_LIMIT[0],
+                                constants.RANDOM_GEM_LIMIT[1]
+                            )
+                        }
+                    }
+                )
+            else:
+                spoiler_log.append(
+                    {
+                        'act': 8,
+                        'check': use_check,
+                        'requirement': {'type': 'item', 'name': trash_list[idx]}
+                    }
+                )
+            idx += 1
 
     if debug:
         print('  Total Checks:', len(all_checks))
@@ -458,6 +496,7 @@ def randomize_map(settings={'weapon': False, 'magician_item': '',}):
         print('  Lair Checks:', len(all_lair_checks))
         print('  Lairs Placed:', len(placed_checks) - len(placed_items))
     
+    # Mise en place ^_^
     return spoiler_log
 
 if __name__ == '__main__':
