@@ -1,6 +1,6 @@
-import os, sys, getopt#, random
+import os, sys, getopt
 import rom_writer, random_manager, hash_maker, update_rom
-from reference import rom_data, qol, text_and_hacks, world, items, lairs, map, constants
+from reference import rom_data, qol, text_and_hacks, lairs, map, constants
 
 valid_args =  "-h                  --help                         | Information about the script. \n"
 valid_args += "-r <ROM Location>   --rom_path    <ROM Location>   | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc \n"
