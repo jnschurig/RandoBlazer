@@ -1,13 +1,10 @@
 import os, sys, getopt
 import random_manager
 
-valid_args =  "-h                  --help                         | Information about the script. \n"
-valid_args += "-r <ROM Location>   --rom_path    <ROM Location>   | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc \n"
-valid_args += "-t <Target ROM>     --target_path <Target ROM>     | Path to target ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/output_rom.smc \n"
-valid_args += "-d                  --debug                        | Enable detailed output for debugging. Default is False. \n"
-valid_args += "-z <Setting String> --randomize   <Setting String> | Apply Randomization with settings. \n"
-valid_args += "-q <QOL String>     --qol         <QOL String>     | Quality of Life Settings. Use colon(:) separated list for QoL items. Text speed (Tnormal,Tfast,Tfaster,Tinstant) \n"
-valid_args += "-s <Seed>           --seed        <Seed>           | The seed used to prime the random number generator. If one is not specified, one will be provided. \n"
+valid_args =  "-h        --help        | Information about the script. \n"
+valid_args += "-s <Seed> --seed <Seed> | The seed used to prime the random number generator. If one is not specified, one will be provided. \n"
+valid_args += "-x        --cross_act   | Allow monsters to be randomized across different acts. \n"
+valid_args += "-n        --non_random  | Do not randomize monster lairs. \n"
 
 help_info  = "Help Info: \n"
 help_info += "This script will modify the contents ROM data and replace bits of it with other data. \n"
@@ -15,17 +12,14 @@ help_info += "The arguments are intended to be used for testing by running this 
 
 def main(argv):
     arguments = {
-        'rom_path': 'Soul Blazer (U) [!].smc',
-        'target_path': 'Soul Blazer.smc',
-        'randomize': False,
-        'qol': '',
+        'seed': None,
+        'cross_act': False,
         'debug': False,
-        'seed': None
     }
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hr:t:z:q:ds:',['help','rom_path=','target_path=','randomize=','qol=','debug','seed='])
+        opts, args = getopt.getopt(argv,'hs:xd',['help','seed=','cross_act','debug'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -34,23 +28,43 @@ def main(argv):
             print('Valid arguments: \n' + valid_args)
             print(help_info)
             sys.exit()
-        elif opt in ('-r', '--rom_path'):
-            arguments['rom_path'] = arg
-        elif opt in ('-t', '--target_path'):
-            arguments['target_path'] = arg
-        elif opt in ('-z', '--randomize'):
-            arguments['randomize'] = arg
-        elif opt in ('-q', '--qol'):
-            arguments['qol'] = arg
-        elif opt in ('-d', '--debug'):
-            arguments['debug'] = True
         elif opt in ('-s', '--seed'):
             arguments['seed'] = arg
+        elif opt in ('-x', '--cross_act'):
+            arguments['cross_act'] = True
+        elif opt in ('-d', '--debug'):
+            arguments['debug'] = True
     
     if False: # Thank you, I hate it.
         print(args)
 
     return arguments
+
+def randomize_lair_monsters(settings_dict):
+    debug = False
+    if 'debug' in settings_dict and settings_dict['debug']: debug = True
+    spoiler_log = []
+    '''
+    pseudo code
+    if lair type is two_up_two_down: 
+        don't randomize
+    if lair type is MustNotRandomizeLairPosition:
+        don't randomize
+
+    cycle through acts...
+    Should we have an option to randomize enemies across acts? Yes. Let's build that in.
+    randomize enemy 
+    randomize direction
+        Some cannot be in certain orientations
+            No up
+    randomize spawn type
+        LAIR_ONE_BY_ONE
+        LAIR_MULTISPAWN
+        LAIR_ONE_BY_ONE_PROX
+    randomize spawn amount
+    '''
+
+    return spoiler_log
 
 if __name__ == '__main__':
     # Run this with creds built in.
