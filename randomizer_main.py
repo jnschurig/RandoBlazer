@@ -1,6 +1,6 @@
 import os, sys, getopt
-import rom_writer, random_manager, hash_maker, update_rom
-from reference import rom_data, qol, text_and_hacks, lairs, map, constants
+import rom_writer, random_manager, hash_maker, update_rom, generate_map
+from reference import qol, text_and_hacks, constants
 
 valid_args =  "-h                  --help                         | Information about the script. \n"
 valid_args += "-r <ROM Location>   --rom_path    <ROM Location>   | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc \n"
@@ -138,6 +138,17 @@ def randomizer(settings):
         print('Output ROM location:', target_rom_path)
 
     # Randomize Stuff
+    rando_settings_string = settings['randomize']
+    # Split the string, pass it in as a dict.
+    item_placements = generate_map.randomize_map(settings)
+    print(len(item_placements))
+    '''
+    This is where we put ALL the randomization stuff. Then at the very end we'll generate the 
+    friendly hash for putting it in the file select screen.
+    '''
+
+
+
     # Get a seed hash
     hash_settings = {}
     for item in text_and_hacks.FILE_SELECT:
