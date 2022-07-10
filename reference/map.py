@@ -969,7 +969,7 @@ REGIONS = {
         ],
         "act": 7,
         "is_act_hub": True,
-        "connected_regions": []
+        "connected_regions": [39, 41]
     },
     # Region 38 - Dr Leo + Queen Magridd cutscene
     38: {

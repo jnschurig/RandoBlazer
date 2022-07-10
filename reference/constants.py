@@ -73,3 +73,5 @@ BASE_LOOKUP = {
 	34: 'y',
 	35: 'z'
 }
+
+VALID_WORLD_TYPES = ['vanilla', 'balanced', 'advanced']
