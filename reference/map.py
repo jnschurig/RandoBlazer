@@ -297,6 +297,71 @@ NPC_ID = {
     "NPC_KING_MAGRIDD"                  : 405
 }
 
+KEY_ITEMS = [
+    "SWORD_OF_LIFE"  ,
+    "PSYCHO_SWORD"   ,
+    "CRITICAL_SWORD" ,
+    "LUCKY_BLADE"    ,
+    "ZANTETSU_SWORD" ,
+    "SPIRIT_SWORD"   ,
+    "RECOVERY_SWORD" ,
+    "SOUL_BLADE"     ,
+    "IRON_ARMOR"     ,
+    "ICE_ARMOR"      ,
+    "BUBBLE_ARMOR"   ,
+    "MAGIC_ARMOR"    ,
+    "MYSTIC_ARMOR"   ,
+    "LIGHT_ARMOR"    ,
+    "ELEMENTAL_MAIL" ,
+    "SOUL_ARMOR"     ,
+    "FLAME_BALL"     ,
+    "LIGHT_ARROW"    ,
+    "MAGIC_FLARE"    ,
+    "ROTATOR"        ,
+    "SPARK_BOMB"     ,
+    "FLAME_PILLAR"   ,
+    "TORNADO"        ,
+    "PHOENIX"        ,
+    "GOATS_FOOD"     ,
+    "HARP_STRING"    ,
+    "PASS"           ,
+    "DREAM_ROD"      ,
+    "LEOS_BRUSH"     ,
+    "GREENWOOD_LEAF" ,
+    "MOLES_RIBBON"   ,
+    "BIG_PEARL"      ,
+    "MERMAIDS_TEARS" ,
+    "MUSHROOM_SHOES" ,
+    "MOBILE_KEY"     ,
+    "THUNDER_RING"   ,
+    "DELICIOUS_SEEDS",
+    "ACTINIDIA_LEAF" ,
+    "DOOR_KEY"       ,
+    "PLATINUM_CARD"  ,
+    "VIP_CARD"       ,
+    "EMBLEM_A"       ,
+    "EMBLEM_B"       ,
+    "EMBLEM_C"       ,
+    "EMBLEM_D"       ,
+    "EMBLEM_E"       ,
+    "EMBLEM_F"       ,
+    "EMBLEM_G"       ,
+    "EMBLEM_H"       ,
+    "RED_HOT_MIRROR" ,
+    "RED_HOT_BALL"   ,
+    "RED_HOT_STICK"  ,
+    "POWER_BRACELET" ,
+    "SHIELD_BRACELET",
+    "SUPER_BRACELET" ,
+    "BROWN_STONE"    ,
+    "GREEN_STONE"    ,
+    "BLUE_STONE"     ,
+    "SILVER_STONE"   ,
+    "PURPLE_STONE"   ,
+    "BLACK_STONE"    ,
+    "MAGIC_BELL"     ,
+]
+
 REGIONS = {
 	# Region 0 - Act 1 start, Underground Castle before elevator
 	0: {
@@ -704,7 +769,7 @@ REGIONS = {
        ],
         "act": 4,
         "is_act_hub": True,
-        "connected_regions": [24, 25, 60, 61, 62]
+        "connected_regions": [24, 25, 40, 60, 61, 62]
     },
     # Region 24 - Mountain of Souls last lair + Laynole
 	24: {
@@ -767,7 +832,7 @@ REGIONS = {
        ],
         "act": 5,
         "is_act_hub": True,
-        "connected_regions": [27, 28, 29, 30, 31, 32]
+        "connected_regions": [27, 28, 29, 30, 31, 32, 63, 64, 65, 67, 68]
     },
     # Region 27 - Leo's Lab Basement (previously region 28)
 	27: {
@@ -884,7 +949,7 @@ REGIONS = {
         ],
         "act": 6,
         "is_act_hub": True,
-        "connected_regions": [34, 35, 36]
+        "connected_regions": [34, 35, 36, 38, 69, 71, 72, 73, 74, 75, 76, 78]
     },
     # Region 34 - Magridd Castle Basement
     34: {

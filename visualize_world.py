@@ -1,82 +1,94 @@
 # import os
+from nbformat import write
 import streamlit as st
-import networkx as nx
-import matplotlib.pyplot as plt
+from reference import constants, map
 # import matplotlib as mpl
 # import graphviz
 
-import generate_map_v2 as rmap
+import generate_map as rmap
 
-vis_map = rmap.randomize_map()
+st.title('Review Randomization')
 
-st.write('Map Viewer')
+# Iniitialize state
+if 'seed' not in st.session_state:
+    st.session_state['seed'] = ''
+if 'starting_weapon' not in st.session_state:
+    st.session_state['starting_weapon'] = 'SWORD_OF_LIFE'
+if 'magician_item' not in st.session_state:
+    st.session_state['magician_item'] = 'RANDOM'
+if 'world_type' not in st.session_state:
+    st.session_state['world_type'] = 'VANILLA'
+if 'debug' not in st.session_state:
+    st.session_state['debug'] = False
 
-nx.draw_networkx(vis_map)
-plt.show()
+ready = False
 
-# G = nx.petersen_graph()
+with st.sidebar:
+    #     arguments = {
+    #     'seed': None,
+    #     'starting_weapon': 'SWORD_OF_LIFE',
+    #     'magician_item': 'RANDOM',
+    #     'world_type': 'vanilla',
+    #     'trash': 'vanilla',
+    #     'plan': [],
+    #     'randbomize_hubs': False, # Not an implemented feature yet...
+    #     'debug': False,
+    # }
+    st.session_state['seed'] = st.text_input('Seed', st.session_state['seed'])
 
-# subax1 = plt.subplot(121)
+    sword_list = map.SWORDS
+    if 'RANDOM' not in sword_list:
+        sword_list.append('RANDOM')
+    st.session_state['starting_weapon'] = st.radio('Starting Weapon', sword_list)
 
-# nx.draw(vis_map, with_labels=True, font_weight='bold')
+    st.session_state['magician_item'] = st.text_input('Magician Item', 'RANDOM').upper()
 
-# subax2 = plt.subplot(122)
+    st.session_state['world_type'] = st.radio('World Type', constants.VALID_WORLD_TYPES)
 
-# nx.draw_shell(vis_map, nlist=[range(5, 10), range(5)], with_labels=True, font_weight='bold')
+    if st.button('Toggle DEBUG'):
+        if st.session_state['debug']:
+            st.session_state['debug'] = False 
+        else:
+            st.session_state['debug'] = True
 
-# plt.show()
+    if st.button('Reset Session'):
+        for key in st.session_state:
+            del st.session_state[key]
 
-# # BEGIN pyplot example
-# pos = nx.layout.spring_layout(vis_map)
+# input_settings = 
+st.write('seed', st.session_state['seed'])
+st.write('starting_weapon', st.session_state['starting_weapon'])
+st.write('magician_item', st.session_state['magician_item'])
+st.write('world_type', st.session_state['world_type'])
+st.write('debug', st.session_state['debug'])
 
-# node_sizes = [3 + 10 * i for i in range(len(vis_map))]
+if st.button('BLAZE IT!'):
+    ready = True
 
-# # st.write(vis_map.number_of_edges())
-# edge_count = vis_map.number_of_edges()
-# edge_colors = range(2, edge_count + 2)
-# edge_alphas = [(5 + i) / (edge_count + 4) for i in range(edge_count)]
+if ready:
+    world_graph = rmap.initialize_world({
+    'seed': st.session_state['seed'],
+    'starting_weapon': st.session_state['starting_weapon'],
+    'magician_item': st.session_state['magician_item'],
+    'world_type': st.session_state['world_type'],
+    'debug': st.session_state['debug'],
+})
+    randomization = rmap.randomize_items(world_graph, {
+    'seed': st.session_state['seed'],
+    'starting_weapon': st.session_state['starting_weapon'],
+    'magician_item': st.session_state['magician_item'],
+    'world_type': st.session_state['world_type'],
+    'debug': st.session_state['debug'],
+})
 
-# nodes = nx.draw_networkx_nodes(vis_map, pos, node_size=node_sizes, node_color='blue')
-# edges = nx.draw_networkx_edges(vis_map, pos, node_size=node_sizes, arrowstyle='->',
-#                                arrowsize=10, edge_color=edge_colors,
-#                                edge_cmap=plt.cm.Blues, width=2)
-
-# for i in range(edge_count):
-#     edges[i].set_alpha(edge_alphas[i])
-
-# pc = mpl.collections.PatchCollection(edges, cmap=plt.cm.Blues)
-# pc.set_array(edge_colors)
-# plt.colorbar(pc)
-
-# ax = plt.gca()
-# ax.set_axis_off()
-# plt.show()
-# # END pyplot example
-
-# st.pyplot()
-
-# st.graphviz_chart(vis_map)
-
-# import streamlit as st
-# import networkx as nx
-# import matplotlib.pyplot as plt
-
-# st.title('Hello Networkx')
-# st.markdown('Zachary´s Karate Club Graph')
-
-
-# G = nx.karate_club_graph()
-
-
-# fig, ax = plt.subplots()
-# pos = nx.kamada_kawai_layout(G)
-# nx.draw(G,pos, with_labels=True)
-# st.pyplot(fig)
-# st.balloons()
-
-# fig, ax = plt.subplots() 
-# pos = nx.kamada_kawai_layout(vis_map)
-# nx.draw(vis_map, pos, with_labels=True)
-
-# st.pyplot(fig)
-# st.balloons()
+    # st.json(randomization, expanded=False)
+    for act in randomization.keys():
+        with st.expander('Act ' + str(act), expanded=False):
+            for item in randomization[act]:
+                # write_string = item['placement']['type'] + ' ' + item['placement']['name'] + ' \n'
+                # write_string += '@ \n'
+                # write_string += item['location']['type'] + ' ' + item['location']['name']
+                # st.write(item['placement']['type'] + ' ' + item['placement']['name'])
+                # st.write('@')
+                # st.write(item['location']['type'] + ' ' + item['location']['name'])
+                st.write(item)

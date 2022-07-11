@@ -75,3 +75,5 @@ BASE_LOOKUP = {
 }
 
 VALID_WORLD_TYPES = ['vanilla', 'balanced', 'advanced']
+
+VALID_TRASH_SETTINGS = ['vanilla', 'random', '<ITEM>', 'none']
