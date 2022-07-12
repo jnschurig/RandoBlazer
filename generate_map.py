@@ -126,12 +126,6 @@ def main(argv):
         print(magician_item_help)
         sys.exit(1)
 
-    # This check is bugged and I'm too bothered to fix it right now.
-    # if arguments['magician_item'] != 'RANDOM' or arguments['magician_item'] not in rom_data.ITEMS.keys():
-    #     print('Selected magician item: "' + arguments['magician_item'] + '" is invalid.')
-    #     print('Try --magician_item help for additional detail.')
-    #     sys.exit(2)
-
     return arguments
     # End main
 
@@ -139,6 +133,14 @@ def main(argv):
 # Output a list which is definitely unique.
 # If input is not a list type, return the same thing without changes.
 def distinctify(non_unique_list):
+    '''
+    Takes a list object as input and returns a list containing 
+    only unique items from the original list.
+
+    Example:
+    input list: [1, 2, 3, 4, 5, 1, 2]
+    output list: [1, 2, 3, 4, 5]
+    '''
     if type(non_unique_list) is not list:
         return non_unique_list
     
@@ -150,6 +152,27 @@ def distinctify(non_unique_list):
     
 def get_all_neighbors(graph, node):
     # neighbor_list should also include self, in case there are unfulfilled reqs there.
+    '''
+    Takes a networkx graph and one of its nodes as input. 
+    Returns a list containing all neighboring nodes, including 
+    node specified in the input. In a digraph type, it will respect 
+    directional relationships and not go "upstream".
+
+    Graph example 6 -> 0 -> 1
+                         -> 2
+                         -> 3
+
+    graph: (see above)
+    input node: 0 
+    returns: [0, 1, 2, 3]
+
+    input node: 6 
+    returns: [6, 0, 1, 2, 3]
+
+    node: 2
+    returns: [2]
+
+    '''
     neighbor_list = [node]
     for neighbor in graph.neighbors(node):
         neighbor_list.append(neighbor)
@@ -157,6 +180,20 @@ def get_all_neighbors(graph, node):
     return distinctify(neighbor_list)
 
 def item_to_flag_reqs(item_name):
+    '''
+    Takes an item)id as defined in the key values of 
+    rom_data.ITEMS.keys() and returns a list of any 
+    flags that might be associated with that item.
+
+    input: foo
+    return: []
+
+    input: SOUL_BLADE
+    return: ['can_cut_metal', 'has_thunder', 'can_cut_spirit']
+
+    input: MEDICAL_HERB
+    return: []
+    '''
     if item_name in map.ITEM_TO_FLAGS:
         return map.ITEM_TO_FLAGS[item_name]
     return []
@@ -167,6 +204,9 @@ def get_next_hub(world_graph, hub=0):
     that hubs descend from each other with 7 as the first, 
     and that sub regions descend from hubs. If multiple 
     parents exist, it will return the first match.
+
+    This is its own function because it requires backwards 
+    digraph traversal.
     Graph example 6 -> 0 -> 1
                          -> 2
                          -> 3
@@ -186,42 +226,25 @@ def get_next_hub(world_graph, hub=0):
 
     return hub
 
-# def get_node_predecessor(world_graph, child=0):
-#     ''' 
-#     Returns a list containing the immediate parents (or predecessors) 
-#     of an input node id. If no parents exist, an empty list will be 
-#     returned.
-#     Graph example 6 -> 0 -> 1
-#                          -> 2
-#                          -> 3
+# def collapse_region_checks(world_graph, node):
+#     # First get all the neighbors
+#     all_checks = []
+#     for region in get_all_neighbors(world_graph, node):
+#         for check in map.REGIONS[region]['checks']:
+#             check['requirements'] = map.REGIONS[region]['requirements']
+#             all_checks.append(check)
 
-#     world_graph: (see above)
-#     child: 0 
-#     returns: [6]
-
-#     world_graph: (see above)
-#     child: 2
-#     returns: [0]
-#     '''
-
-#     parents = []
-#     for x in nx.all_neighbors(world_graph, child):
-#         if x not in nx.neighbors(world_graph, child):
-#             parents.append(x)
-
-#     return parents
-
-def collapse_region_checks(world_graph, node):
-    # First get all the neighbors
-    all_checks = []
-    for region in get_all_neighbors(world_graph, node):
-        for check in map.REGIONS[region]['checks']:
-            check['requirements'] = map.REGIONS[region]['requirements']
-            all_checks.append(check)
-
-    return all_checks
+#     return all_checks
 
 def check_is_compatible(location, requirement):
+    '''
+    Takes a location or 'check' input and requirement 
+    and determines if they are compatible with each 
+    other. The location and requirement should be 
+    formatted exactly like the map.REGIONS checks and 
+    requirements that are found there.
+    Returns boolean True or False.
+    '''
     if requirement['type'] == 'item' and location['type'] in ['chest', 'item']:
         return True 
     elif requirement['type'] == 'npc_id' and location['type'] == 'lair':
@@ -229,11 +252,18 @@ def check_is_compatible(location, requirement):
 
     return False
 
-
-
 def initialize_world(settings={'world_type': 'vanilla'}):
+    '''
+    Takes a settings dict with 'world_type' key and generates 
+    a graph based on that setting. As of this writing, valid 
+    settings are vanilla, balanced, and advanced. Returns a 
+    networkx digraph object. See world_type_help in same script 
+    for additional detail.
+    '''
     debug = False
-    if 'debug' in settings and settings['debug']: debug = True 
+    if 'debug' in settings and settings['debug']: 
+        debug = True 
+        print(json.dumps(settings, indent = 4))
 
     if debug: print('Building world...')
     world_graph = nx.DiGraph()
@@ -304,9 +334,24 @@ def initialize_world(settings={'world_type': 'vanilla'}):
     return world_graph
 
 def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIFE', 'magician_item': 'RANDOM', 'trash': 'VANILLA'}):
+    '''
+    Takes a networkx digraph object as generated by initialize_world() 
+    and a settings dict with a minimum of settings: 'starting_weapon', 
+    'magician_item', and 'trash', and randomly assigns items and npcs 
+    to the locations specified in map.REGIONS. Returns a json object 
+    structured like this:
+    {
+        '0': [list of checks and locations],
+        '1': [list of checks and locations],
+        ...
+        '7': [list of checks and locations],
+    }
+    Additional keys may be added to track trash and enemy placement.
+    '''
     debug = False 
     if 'debug' in settings_dict and settings_dict['debug']:
         debug = True
+        print(json.dumps(settings_dict, indent = 4))
     # Initialize states
     placed_checks = {
         1: [],
@@ -344,12 +389,17 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
 
     key_items_to_place = random_manager.shuffle_list(key_items_to_place)
     plan = []
+
     # Specific functions for item randomization section.
-    # def fulfill_flags(item_name):
-    #     for alt_flag in item_to_flag_reqs(item_name):
-    #         fulfilled_requirements.append({'type': 'flag', 'name': alt_flag})
-    #     return item_name
     def get_placements():
+        '''
+        Returns a flat list of all placement json objects.
+        See place_check() for an example of a placement 
+        json object.
+
+        This function should only be used within the 
+        context of the parent function
+        '''
         placements = []
         for key in placed_checks.keys():
             placements += placed_checks[key]
@@ -365,6 +415,9 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
             'location': {'type': 'chest', 'id': 0}, # (as seen in map.REGIONS under "checks")
             'placement': {'type': 'npc_id', 'name': 'NPC_BRIDGE_GUARD'} # (as seen in map.REGEIONS under "requirements")
         }
+
+        This function should only be used within the 
+        context of the parent function
         '''
         act_number = placement_dict['act']
         del placement_dict['act']
@@ -384,20 +437,6 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         placed_checks[act_number].append(placement_dict)
         placed_locations.append(placement_dict['location'])
         return True
-
-    # def is_check_ok(requirements):
-    #     for req in requirements:
-    #         if req in fulfilled_requirements:
-    #             return False
-
-    #     return True
-
-    # def remove_placed_locations(location_list):
-    #     new_list = []
-    #     for location in location_list:
-    #         if location not in placed_locations:
-    #             new_list.append(location)
-    #     return new_list
 
     # Do starting weapon...
     if settings_dict['starting_weapon'] == 'RANDOM':
@@ -429,9 +468,18 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
 
 
     def get_local_requirements(hub_region):
-        # Get a list of valid regions, then gather up all 
-        # the locations (requirements) for those regions
+        '''
+        Takes a node id as input and returns the non-fullfilled 
+        requirements associated with that node and all neighbors.
+        Also includes requirements for the parent node that is 
+        "upstream" one position in the digraph.
+
+        This was intended to be used with hub regions, but the 
+        function will still work just fine with any node in the 
+        graph.
+        '''
         
+        # Get a list of valid regions, then gather up all 
         valid_regions = [get_next_hub(world_graph, hub_region)]
         all_neighbors = get_all_neighbors(world_graph, hub_region)
         for region_id in all_neighbors:
@@ -441,6 +489,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                     if sub_region in all_neighbors:
                         valid_regions.append(sub_region)
 
+        # the possible placements (requirements) for those regions
         valid_requirements = []
         for valid_id in valid_regions:
             for req in map.REGIONS[valid_id]['requirements']:
@@ -450,8 +499,13 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         return distinctify(valid_requirements)
 
     def get_local_locations(hub_region):
-        # Get a list of checks that are currently compatible with the world 
-        # and with the list of fulfilled requirements.
+        '''
+        Takes a hub region (again, doesn't have to be a hub) 
+        and returns all checks (or locations) that are not 
+        already placed that are also logically available 
+        based on already fulfilled requirements.
+        '''
+        # Get a list of regions (not including anything upstream)
         valid_regions = []
         all_neighbors = get_all_neighbors(world_graph, hub_region)
         for region_id in all_neighbors:
@@ -461,6 +515,8 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                     if sub_region in all_neighbors:
                         valid_regions.append(sub_region)
 
+        # Get a list of checks that are currently compatible with the world 
+        # and with the list of fulfilled requirements.
         valid_locations = []
         for valid_id in valid_regions:
             region_is_ok = True
@@ -471,6 +527,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
             if region_is_ok:
                 valid_locations += map.REGIONS[valid_id]['checks']
 
+        # Make sure each check/location is not already placed.
         return_locations = []
         for loc in valid_locations:
             if loc not in placed_locations:
@@ -484,7 +541,6 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
     # 1. We need to compile a list of available placemenets (requirements) (items and npcs)
     #    this list may be customized at some point based on input. For now it includes everything...
     #   a. Start a loop and iterate until complete...
-    #   b. while len(placed_checks) < len(available placements)
     while len(get_placements()) < len(all_requirements):
         # 2. get a list of requirements we need to fulfill
         next_requirement = random_manager.get_random_list_member(get_local_requirements(current_hub))
@@ -518,8 +574,6 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
     # Now time to dole out the "trash"
     # Save this for another time I think.
 
-
-
     if debug:
         print('Total Requirements:', len(all_requirements), '(no flag items)')
         print('Actual Requirements Fulfilled:', len(fulfilled_requirements), '(includes flags and flag items)')
@@ -540,13 +594,6 @@ if __name__ == '__main__':
 
     world_graph = initialize_world(settings_dict)
     randomization = randomize_items(world_graph, settings_dict)
-
-    # print('directed neighbors', list(nx.neighbors(world_graph, 0)))
-    # print('all neighbors', list(nx.all_neighbors(world_graph, 0)))
-    # for x in nx.all_neighbors(world_graph, 0):
-    #     if x not in nx.neighbors(world_graph, 0):
-    #         print('found predecessor', x)
-    # randomize_result = randomize_map(settings_dict)
 
     output_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'check_spoiler.json')
     with open(output_file, 'w') as f:

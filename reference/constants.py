@@ -77,3 +77,10 @@ BASE_LOOKUP = {
 VALID_WORLD_TYPES = ['vanilla', 'balanced', 'advanced']
 
 VALID_TRASH_SETTINGS = ['vanilla', 'random', '<ITEM>', 'none']
+
+DEFAULT_RANDO_SETTINGS = {
+    'world_type': 'balanced',
+    'starting_weapon': 'RANDOM',
+    'magician_item': 'RANDOM',
+}
+
