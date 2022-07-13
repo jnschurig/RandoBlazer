@@ -198,6 +198,26 @@ def item_to_flag_reqs(item_name):
         return map.ITEM_TO_FLAGS[item_name]
     return []
 
+def get_hub_by_act(act_num):
+    '''
+    Input an act number and get its hub's region id.
+    Returns false if none could be found.
+    Example:
+    input -> 1
+    return -> 0
+
+    input -> 2
+    return -> 6
+
+    input -> 3
+    return -> 12
+    '''
+    for region in map.REGIONS:
+        if 'is_act_hub' in map.REGIONS[region] and map.REGIONS[region]['act'] == act_num:
+            return region
+
+    return False
+
 def get_next_hub(world_graph, hub=0):
     ''' 
     Returns the next hub above the input hub. This assumes
@@ -354,6 +374,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         print(json.dumps(settings_dict, indent = 4))
     # Initialize states
     placed_checks = {
+        0: [],
         1: [],
         2: [],
         3: [],
@@ -364,7 +385,8 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         # 'trash': [],
     }
 
-    # placed_items = []
+    if debug:
+        print('Initializing variables...')
     placed_locations = []
     fulfilled_requirements = []
     all_requirements = []
@@ -372,20 +394,24 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
     for region in map.REGIONS.keys():
         all_check_locations += map.REGIONS[region]['checks']
         for req in map.REGIONS[region]['requirements']:
-        # all_requirements.append(map.REGIONS[region]['requirements'])
             if req['type'] != 'flag':
                 all_requirements.append(req)
     del region
+    if debug: print('all_check_locations: DONE')
     all_requirements = distinctify(all_requirements)
-    # key_items_to_place = random_manager.shuffle_list(map.KEY_ITEMS + map.NPC_ID.keys())
+    if debug: print('all_requirements: DONE')
     key_items_to_place = []
+    if debug: print('Gathering key items...')
     for key_item in map.KEY_ITEMS:
         key_items_to_place.append({'type': 'item', 'name': key_item})
     del key_item
+    if debug: print('DONE')
 
+    if debug: print('Gathering key NPCs...')
     for key_npc in map.NPC_ID.keys():
         key_items_to_place.append({'type': 'npc_id', 'name': key_npc})
     del key_npc
+    if debug: print('DONE')
 
     key_items_to_place = random_manager.shuffle_list(key_items_to_place)
     plan = []
@@ -438,33 +464,73 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         placed_locations.append(placement_dict['location'])
         return True
 
+    def unplace_act(act):
+        '''
+        Resets the state of placed checks in an act. This is done to 
+        prevent a deadlock where non-essential checks get made, 
+        filling all the spots for essential ones. Flag-based ones 
+        and next hub requirement ones do not get reset.
+        '''
+        if act in placed_checks:
+            placements_to_remove = []
+            next_hub = get_next_hub(world_graph, get_hub_by_act(act))
+            for placement in placed_checks[act]:
+                if placement['placement']['type'] == 'item' and item_to_flag_reqs(placement['placement']['name']):
+                    # This logic states that if the type is an item 
+                    # and the item is related to flags, do nothing
+                    pass
+                elif placement['placement']['type'] == 'npc_id' and placement['placement'] in map.REGIONS[next_hub]['requirements']:
+                    # Check to see if the npc is one of the 
+                    # required ones for the next hub.
+                    # If so, do nothing.
+                    pass
+                else:
+                    # destroy that placement...
+                    placements_to_remove.append(placement)
+            
+            for removal in placements_to_remove:
+                placed_checks[act].remove(removal)
+                if removal['location'] in placed_locations:
+                    placed_locations.remove(removal['location'])
+                if removal['placement'] in fulfilled_requirements:
+                    fulfilled_requirements.remove(removal['placement'])
+            return True
+        return False
+
     # Do starting weapon...
+    if debug: print('Placing starting_weapon...')
     if settings_dict['starting_weapon'] == 'RANDOM':
         settings_dict['starting_weapon'] = random_manager.get_random_list_member(map.SWORDS)
 
     plan_member_sol = {
-        'act': 1,
+        'act': 0,
         'location': map.REGIONS[0]['checks'][0],
         'placement': {'type': 'item', 'name': settings_dict['starting_weapon']}
     }
     plan.append(plan_member_sol)
+    if debug: print('DONE')
+    
     # key_items_to_place.remove(settings_dict['starting_weapon'])
 
     if settings_dict['magician_item'] != 'RANDOM':
+        if debug: print('Placing magician_item...')
         # Take the item setting and add it to the plan
         plan_member_mag_item = {
-            'act': 1,
+            'act': 0,
             'location': map.REGIONS[0]['checks'][1],
             'placement': {'type': 'item', 'name': settings_dict['magician_item']}
         }
         plan.append(plan_member_mag_item)
+        if debug: print('DONE')
 
     if 'plan' in settings_dict:
         plan += list(settings_dict['plan'])
 
+    if debug: print('Placing plan_members:', len(plan))
     for plan_member in plan:
         place_check(plan_member)
     del plan_member
+    if debug: print('DONE')
 
 
     def get_local_requirements(hub_region):
@@ -535,41 +601,97 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
 
         return distinctify(return_locations)
 
+    def region_requirements_fulfilled(region_id):
+        '''
+        Returns True if all requirements in a region 
+        have been met in fulfilled_requirements[].
+        Returns False if not.
+        '''
+        if 'requirements' in map.REGIONS[region_id]:
+            for req in map.REGIONS[region_id]['requirements']:
+                if req not in fulfilled_requirements:
+                    return False
+            return True
+        return False
+
     current_hub = 0
+    current_act = map.REGIONS[current_hub]['act']
+    # debug_req = json.loads('{"type": "npc_id", "name": "NPC_VILLAGE_CHIEF"}')
+    # debug_locations = get_local_locations(current_hub)
+    # print(len(debug_locations))
+    # print(json.dumps(debug_locations))
+    # debug_locations = random_manager.shuffle_list(debug_locations)
+    # print(len(debug_locations))
+    # print(json.dumps(debug_locations))
+
+    # sys.exit('TESTING')
 
     # Now we need to do the following:
     # 1. We need to compile a list of available placemenets (requirements) (items and npcs)
     #    this list may be customized at some point based on input. For now it includes everything...
     #   a. Start a loop and iterate until complete...
+    if debug: 
+        print('Starting full randomization...')
+        print('Act:', current_act)
+
+    total_restarts = 0
+    region_restarts = 0
     while len(get_placements()) < len(all_requirements):
+        # idx += 1
+        next_hub = get_next_hub(world_graph, current_hub)
+        if region_restarts >= constants.MAX_LOOPS:
+            print('ERROR: maximum region re-rolls reached. There is an issue with the logic...')
+            sys.exit(2)
         # 2. get a list of requirements we need to fulfill
         next_requirement = random_manager.get_random_list_member(get_local_requirements(current_hub))
+        # if debug: print('next_requirement:', json.dumps(next_requirement))
         # Is next requirement a flag? if so, choose a random item to fullfill it.
+        is_flag = False
         if next_requirement and next_requirement['type'] == 'flag':
+            is_flag = True
+            # if debug: print('next requirement is a flag...')
             actual_item = random_manager.get_random_list_member(map.FLAGS[next_requirement['name']])
+            flag_requirement = next_requirement
             next_requirement = {'type': 'item', 'name': actual_item}
         possible_locations = random_manager.shuffle_list(get_local_locations(current_hub))
+        # if debug: print('possible_locations:', json.dumps(possible_locations))
+        
+        placed_check_count = len(placed_locations)
         for use_loc in possible_locations:
             if check_is_compatible(use_loc, next_requirement):
                 # Place that check.
                 placement = {
-                    'act': map.REGIONS[current_hub]['act'],
+                    'act': current_act,
                     'location': use_loc,
                     'placement': next_requirement,
                 }
                 place_check(placement)
+                if is_flag:
+                    fulfilled_requirements.append(flag_requirement)
                 break
 
-        # Check to see if we have fulfilled the hub requirements and 
-        # can set current hub = next hub
-        next_hub = get_next_hub(world_graph, current_hub)
-        all_fulfilled = True
-        for hub_requirement in map.REGIONS[next_hub]['requirements']:
-            if hub_requirement not in fulfilled_requirements:
-                all_fulfilled = False
+        if len(placed_locations) == placed_check_count:
+            # We couldn't place a thing, so there was no place for it.
+            # Let's reset some checks and try the randomization again.
+            if debug:
+                print('Unplacing act checks...')
 
-        if all_fulfilled:
+            # Possibly need to pick a "next hub" requirement to fulfill.
+            # For now just rerolling the rng seems to work.
+            unplace_act(current_act)
+            region_restarts += 1
+
+
+        if region_requirements_fulfilled(next_hub):
             current_hub = next_hub
+            current_act = map.REGIONS[current_hub]['act']
+            total_restarts += region_restarts
+            region_restarts = 0
+
+            # if debug: 
+            #     print('Act:', current_act)
+                # print('Checks placed:', len(placed_locations))
+    print('Total Restarts:', total_restarts)
 
     # Now time to dole out the "trash"
     # Save this for another time I think.

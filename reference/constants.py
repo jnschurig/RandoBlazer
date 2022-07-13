@@ -83,4 +83,3 @@ DEFAULT_RANDO_SETTINGS = {
     'starting_weapon': 'RANDOM',
     'magician_item': 'RANDOM',
 }
-
