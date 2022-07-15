@@ -73,6 +73,8 @@ def get_random_int(min=0, max=None):
     return random.randint(int(min), int(max))
 
 def get_random_list_member(list_values):
+    if len(list_values) == 0:
+        return None
     return list_values[get_random_int(1, len(list_values)) - 1]
 
 def shuffle_list(ordered_list=[]):

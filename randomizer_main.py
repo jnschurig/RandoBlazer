@@ -1,18 +1,21 @@
-import os, sys, getopt
+import os, sys, getopt, json
 import rom_writer, random_manager, hash_maker, update_rom, generate_map
 from reference import qol, text_and_hacks, constants
 
-valid_args =  "-h                  --help                         | Information about the script. \n"
-valid_args += "-r <ROM Location>   --rom_path    <ROM Location>   | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc \n"
-valid_args += "-t <Target ROM>     --target_path <Target ROM>     | Path to target ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/output_rom.smc \n"
-valid_args += "-d                  --debug                        | Enable detailed output for debugging. Default is False. \n"
-valid_args += "-z <Setting String> --randomize   <Setting String> | Apply Randomization with settings. \n"
-valid_args += "-q <QOL String>     --qol         <QOL String>     | Quality of Life Settings. Use colon(:) separated list for QoL items. Text speed (Tnormal,Tfast,Tfaster,Tinstant) \n"
-valid_args += "-s <Seed>           --seed        <Seed>           | The seed used to prime the random number generator. If one is not specified, one will be provided. \n"
+valid_args = '''Valid Arguments:
+-h                --help                       | Information about the script. 
+-r <ROM Location> --rom_path    <ROM Location> | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc 
+-t <Target ROM>   --target_path <Target ROM>   | Path to target ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/output_rom.smc 
+-d                --debug                      | Enable detailed output for debugging. Default is False. 
+-z <Setting JSON> --randomize   <Setting JSON> | Apply Randomization with settings in json format. Submitted string will be hashed as JSON.
+-q <QOL String>   --qol         <QOL String>   | Quality of Life Settings. Use colon(:) separated list for QoL items. Text speed (Tnormal,Tfast,Tfaster,Tinstant) 
+-s <Seed>         --seed        <Seed>         | The seed used to prime the random number generator. If one is not specified, one will be provided. 
+'''
 
-help_info  = "Help Info: \n"
-help_info += "This script will modify the contents ROM data and replace bits of it with other data. \n"
-help_info += "The arguments are intended to be used for testing by running this script all by itself. \n"
+help_info = '''Help Info: 
+This script will modify the contents ROM data and replace bits of it with other data. 
+The arguments are intended to be used for testing by running this script all by itself. 
+'''
 
 def main(argv):
     arguments = {
@@ -111,7 +114,7 @@ def randomizer(settings):
 
     target_rom_path = os.path.join(constants.REPOSITORY_ROOT_DIR, settings_dict['target_path'])
 
-    rom_info = rom_writer.check_hash(source_rom_path, settings['debug'])
+    rom_info = rom_writer.check_hash(source_rom_path, debug)
 
     if debug: print(rom_info)
 
@@ -120,32 +123,47 @@ def randomizer(settings):
         if not debug: print('Use --debug for details')
         return False
 
-    # Check settings
-    # Start up the rng
-    seed = random_manager.start_randomization(settings['seed'])
-    settings['seed'] = seed
-    if debug: print('Seed:', seed)
-
+    # Randomize Stuff
     randomize = False
-    if settings['randomize']:
+    if 'randomize' in settings and settings['randomize']:
         randomize = True
-        target_rom_path = target_rom_path.replace('.smc', '') + ' Randomizer - ' + settings['randomize'] + '-' + str(seed) + '.smc'
+        # Start up the rng
+        seed = random_manager.start_randomization(settings['seed'])
+        settings['seed'] = seed
+        if debug: print('Seed:', seed)
+
+        # Check settings
+        if type(settings['randomize']) is bool:
+            # Randomize is true, but no settings exist. Use defaults
+            settings['randomize'] = constants.DEFAULT_RANDO_SETTINGS
+        elif type(settings['randomize']) is str:
+            if settings['randomize'] == 'True':
+                # Randomize is true, but no settings exist. Use defaults
+                settings['randomize'] = constants.DEFAULT_RANDO_SETTINGS
+            else:
+                # Means we need to parse the settings to json (hopefully)
+                settings['randomize'] = json.loads(settings['randomize'])
+        elif type(settings['randomize']) is dict:
+            # Do nothing I guess...
+            pass
+        
+        # Create a function that will make a pretty string...
+        rando_settings_str = 'placeholder'
+        target_rom_path = target_rom_path.replace('.smc', '') + ' Randomizer - ' + rando_settings_str + '-' + str(seed) + '.smc'
+
+        world_graph = generate_map.initialize_world(settings['randomize'])
+        item_placements = generate_map.randomize_items(world_graph, settings['randomize'])
+        print(len(item_placements))
+        '''
+        This is where we put ALL the randomization stuff. Then at the very end we'll generate the 
+        friendly hash for putting it in the file select screen.
+        '''
 
     # Initialize Rom
     rom_created = rom_writer.initialize_file(source_rom_path, target_rom_path, rom_info['headered'])
     if debug: 
         print('Output ROM created:', rom_created)
         print('Output ROM location:', target_rom_path)
-
-    # Randomize Stuff
-    rando_settings_string = settings['randomize']
-    # Split the string, pass it in as a dict.
-    item_placements = generate_map.randomize_map(settings)
-    print(len(item_placements))
-    '''
-    This is where we put ALL the randomization stuff. Then at the very end we'll generate the 
-    friendly hash for putting it in the file select screen.
-    '''
 
 
 
@@ -186,6 +204,8 @@ def randomizer(settings):
 if __name__ == '__main__':
     # Run this with creds built in.
     settings_dict = main(sys.argv[1:])
+    if settings_dict['debug']:
+        print(json.dumps(settings_dict, indent = 4))
 
     rando_result = randomizer(settings_dict)
     print(rando_result)
