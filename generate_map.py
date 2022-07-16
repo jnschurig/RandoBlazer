@@ -510,8 +510,6 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
     plan.append(plan_member_sol)
     if debug: print('DONE')
     
-    # key_items_to_place.remove(settings_dict['starting_weapon'])
-
     if settings_dict['magician_item'] != 'RANDOM':
         if debug: print('Placing magician_item...')
         # Take the item setting and add it to the plan
@@ -616,15 +614,6 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
 
     current_hub = 0
     current_act = map.REGIONS[current_hub]['act']
-    # debug_req = json.loads('{"type": "npc_id", "name": "NPC_VILLAGE_CHIEF"}')
-    # debug_locations = get_local_locations(current_hub)
-    # print(len(debug_locations))
-    # print(json.dumps(debug_locations))
-    # debug_locations = random_manager.shuffle_list(debug_locations)
-    # print(len(debug_locations))
-    # print(json.dumps(debug_locations))
-
-    # sys.exit('TESTING')
 
     # Now we need to do the following:
     # 1. We need to compile a list of available placemenets (requirements) (items and npcs)
@@ -637,7 +626,6 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
     total_restarts = 0
     region_restarts = 0
     while len(get_placements()) < len(all_requirements):
-        # idx += 1
         next_hub = get_next_hub(world_graph, current_hub)
         if region_restarts >= constants.MAX_LOOPS:
             print('ERROR: maximum region re-rolls reached. There is an issue with the logic...')
@@ -657,6 +645,9 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         # if debug: print('possible_locations:', json.dumps(possible_locations))
         
         placed_check_count = len(placed_locations)
+        
+        # Loop through the locations until we find one that is compatible 
+        # with the randomly selected item/npc
         for use_loc in possible_locations:
             if check_is_compatible(use_loc, next_requirement):
                 # Place that check.
@@ -668,10 +659,11 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                 place_check(placement)
                 if is_flag:
                     fulfilled_requirements.append(flag_requirement)
+                # Break the loop because the check has been placed.
                 break
 
         if len(placed_locations) == placed_check_count:
-            # We couldn't place a thing, so there was no place for it.
+            # We couldn't place the thing, so there was no place for it.
             # Let's reset some checks and try the randomization again.
             if debug:
                 print('Unplacing act checks...')
@@ -680,17 +672,13 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
             # For now just rerolling the rng seems to work.
             unplace_act(current_act)
             region_restarts += 1
-
+            total_restarts += 1
 
         if region_requirements_fulfilled(next_hub):
             current_hub = next_hub
             current_act = map.REGIONS[current_hub]['act']
-            total_restarts += region_restarts
             region_restarts = 0
 
-            # if debug: 
-            #     print('Act:', current_act)
-                # print('Checks placed:', len(placed_locations))
     print('Total Restarts:', total_restarts)
 
     # Now time to dole out the "trash"
@@ -720,4 +708,3 @@ if __name__ == '__main__':
     output_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'check_spoiler.json')
     with open(output_file, 'w') as f:
         f.write(json.dumps(randomization, indent = 4))
-    # print(json.dumps(randomize_result, indent = 4))
