@@ -84,4 +84,11 @@ DEFAULT_RANDO_SETTINGS = {
     'magician_item': 'RANDOM',
 }
 
-TRASH_FILL_METHODS = ['vanilla', 'equilized', '<ITEM>']
+TRASH_FILL_METHODS = ['vanilla', 'equilized', '<ITEMs>']
+
+VANILLA_TRASH_WEIGHTS = {
+	'MEDICAL_HERB': 19,
+	'STRANGE_BOTTLE': 7,
+	'GEM_EXP': 33,
+	'NOTHING': 3,
+}

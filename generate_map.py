@@ -10,7 +10,7 @@ valid_args = '''Valid Arguments:
 -w <ITEM>  --starting_weapon <ITEM> | Randomize starting weapon. If set, a random sword will be in the starting chest. Otherwise it will be Sword of Life. 
 -m <ITEM>  --magician_item <ITEM>   | Choose what the magician will drop. Use 'has_magic' for a random spell. Leave blank for random item. 
 -a         --world_type             | Determines the method for locating valid places to put checks. Try `--world_type help` for more detail.
--t <ITEM>  --trash <ITEM>           | Determines how trash is dispersed. Use a specific item code or ''' + str(constants.TRASH_FILL_METHODS) + '''
+-t <ITEMs> --trash <ITEMs>          | Determines how trash is dispersed. Use specific item code(s) or ''' + str(constants.TRASH_FILL_METHODS) + '''
 -g         --random_gem_amounts     | Randomize the gem amounts on the gem/xp checks. 
 -p {plan}  --plan {plan}            | A dict or json object with pre-determined placements. Use --plan help for more detail.
 -o         --only_required          | Only add place required key items. Will exclude many swords, most armor, most magic, and goat food. Instead trash items will be placed. 
@@ -460,6 +460,9 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         if placement_dict['placement'] not in fulfilled_requirements:
             fulfilled_requirements.append(placement_dict['placement'])
 
+        if placement_dict['placement'] not in all_requirements:
+            all_requirements.append(placement_dict['placement'])
+
         # Pretty up the chest name...
         if placement_dict['location']['type'] == 'chest' and 'name' not in placement_dict['location']:
             placement_dict['location']['name'] = map.CHEST_ITEMS[placement_dict['location']['id']]['item_id']
@@ -479,9 +482,11 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
             placements_to_remove = []
             next_hub = get_next_hub(world_graph, get_hub_by_act(act))
             for placement in placed_checks[act]:
-                if placement['placement']['type'] == 'item' and item_to_flag_reqs(placement['placement']['name']):
+                if placement['placement']['type'] == 'item' and (item_to_flag_reqs(placement['placement']['name'])
+                                                                or placement['placement']['name'] in ['LUCKY_BLADE', 'BUBBLE_ARMOR']):
                     # This logic states that if the type is an item 
-                    # and the item is related to flags, do nothing
+                    # and the item is related to flags,  or is 
+                    # bubble armor/ lucky blade, do nothing
                     pass
                 elif placement['placement']['type'] == 'npc_id' and placement['placement'] in map.REGIONS[next_hub]['requirements']:
                     # Check to see if the npc is one of the 
@@ -721,9 +726,32 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         pass
     else:
         # place non-required key items
-        # Includes most armor, most magic, goat food, many swords
-        pass
-    
+        # Includes most armor, most magic, goat food, many swords, bracelets, etc
+        if debug: print('Placing non-required key items...')
+        placed_checks['non_required'] = []
+        placed_items = []
+        for placement in get_placements():
+            if placement['placement']['type'] == 'item':
+                placed_items.append(placement['placement']['name'])
+        del placement
+
+        # Cycle through all key items...
+        for item in map.KEY_ITEMS:
+            # Key item must not have been placed already.
+            if item not in placed_items:
+                # Cycle through all locations
+                for loc in all_check_locations:
+                    # Is the location compatible?
+                    if loc not in placed_locations and loc['type'] in ['chest', 'item']:
+                        non_required = {
+                            'act': 'non_required',
+                            'location': loc,
+                            'placement': {'type': 'item', 'name': item}
+                        }
+                        place_check(non_required)
+                        break
+        del item
+        if debug: print('DONE')
         
 
     flags_fulfilled = 0
