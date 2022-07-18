@@ -1,5 +1,5 @@
 import sys, getopt
-import json, os
+import json, os, math
 import networkx as nx
 from reference import map, constants, rom_data
 import random_manager
@@ -10,7 +10,8 @@ valid_args = '''Valid Arguments:
 -w <ITEM>  --starting_weapon <ITEM> | Randomize starting weapon. If set, a random sword will be in the starting chest. Otherwise it will be Sword of Life. 
 -m <ITEM>  --magician_item <ITEM>   | Choose what the magician will drop. Use 'has_magic' for a random spell. Leave blank for random item. 
 -a         --world_type             | Determines the method for locating valid places to put checks. Try `--world_type help` for more detail.
--t <ITEMs> --trash <ITEMs>          | Determines how trash is dispersed. Use specific item code(s) or ''' + str(constants.TRASH_FILL_METHODS) + '''
+-t <MODE>  --trash_mode <MODE>      | Determines how trash is dispersed. Default vanilla. Use ''' + str(constants.TRASH_FILL_METHODS) + '''
+-u <ITEMs> --trash <ITEMs>          | A comma separated list (or list object) of all items to be used as trash.
 -g         --random_gem_amounts     | Randomize the gem amounts on the gem/xp checks. 
 -p {plan}  --plan {plan}            | A dict or json object with pre-determined placements. Use --plan help for more detail.
 -o         --only_required          | Only add place required key items. Will exclude many swords, most armor, most magic, and goat food. Instead trash items will be placed. 
@@ -63,7 +64,8 @@ def main(argv):
         'starting_weapon': 'SWORD_OF_LIFE',
         'magician_item': 'RANDOM',
         'world_type': 'vanilla',
-        'trash': 'vanilla',
+        'trash_mode': 'vanilla',
+        'trash': [],
         'plan': [],
         'only_required': False, 
         'randomize_hubs': False, # Not an implemented feature yet...
@@ -73,7 +75,7 @@ def main(argv):
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hs:wm:a:t:p:ozdv',['help','seed=','starting_weapon=','magician_item=','world_type=','trash=','plan=','only_required','randomize_hubs','debug','verbose'])
+        opts, args = getopt.getopt(argv,'hs:wm:a:t:u:p:ozdv',['help','seed=','starting_weapon=','magician_item=','world_type=','trash_mode=','trash=','plan=','only_required','randomize_hubs','debug','verbose'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -90,7 +92,9 @@ def main(argv):
             arguments['magician_item'] = arg.strip().upper()
         elif opt in ('-a', '--world_type'):
             arguments['world_type'] = arg.strip().lower()
-        elif opt in ('-t', '--trash'):
+        elif opt in ('-t', '--trash_mode'):
+            arguments['trash_mode'] = arg.strip().lower()
+        elif opt in ('-u', '--trash'):
             arguments['trash'] = arg.strip().upper()
         elif opt in ('-p', '--plan'):
             arguments['plan'] = arg
@@ -752,7 +756,86 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                         break
         del item
         if debug: print('DONE')
+
+    # Now place the really useless trash
+    # 1. Decide the trash list...
+    trash_list = constants.VANILLA_TRASH_WEIGHTS.keys()
+    if 'trash' in settings_dict:
+        new_trash = False
+        if type(settings_dict['trash']) is list and settings_dict['trash'] != []:
+            trash_list = settings_dict['trash']
+            new_trash = True
+        elif type(settings_dict['trash']) is str:
+            # Check for commas, else just use the string.
+            if ',' in settings_dict['trash']:
+                trash_list = settings_dict['trash'].upper().split(',')
+            else:
+                trash_list = [settings_dict['trash']].upper()
+            new_trash = True
+        # Now check the trash list to make sure it's ok.
+        if new_trash:
+            new_list = []
+            for item in trash_list:
+                if item in rom_data.ITEMS.keys():
+                    new_list.append(item)
+            trash_list = new_list
+            del new_list
+
+    if len(trash_list) == 0:
+        trash_list = ['NOTHING']
+
+    # Multiply trash...
+    use_trash = []
+    if 'trash_mode' not in settings_dict or settings_dict['trash_mode'] == 'vanilla':
+        # Use vanilla trash weights based on the existing 
+        for trash_item in trash_list:
+            for x in range(constants.VANILLA_TRASH_WEIGHTS[trash_item]):
+                use_trash.append(trash_item)
+        del trash_item
+        # use_trash += random_manager.shuffle_list(use_trash)
+    elif settings_dict['trash_mode'] == 'equalized':
+        trash_count = 0
+        for key in constants.VANILLA_TRASH_WEIGHTS.keys():
+            trash_count += constants.VANILLA_TRASH_WEIGHTS[key]
+        del key 
+
+        # Put an equal number of each item in the pool.
+        trash_copies = math.floor(trash_count / len(trash_list))
+
+        for trash_item in trash_list:
+            for x in range(trash_copies):
+                use_trash.append(trash_item)
+        del trash_item 
+    # Future methods of trash go here...
+
+    use_trash = random_manager.shuffle_list(use_trash)
+    # Double the list because the exact right number may not have come out.
+    use_trash += use_trash
+
+    if debug: print('Distinct Trash Count:', len(trash_list))
+    if debug and verbose: print('Trash List:', trash_list)
+    if debug: print('Actual Trash Count:', len(use_trash))
+
+    # Finally, place the trash in locations...
+    placed_checks['trash_items'] = []
+    for item in use_trash:
+        # Go through all the locations AGAIN
+        for loc in all_check_locations:
+            # Make sure we can actually place it there...
+            if loc['type'] in ['item', 'chest'] and loc not in placed_locations:
+                # Place the trash.
+                trash_placement = {
+                    'act': 'trash_items',
+                    'location': loc,
+                    'placement': {'type': 'item', 'name': item}
+                }
+                # Come back to here. Check to see if item is GEM_EXP
+                # If it is, follow the method for assigning an amount...
+                place_check(trash_placement)
+                break
         
+        if len(placed_locations) >= len(all_check_locations):
+            break
 
     flags_fulfilled = 0
     total_placements = 0

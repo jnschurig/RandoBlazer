@@ -84,7 +84,7 @@ DEFAULT_RANDO_SETTINGS = {
     'magician_item': 'RANDOM',
 }
 
-TRASH_FILL_METHODS = ['vanilla', 'equilized', '<ITEMs>']
+TRASH_FILL_METHODS = ['vanilla', 'equalized',]
 
 VANILLA_TRASH_WEIGHTS = {
 	'MEDICAL_HERB': 19,
