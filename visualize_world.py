@@ -1,7 +1,6 @@
 # import os
-from nbformat import write
 import streamlit as st
-from reference import constants, map
+from reference import constants, map, rom_data
 # import matplotlib as mpl
 # import graphviz
 
@@ -18,22 +17,20 @@ if 'magician_item' not in st.session_state:
     st.session_state['magician_item'] = 'RANDOM'
 if 'world_type' not in st.session_state:
     st.session_state['world_type'] = 'VANILLA'
+if 'trash_mode' not in st.session_state:
+    st.session_state['trash_mode'] = 'VANILLA'
+if 'trash' not in st.session_state:
+    st.session_state['trash'] = []
+if 'only_required' not in st.session_state:
+    st.session_state['only_required'] = False
+if 'gem_scaling' not in st.session_state:
+    st.session_state['gem_scaling'] = 1
 if 'debug' not in st.session_state:
     st.session_state['debug'] = False
 
 ready = False
 
 with st.sidebar:
-    #     arguments = {
-    #     'seed': None,
-    #     'starting_weapon': 'SWORD_OF_LIFE',
-    #     'magician_item': 'RANDOM',
-    #     'world_type': 'vanilla',
-    #     'trash': 'vanilla',
-    #     'plan': [],
-    #     'randbomize_hubs': False, # Not an implemented feature yet...
-    #     'debug': False,
-    # }
     st.session_state['seed'] = st.text_input('Seed', st.session_state['seed'])
 
     sword_list = map.SWORDS
@@ -44,6 +41,22 @@ with st.sidebar:
     st.session_state['magician_item'] = st.text_input('Magician Item', 'RANDOM').upper()
 
     st.session_state['world_type'] = st.radio('World Type', constants.VALID_WORLD_TYPES)
+
+    st.session_state['trash_mode'] = st.radio('Trash Mode', constants.TRASH_FILL_METHODS)
+
+    item_list = list(rom_data.ITEMS.keys())
+    item_list.sort()
+    with st.expander('Trash Selection (Leave blank for vanilla)', expanded=False):
+        for item in item_list:
+            add_item = st.checkbox(item)
+            if add_item and item not in st.session_state['trash']:
+                st.session_state['trash'].append(item)
+            elif not add_item and item in st.session_state['trash']:
+                st.session_state['trash'].remove(item)
+
+    st.session_state['only_required'] = st.radio('Only Required', [True, False])
+
+    st.session_state['gem_scaling'] = st.slider('Gem/Exp Scaling', 0.0, 10.0, 1.0, 0.1)
 
     if st.button('Toggle DEBUG'):
         if st.session_state['debug']:
@@ -56,11 +69,15 @@ with st.sidebar:
             del st.session_state[key]
 
 # input_settings = 
-st.write('seed', st.session_state['seed'])
-st.write('starting_weapon', st.session_state['starting_weapon'])
-st.write('magician_item', st.session_state['magician_item'])
-st.write('world_type', st.session_state['world_type'])
-st.write('debug', st.session_state['debug'])
+st.write('Seed:', st.session_state['seed'])
+st.write('Starting Weapon:', st.session_state['starting_weapon'])
+st.write('Magician Item:', st.session_state['magician_item'])
+st.write('World Type:', st.session_state['world_type'])
+st.write('Trash Mode:', st.session_state['trash_mode'])
+st.write('Trash:', st.session_state['trash'])
+st.write('Only Required:', st.session_state['only_required'])
+st.write('Gem Scaling:', st.session_state['gem_scaling'])
+st.write('debug:', st.session_state['debug'])
 
 if st.button('BLAZE IT!'):
     ready = True
@@ -78,12 +95,16 @@ if ready:
     'starting_weapon': st.session_state['starting_weapon'],
     'magician_item': st.session_state['magician_item'],
     'world_type': st.session_state['world_type'],
+    'trash_mode': st.session_state['trash_mode'],
+    'trash': st.session_state['trash'],
+    'only_required': st.session_state['only_required'],
+    'gem_scaling': st.session_state['gem_scaling'],
     'debug': st.session_state['debug'],
 })
 
     # st.json(randomization, expanded=False)
     for act in randomization.keys():
-        with st.expander('Act ' + str(act), expanded=False):
+        with st.expander(str(act), expanded=False):
             for item in randomization[act]:
                 # write_string = item['placement']['type'] + ' ' + item['placement']['name'] + ' \n'
                 # write_string += '@ \n'

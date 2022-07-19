@@ -1,5 +1,5 @@
 import sys, getopt
-import json, os
+import json, os, math
 import networkx as nx
 from reference import map, constants, rom_data
 import random_manager
@@ -9,11 +9,13 @@ valid_args = '''Valid Arguments:
 -s <Seed>  --seed <Seed>            | The seed used to prime the random number generator. If one is not specified, one will be provided. 
 -w <ITEM>  --starting_weapon <ITEM> | Randomize starting weapon. If set, a random sword will be in the starting chest. Otherwise it will be Sword of Life. 
 -m <ITEM>  --magician_item <ITEM>   | Choose what the magician will drop. Use 'has_magic' for a random spell. Leave blank for random item. 
--a         --world_type             | Determines the method for locating valid places to put checks. See
--t <ITEM>  --trash <ITEM>           | Replaces all optional items with the trash item of your choosing. 
--g         --random_gem_amounts     | Randomize the gem amounts on the gem/xp checks. 
+-a         --world_type             | Determines the method for locating valid places to put checks. Try `--world_type help` for more detail.
+-t <MODE>  --trash_mode <MODE>      | Determines how trash is dispersed. Default vanilla. Use ''' + str(constants.TRASH_FILL_METHODS) + '''
+-u <ITEMs> --trash <ITEMs>          | A comma separated list (or list object) of all items to be used as trash.
 -p {plan}  --plan {plan}            | A dict or json object with pre-determined placements. Use --plan help for more detail.
--o         --randbomize_hubs        | Randomize the world hub placement. Not implemented
+-o         --only_required          | Only add place required key items. Will exclude many swords, most armor, most magic, and goat food. Instead trash items will be placed. 
+-g <SCALE> --gem_scaling <SCALE>    | Multiply the gem/exp amounts from chests and NPCs by the input scale. Default 1 (gives vanilla gem amounts).
+-z         --randomize_hubs         | Randomize the world hub placement. Not implemented
 '''
 
 help_info = '''Help Info: 
@@ -50,7 +52,7 @@ Default: random
 Valid items include:
 RANDOM
 '''
-# mag_item_list = []
+
 for ref_item in rom_data.ITEMS.keys():
     magician_item_help += ref_item + ' \n'
     # mag_item_list.append(ref_item)
@@ -62,15 +64,19 @@ def main(argv):
         'starting_weapon': 'SWORD_OF_LIFE',
         'magician_item': 'RANDOM',
         'world_type': 'vanilla',
-        'trash': 'vanilla',
+        'trash_mode': 'vanilla',
+        'trash': [],
         'plan': [],
-        'randbomize_hubs': False, # Not an implemented feature yet...
+        'only_required': False, 
+        'randomize_hubs': False, # Not an implemented feature yet...
+        'gem_scaling': 1, 
         'debug': False,
+        'verbose': False,
     }
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hs:wm:a:t:p:od',['help','seed=','starting_weapon=','magician_item=','world_type=','trash=','plan=','randbomize_hubs','debug'])
+        opts, args = getopt.getopt(argv,'hs:wm:a:t:u:p:ozg:dv',['help','seed=','starting_weapon=','magician_item=','world_type=','trash_mode=','trash=','plan=','only_required','randomize_hubs','gem_scaling=','debug','verbose'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -87,14 +93,22 @@ def main(argv):
             arguments['magician_item'] = arg.strip().upper()
         elif opt in ('-a', '--world_type'):
             arguments['world_type'] = arg.strip().lower()
-        elif opt in ('-t', '--trash'):
+        elif opt in ('-t', '--trash_mode'):
+            arguments['trash_mode'] = arg.strip().lower()
+        elif opt in ('-u', '--trash'):
             arguments['trash'] = arg.strip().upper()
         elif opt in ('-p', '--plan'):
             arguments['plan'] = arg
-        elif opt in ('-o', '--randbomize_hubs'):
-            arguments['randbomize_hubs'] = True
+        elif opt in ('-o', '--only_required'):
+            arguments['only_required'] = True
+        elif opt in ('-z', '--randomize_hubs'):
+            arguments['randomize_hubs'] = True
+        elif opt in ('-g', '--gem_scaling'):
+            arguments['gem_scaling'] = float(arg)
         elif opt in ('-d', '--debug'):
             arguments['debug'] = True
+        elif opt in ('-v', '--verbose'):
+            arguments['verbose'] = True
     
     if False: print(args) # Thanks, I hate it.
 
@@ -246,16 +260,6 @@ def get_next_hub(world_graph, hub=0):
 
     return hub
 
-# def collapse_region_checks(world_graph, node):
-#     # First get all the neighbors
-#     all_checks = []
-#     for region in get_all_neighbors(world_graph, node):
-#         for check in map.REGIONS[region]['checks']:
-#             check['requirements'] = map.REGIONS[region]['requirements']
-#             all_checks.append(check)
-
-#     return all_checks
-
 def check_is_compatible(location, requirement):
     '''
     Takes a location or 'check' input and requirement 
@@ -372,6 +376,10 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
     if 'debug' in settings_dict and settings_dict['debug']:
         debug = True
         print(json.dumps(settings_dict, indent = 4))
+
+    verbose = False 
+    if 'verbose' in settings_dict and settings_dict['verbose']:
+        verbose = True
     # Initialize states
     placed_checks = {
         0: [],
@@ -384,6 +392,9 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         7: [],
         # 'trash': [],
     }
+
+    if 'gem_scaling' not in settings_dict:
+        settings_dict['gem_scaling'] = 1
 
     if debug:
         print('Initializing variables...')
@@ -398,8 +409,10 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                 all_requirements.append(req)
     del region
     if debug: print('all_check_locations: DONE')
+
     all_requirements = distinctify(all_requirements)
     if debug: print('all_requirements: DONE')
+
     key_items_to_place = []
     if debug: print('Gathering key items...')
     for key_item in map.KEY_ITEMS:
@@ -429,6 +442,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         placements = []
         for key in placed_checks.keys():
             placements += placed_checks[key]
+        del key
 
         return placements
 
@@ -456,6 +470,9 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         if placement_dict['placement'] not in fulfilled_requirements:
             fulfilled_requirements.append(placement_dict['placement'])
 
+        if placement_dict['placement'] not in all_requirements:
+            all_requirements.append(placement_dict['placement'])
+
         # Pretty up the chest name...
         if placement_dict['location']['type'] == 'chest' and 'name' not in placement_dict['location']:
             placement_dict['location']['name'] = map.CHEST_ITEMS[placement_dict['location']['id']]['item_id']
@@ -475,9 +492,11 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
             placements_to_remove = []
             next_hub = get_next_hub(world_graph, get_hub_by_act(act))
             for placement in placed_checks[act]:
-                if placement['placement']['type'] == 'item' and item_to_flag_reqs(placement['placement']['name']):
+                if placement['placement']['type'] == 'item' and (item_to_flag_reqs(placement['placement']['name'])
+                                                                or placement['placement']['name'] in ['LUCKY_BLADE', 'BUBBLE_ARMOR']):
                     # This logic states that if the type is an item 
-                    # and the item is related to flags, do nothing
+                    # and the item is related to flags,  or is 
+                    # bubble armor/ lucky blade, do nothing
                     pass
                 elif placement['placement']['type'] == 'npc_id' and placement['placement'] in map.REGIONS[next_hub]['requirements']:
                     # Check to see if the npc is one of the 
@@ -487,6 +506,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                 else:
                     # destroy that placement...
                     placements_to_remove.append(placement)
+            del placement
             
             for removal in placements_to_remove:
                 placed_checks[act].remove(removal)
@@ -494,6 +514,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                     placed_locations.remove(removal['location'])
                 if removal['placement'] in fulfilled_requirements:
                     fulfilled_requirements.remove(removal['placement'])
+            del removal
             return True
         return False
 
@@ -510,8 +531,6 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
     plan.append(plan_member_sol)
     if debug: print('DONE')
     
-    # key_items_to_place.remove(settings_dict['starting_weapon'])
-
     if settings_dict['magician_item'] != 'RANDOM':
         if debug: print('Placing magician_item...')
         # Take the item setting and add it to the plan
@@ -554,6 +573,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                 for sub_region in map.REGIONS[region_id]['connected_regions']:
                     if sub_region in all_neighbors:
                         valid_regions.append(sub_region)
+        del region_id
 
         # the possible placements (requirements) for those regions
         valid_requirements = []
@@ -561,6 +581,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
             for req in map.REGIONS[valid_id]['requirements']:
                 if req not in fulfilled_requirements:
                     valid_requirements.append(req)
+        del valid_id
 
         return distinctify(valid_requirements)
 
@@ -580,6 +601,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                 for sub_region in map.REGIONS[region_id]['connected_regions']:
                     if sub_region in all_neighbors:
                         valid_regions.append(sub_region)
+        del region_id
 
         # Get a list of checks that are currently compatible with the world 
         # and with the list of fulfilled requirements.
@@ -592,12 +614,14 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                     break 
             if region_is_ok:
                 valid_locations += map.REGIONS[valid_id]['checks']
+        del valid_id
 
         # Make sure each check/location is not already placed.
         return_locations = []
         for loc in valid_locations:
             if loc not in placed_locations:
                 return_locations.append(loc)
+        del loc
 
         return distinctify(return_locations)
 
@@ -616,15 +640,6 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
 
     current_hub = 0
     current_act = map.REGIONS[current_hub]['act']
-    # debug_req = json.loads('{"type": "npc_id", "name": "NPC_VILLAGE_CHIEF"}')
-    # debug_locations = get_local_locations(current_hub)
-    # print(len(debug_locations))
-    # print(json.dumps(debug_locations))
-    # debug_locations = random_manager.shuffle_list(debug_locations)
-    # print(len(debug_locations))
-    # print(json.dumps(debug_locations))
-
-    # sys.exit('TESTING')
 
     # Now we need to do the following:
     # 1. We need to compile a list of available placemenets (requirements) (items and npcs)
@@ -637,7 +652,6 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
     total_restarts = 0
     region_restarts = 0
     while len(get_placements()) < len(all_requirements):
-        # idx += 1
         next_hub = get_next_hub(world_graph, current_hub)
         if region_restarts >= constants.MAX_LOOPS:
             print('ERROR: maximum region re-rolls reached. There is an issue with the logic...')
@@ -649,14 +663,17 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         is_flag = False
         if next_requirement and next_requirement['type'] == 'flag':
             is_flag = True
-            # if debug: print('next requirement is a flag...')
+            # if debug and verbose: print('next requirement is a flag...')
             actual_item = random_manager.get_random_list_member(map.FLAGS[next_requirement['name']])
             flag_requirement = next_requirement
             next_requirement = {'type': 'item', 'name': actual_item}
         possible_locations = random_manager.shuffle_list(get_local_locations(current_hub))
-        # if debug: print('possible_locations:', json.dumps(possible_locations))
+        # if debug and verbose: print('possible_locations:', json.dumps(possible_locations))
         
         placed_check_count = len(placed_locations)
+        
+        # Loop through the locations until we find one that is compatible 
+        # with the randomly selected item/npc
         for use_loc in possible_locations:
             if check_is_compatible(use_loc, next_requirement):
                 # Place that check.
@@ -668,10 +685,12 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                 place_check(placement)
                 if is_flag:
                     fulfilled_requirements.append(flag_requirement)
+                # Break the loop because the check has been placed.
                 break
+        del use_loc
 
         if len(placed_locations) == placed_check_count:
-            # We couldn't place a thing, so there was no place for it.
+            # We couldn't place the thing, so there was no place for it.
             # Let's reset some checks and try the randomization again.
             if debug:
                 print('Unplacing act checks...')
@@ -680,28 +699,211 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
             # For now just rerolling the rng seems to work.
             unplace_act(current_act)
             region_restarts += 1
-
+            total_restarts += 1
 
         if region_requirements_fulfilled(next_hub):
             current_hub = next_hub
             current_act = map.REGIONS[current_hub]['act']
-            total_restarts += region_restarts
+            if debug: print('Act Restarts:', region_restarts)
             region_restarts = 0
 
-            # if debug: 
-            #     print('Act:', current_act)
-                # print('Checks placed:', len(placed_locations))
-    print('Total Restarts:', total_restarts)
+    if debug or verbose: print('Total Restarts:', total_restarts)
 
+    ###########
+    ## TRASH ##
+    ###########
     # Now time to dole out the "trash"
-    # Save this for another time I think.
+    
+    # Place useless NPCs
+    placed_checks['trash_npcs'] = []
+    remaining_npcs = random_manager.shuffle_list(map.NON_KEY_NPCS)
 
-    if debug:
+    for npc_name in remaining_npcs:
+
+        for loc in all_check_locations:
+            if loc not in placed_locations and loc['type'] == 'lair':
+                npc_placement = {
+                    'act': 'trash_npcs',
+                    'location': loc,
+                    'placement': {'type': 'npc_id', 'name': npc_name}
+                }
+                place_check(npc_placement)
+    del npc_name
+
+    # Now place slightly less useless trash items.
+    if 'only_required' in settings_dict and settings_dict['only_required']:
+        # Place trash instead of non-placed key items
+        pass
+    else:
+        # place non-required key items
+        # Includes most armor, most magic, goat food, many swords, bracelets, etc
+        if debug: print('Placing non-required key items...')
+        placed_checks['non_required'] = []
+        placed_items = []
+        for placement in get_placements():
+            if placement['placement']['type'] == 'item':
+                placed_items.append(placement['placement']['name'])
+        del placement
+
+        # Cycle through all key items...
+        for item in map.KEY_ITEMS:
+            # Key item must not have been placed already.
+            if item not in placed_items:
+                # Cycle through all locations
+                for loc in all_check_locations:
+                    # Is the location compatible?
+                    if loc not in placed_locations and loc['type'] in ['chest', 'item']:
+                        non_required = {
+                            'act': 'non_required',
+                            'location': loc,
+                            'placement': {'type': 'item', 'name': item}
+                        }
+                        place_check(non_required)
+                        break
+        del item
+        if debug: print('DONE')
+
+    # Now place the really useless trash
+    # 1. Decide the trash list...
+    trash_list = constants.VANILLA_TRASH_WEIGHTS.keys()
+    if 'trash' in settings_dict:
+        new_trash = False
+        if type(settings_dict['trash']) is list and settings_dict['trash'] != []:
+            trash_list = settings_dict['trash']
+            new_trash = True
+        elif type(settings_dict['trash']) is str:
+            # Check for commas, else just use the string.
+            if ',' in settings_dict['trash']:
+                trash_list = settings_dict['trash'].upper().split(',')
+            else:
+                trash_list = [settings_dict['trash']].upper()
+            new_trash = True
+        # Now check the trash list to make sure it's ok.
+        if new_trash:
+            new_list = []
+            for item in trash_list:
+                if item in rom_data.ITEMS.keys():
+                    new_list.append(item)
+            trash_list = new_list
+            del new_list
+
+    if len(trash_list) == 0:
+        trash_list = ['NOTHING']
+
+    # Multiply trash...
+    use_trash = []
+    if 'trash_mode' not in settings_dict or settings_dict['trash_mode'] == 'vanilla':
+        # Use vanilla trash weights based on the existing 
+        for trash_item in trash_list:
+            for x in range(constants.VANILLA_TRASH_WEIGHTS[trash_item]):
+                use_trash.append(trash_item)
+        del trash_item
+    elif settings_dict['trash_mode'] == 'equalized':
+        trash_count = 0
+        for key in constants.VANILLA_TRASH_WEIGHTS.keys():
+            trash_count += constants.VANILLA_TRASH_WEIGHTS[key]
+        del key 
+
+        # Put an equal number of each item in the pool.
+        trash_copies = math.floor(trash_count / len(trash_list))
+
+        for trash_item in trash_list:
+            for x in range(trash_copies):
+                use_trash.append(trash_item)
+        del trash_item 
+    # Future methods of trash go here...
+
+    use_trash = random_manager.shuffle_list(use_trash)
+    # Double the list because the exact right number may not have come out.
+    use_trash += use_trash
+
+    gem_amounts = []
+    for key in constants.GEM_EXP_AMOUNTS.keys():
+        for x in range(constants.GEM_EXP_AMOUNTS[key]):
+            amount = int(int(key) * settings_dict['gem_scaling'])
+            gem_amounts.append(amount)
+
+    gem_amounts = random_manager.shuffle_list(gem_amounts)
+    if verbose: print('Gem/EXP Amounts:', gem_amounts)
+    # LOL. I kind of hate this, but it's fine for now.
+    gem_amounts += gem_amounts + gem_amounts + gem_amounts + gem_amounts
+    
+    if debug: print('Distinct Trash Count:', len(trash_list))
+    if debug and verbose: print('Trash List:', trash_list)
+    if debug: print('Actual Trash Count:', len(use_trash))
+
+    # Finally, place the trash in locations...
+    placed_checks['trash_items'] = []
+    for item in use_trash:
+        # Go through all the locations AGAIN
+        for loc in all_check_locations:
+            # Make sure we can actually place it there...
+            if loc['type'] in ['item', 'chest'] and loc not in placed_locations:
+                # Place the trash.
+                trash_placement = {
+                    'act': 'trash_items',
+                    'location': loc,
+                    'placement': {'type': 'item', 'name': item}
+                }
+                if item == 'GEMS_EXP':
+                    trash_placement['placement']['amount'] = gem_amounts.pop(0)
+                # Come back to here. Check to see if item is GEM_EXP
+                # If it is, follow the method for assigning an amount...
+                place_check(trash_placement)
+                break
+        
+        if len(placed_locations) >= len(all_check_locations):
+            break
+
+    flags_fulfilled = 0
+    total_placements = 0
+    item_placement_count = 0
+    total_item_locations = 0
+    item_locations_filled = 0
+    npc_placement_count = 0
+    total_npc_locations = 0
+    npc_locations_filled = 0
+
+    for req in fulfilled_requirements:
+        if req['type'] == 'flag': flags_fulfilled += 1
+    del req
+
+    for placement in get_placements():
+        total_placements += 1
+        # Locations
+        if placement['location']['type'] in ['chest', 'item']: item_locations_filled += 1
+        if placement['location']['type'] == 'lair': npc_locations_filled += 1
+
+        # Check/Placement
+        if placement['placement']['type'] == 'npc_id': npc_placement_count += 1
+        if placement['placement']['type'] == 'item': item_placement_count += 1
+    del placement
+
+    for region in map.REGIONS.keys():
+        for check in map.REGIONS[region]['checks']:
+            if check['type'] in ['chest', 'item']: total_item_locations += 1
+            if check['type'] == 'lair': total_npc_locations += 1
+    del region
+
+
+    if debug or verbose:
         print('Total Requirements:', len(all_requirements), '(no flag items)')
         print('Actual Requirements Fulfilled:', len(fulfilled_requirements), '(includes flags and flag items)')
         print('Placed Check Locations:', len(get_placements()))
         print('Total Check Locations:', len(all_check_locations))
         print('Remaining Locations to Populate:', len(all_check_locations) - len(get_placements()))
+
+    if verbose:
+        print('Extra Stats:')
+        print('Flags Fulfilled:', flags_fulfilled)
+        print('Items Placed:', item_placement_count)
+        print('Item Locations Filled:', item_locations_filled)
+        print('Total Item Locations:', total_item_locations)
+        print('NPCs Placed:', npc_placement_count)
+        print('NPC Locations Filled:', npc_locations_filled)
+        print('Total NPC Locations:', total_npc_locations)
+        print('Total Placements:', total_placements)
+        
 
     return placed_checks
 
@@ -720,4 +922,3 @@ if __name__ == '__main__':
     output_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'check_spoiler.json')
     with open(output_file, 'w') as f:
         f.write(json.dumps(randomization, indent = 4))
-    # print(json.dumps(randomize_result, indent = 4))

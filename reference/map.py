@@ -693,6 +693,7 @@ REGIONS = {
         "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
             {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
+            # {"type": "item", "name": "MERMAIDS_TEARS"}, # Opted not to make this required.
        ],
         "act": 3
     },

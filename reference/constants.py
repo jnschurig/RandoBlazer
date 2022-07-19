@@ -83,3 +83,28 @@ DEFAULT_RANDO_SETTINGS = {
     'starting_weapon': 'RANDOM',
     'magician_item': 'RANDOM',
 }
+
+TRASH_FILL_METHODS = ['vanilla', 'equalized',]
+
+VANILLA_TRASH_WEIGHTS = {
+	'MEDICAL_HERB': 19,
+	'STRANGE_BOTTLE': 7,
+	'GEM_EXP': 33,
+	'NOTHING': 3,
+}
+
+GEM_EXP_AMOUNTS = {
+	'1': 2,
+	'12': 1,
+	'30': 1,
+	'40': 1,
+	'50': 5,
+	'60': 2,
+	'80': 6,
+	'100': 4,
+	'150': 2,
+	'200': 2,
+	'250': 1,
+	'300': 5,
+	'400': 1,
+}
