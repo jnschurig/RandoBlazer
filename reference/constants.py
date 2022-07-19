@@ -89,7 +89,7 @@ TRASH_FILL_METHODS = ['vanilla', 'equalized',]
 VANILLA_TRASH_WEIGHTS = {
 	'MEDICAL_HERB': 19,
 	'STRANGE_BOTTLE': 7,
-	'GEM_EXP': 33,
+	'GEMS_EXP': 33,
 	'NOTHING': 3,
 }
 
