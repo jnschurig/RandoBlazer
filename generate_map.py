@@ -12,9 +12,9 @@ valid_args = '''Valid Arguments:
 -a         --world_type             | Determines the method for locating valid places to put checks. Try `--world_type help` for more detail.
 -t <MODE>  --trash_mode <MODE>      | Determines how trash is dispersed. Default vanilla. Use ''' + str(constants.TRASH_FILL_METHODS) + '''
 -u <ITEMs> --trash <ITEMs>          | A comma separated list (or list object) of all items to be used as trash.
--g         --random_gem_amounts     | Randomize the gem amounts on the gem/xp checks. 
 -p {plan}  --plan {plan}            | A dict or json object with pre-determined placements. Use --plan help for more detail.
 -o         --only_required          | Only add place required key items. Will exclude many swords, most armor, most magic, and goat food. Instead trash items will be placed. 
+-g <SCALE> --gem_scaling <SCALE>    | Multiply the gem/exp amounts from chests and NPCs by the input scale. Default 1 (gives vanilla gem amounts).
 -z         --randomize_hubs         | Randomize the world hub placement. Not implemented
 '''
 
@@ -69,13 +69,14 @@ def main(argv):
         'plan': [],
         'only_required': False, 
         'randomize_hubs': False, # Not an implemented feature yet...
+        'gem_scaling': 1, 
         'debug': False,
         'verbose': False,
     }
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hs:wm:a:t:u:p:ozdv',['help','seed=','starting_weapon=','magician_item=','world_type=','trash_mode=','trash=','plan=','only_required','randomize_hubs','debug','verbose'])
+        opts, args = getopt.getopt(argv,'hs:wm:a:t:u:p:ozg:dv',['help','seed=','starting_weapon=','magician_item=','world_type=','trash_mode=','trash=','plan=','only_required','randomize_hubs','gem_scaling=','debug','verbose'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -102,6 +103,8 @@ def main(argv):
             arguments['only_required'] = True
         elif opt in ('-z', '--randomize_hubs'):
             arguments['randomize_hubs'] = True
+        elif opt in ('-g', '--gem_scaling'):
+            arguments['gem_scaling'] = float(arg)
         elif opt in ('-d', '--debug'):
             arguments['debug'] = True
         elif opt in ('-v', '--verbose'):
@@ -389,6 +392,9 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         7: [],
         # 'trash': [],
     }
+
+    if 'gem_scaling' not in settings_dict:
+        settings_dict['gem_scaling'] = 1
 
     if debug:
         print('Initializing variables...')
@@ -792,7 +798,6 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
             for x in range(constants.VANILLA_TRASH_WEIGHTS[trash_item]):
                 use_trash.append(trash_item)
         del trash_item
-        # use_trash += random_manager.shuffle_list(use_trash)
     elif settings_dict['trash_mode'] == 'equalized':
         trash_count = 0
         for key in constants.VANILLA_TRASH_WEIGHTS.keys():
@@ -812,6 +817,17 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
     # Double the list because the exact right number may not have come out.
     use_trash += use_trash
 
+    gem_amounts = []
+    for key in constants.GEM_EXP_AMOUNTS.keys():
+        for x in range(constants.GEM_EXP_AMOUNTS[key]):
+            amount = int(int(key) * settings_dict['gem_scaling'])
+            gem_amounts.append(amount)
+
+    gem_amounts = random_manager.shuffle_list(gem_amounts)
+    if verbose: print('Gem/EXP Amounts:', gem_amounts)
+    # LOL. I kind of hate this, but it's fine for now.
+    gem_amounts += gem_amounts + gem_amounts + gem_amounts + gem_amounts
+    
     if debug: print('Distinct Trash Count:', len(trash_list))
     if debug and verbose: print('Trash List:', trash_list)
     if debug: print('Actual Trash Count:', len(use_trash))
@@ -829,6 +845,8 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                     'location': loc,
                     'placement': {'type': 'item', 'name': item}
                 }
+                if item == 'GEMS_EXP':
+                    trash_placement['placement']['amount'] = gem_amounts.pop(0)
                 # Come back to here. Check to see if item is GEM_EXP
                 # If it is, follow the method for assigning an amount...
                 place_check(trash_placement)
