@@ -44,7 +44,7 @@ with st.sidebar:
 
     st.session_state['trash_mode'] = st.radio('Trash Mode', constants.TRASH_FILL_METHODS)
 
-    item_list = list(rom_data.ITEMS.keys())
+    item_list = list(constants.VANILLA_TRASH_WEIGHTS.keys())
     item_list.sort()
     with st.expander('Trash Selection (Leave blank for vanilla)', expanded=False):
         for item in item_list:
@@ -54,7 +54,7 @@ with st.sidebar:
             elif not add_item and item in st.session_state['trash']:
                 st.session_state['trash'].remove(item)
 
-    st.session_state['only_required'] = st.radio('Only Required', [True, False])
+    st.session_state['only_required'] = st.radio('Only Required', [True, False], 1)
 
     st.session_state['gem_scaling'] = st.slider('Gem/Exp Scaling', 0.0, 10.0, 1.0, 0.1)
 
@@ -105,11 +105,14 @@ if ready:
     # st.json(randomization, expanded=False)
     for act in randomization.keys():
         with st.expander(str(act), expanded=False):
-            for item in randomization[act]:
-                # write_string = item['placement']['type'] + ' ' + item['placement']['name'] + ' \n'
-                # write_string += '@ \n'
-                # write_string += item['location']['type'] + ' ' + item['location']['name']
-                # st.write(item['placement']['type'] + ' ' + item['placement']['name'])
-                # st.write('@')
-                # st.write(item['location']['type'] + ' ' + item['location']['name'])
-                st.write(item)
+            if act == 'settings':
+                st.json(randomization[act])
+            else:
+                for item in randomization[act]:
+                    # write_string = item['placement']['type'] + ' ' + item['placement']['name'] + ' \n'
+                    # write_string += '@ \n'
+                    # write_string += item['location']['type'] + ' ' + item['location']['name']
+                    # st.write(item['placement']['type'] + ' ' + item['placement']['name'])
+                    # st.write('@')
+                    # st.write(item['location']['type'] + ' ' + item['location']['name'])
+                    st.write(item)

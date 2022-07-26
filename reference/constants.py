@@ -84,7 +84,7 @@ DEFAULT_RANDO_SETTINGS = {
     'magician_item': 'RANDOM',
 }
 
-TRASH_FILL_METHODS = ['vanilla', 'equalized',]
+TRASH_FILL_METHODS = ['vanilla', 'equalized', 'chaotic',]
 
 VANILLA_TRASH_WEIGHTS = {
 	'MEDICAL_HERB': 19,
@@ -92,6 +92,8 @@ VANILLA_TRASH_WEIGHTS = {
 	'GEMS_EXP': 33,
 	'NOTHING': 3,
 }
+
+CHAOS_TRASH_MIN_MAX = [1, 10]
 
 GEM_EXP_AMOUNTS = {
 	'1': 2,
