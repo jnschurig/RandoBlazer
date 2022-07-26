@@ -1,8 +1,5 @@
-# import os
 import streamlit as st
-from reference import constants, map, rom_data
-# import matplotlib as mpl
-# import graphviz
+from reference import constants, map
 
 import generate_map as rmap
 
@@ -105,14 +102,8 @@ if ready:
     # st.json(randomization, expanded=False)
     for act in randomization.keys():
         with st.expander(str(act), expanded=False):
-            if act == 'settings':
+            if type(randomization[act]) is dict:
                 st.json(randomization[act])
             else:
                 for item in randomization[act]:
-                    # write_string = item['placement']['type'] + ' ' + item['placement']['name'] + ' \n'
-                    # write_string += '@ \n'
-                    # write_string += item['location']['type'] + ' ' + item['location']['name']
-                    # st.write(item['placement']['type'] + ' ' + item['placement']['name'])
-                    # st.write('@')
-                    # st.write(item['location']['type'] + ' ' + item['location']['name'])
                     st.write(item)

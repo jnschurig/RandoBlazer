@@ -768,7 +768,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
 
     # Now place the really useless trash
     # 1. Decide the trash list...
-    trash_list = constants.VANILLA_TRASH_WEIGHTS.keys()
+    trash_list = list(constants.VANILLA_TRASH_WEIGHTS.keys())
     if 'trash' in settings_dict:
         new_trash = False
         if type(settings_dict['trash']) is list and settings_dict['trash'] != []:
@@ -905,6 +905,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
     # Add the settings to the spoiler log...
     placed_checks['settings'] = settings_dict
     placed_checks['settings']['trash_weights'] = trash_weights
+    placed_checks['settings']['trash'] = trash_list
 
     return placed_checks
 
