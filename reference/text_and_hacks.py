@@ -228,7 +228,7 @@ TRUE_DEATH_TOLL_INTRO_TEXT = {
 VICTORY_TEXT = [
     {
         "address": 0x5388,
-        "value": b'\x0B',
+        "value": ord(b'\x0B'),
         "note": "This changes the text address. Seems like there are two sets of text available."
     },
     {
@@ -314,7 +314,7 @@ TOOL_SHOP_OWNER_SON_TEXT = [
                  + START_YELLOW_STYLE_TEXT
                  + [map.LOCATION_ID_LOOKUP['ITEM_TEDDY']] 
                  + END_YELLOW_STYLE_TEXT
-                 + ['\rfor a billion dollars?', b'\x0C']
+                 + ['\rfor a billion dollars?', ord(b'\x0C')]
 
     },
 ]
@@ -338,7 +338,7 @@ WATER_MILL_KEEPER = [
 LISA_HACK = [ 
     {
         "address": 0x18A6F,
-        "value": b'\x00',
+        "value": ord(b'\x00'),
         "note": "Remove requirement to have certain item"
     },
     {
@@ -352,11 +352,11 @@ LISA_HACK = [
 TULIP_TEXT = [
     {
         "address": 0x1984E,
-        "value": b'\x9A'
+        "value": ord(b'\x9A')
     },
     {
         "address": 0x1989A,
-        "value": [b'\x10', 'Hello...']
+        "value": [ord(b'\x10'), 'Hello...']
     }
 ]
 
@@ -365,19 +365,19 @@ TULIP_TEXT = [
 VILLAGE_CHIEF = [
     {
         "address": 0x1A0C0,
-        "value": b'\x00',
+        "value": ord(b'\x00'),
         "note": 'This should be an "impossible" item id.'
     },
     {
         "address": 0x1A123,
-        "value": b'\x33',
+        "value": ord(b'\x33'),
         "note": 'Change pointer'
     },
     {
         "address": 0x1A125,
         "note": 'Content',
         "value": [b'\x02\x01\x91\xA1\x00\x5E'] # Text "Gives item"
-               + [b'\x02\x0A', b'\x00'] # Actually give the item # SECOND MEMBER IS RANDOMIZED ITEM ID.
+               + [b'\x02\x0A', ord(b'\x00')] # Actually give the item # SECOND MEMBER IS RANDOMIZED ITEM ID.
                + [b'\x02\x09\x00\x9B\x6B'] # Set flag: item has been given
                + [b'\x02\x01\x72\xA2\x6B'] # Text when item is already given
     },
@@ -386,7 +386,7 @@ VILLAGE_CHIEF = [
 LISA_DREAM_TEXT = [
     {
         "address": 0x1A522,
-        "value": [b'\x3C', b'Lisa, you must\rhelp this man.', b'\x3E'] # Closing quotation marks
+        "value": [ord(b'\x3C'), b'Lisa, you must\rhelp this man.', ord(b'\x3E')] # Closing quotation marks
                + TEXT_END_MULTI["ENDTYPE_88B9"]
     },
     {
@@ -402,7 +402,7 @@ MAGICIAN_TEXT = {
 
 UNDERGROUND_CRYSTAL_FAIRY_1 = {
     "address": 0x1AC5B,
-    "value": b'\x00'
+    "value": ord(b'\x00')
 }
 
 UNDERGROUND_CRYSTAL_FAIRY_2 = {
