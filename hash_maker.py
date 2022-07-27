@@ -1,4 +1,4 @@
-from reference import lairs, map, items
+from reference import lairs, map, rom_data
 
 # Using the contents of many of our reference data files,
 # Create a list of elements from the game. 
@@ -36,7 +36,7 @@ def generate_hash_members():
         for key_part in split_key:
             all_things.append(key_part)
 
-    for key in items.ITEMS.keys():
+    for key in rom_data.ITEMS.keys():
         all_things.append(key)
 
     good_things = []

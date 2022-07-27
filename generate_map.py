@@ -1,35 +1,82 @@
 import sys, getopt
-import os, json
+import json, os, math
 import networkx as nx
 from reference import map, constants, rom_data
 import random_manager
 
-valid_args =  "-h         --help                 | Information about the script. \n"
-valid_args += "-s <Seed>  --seed <Seed>          | The seed used to prime the random number generator. If one is not specified, one will be provided. \n"
-valid_args += "-w         --weapon               | Randomize starting weapon. If set, a random sword will be in the starting chest. Otherwise it will be Sword of Life. \n"
-valid_args += "-m <ITEM>  --magician_item <ITEM> | Choose what the magician will drop. Use 'has_magic' for a random spell. Leave blank for random item. \n"
-valid_args += "-a         --advanced_world       | Uses graph logic to eliminate certain areas from having early require progression. \n"
-valid_args += "-t <ITEM>  --all_trash <ITEM>     | Replaces all optional items with the trash item of your choosing. \n"
-valid_args += "-g         --random_gem_amounts   | Randomize the gem amounts on the gem/xp checks. \n"
+valid_args = '''Valid Arguments:
+-h         --help                   | Information about the script. 
+-s <Seed>  --seed <Seed>            | The seed used to prime the random number generator. If one is not specified, one will be provided. 
+-w <ITEM>  --starting_weapon <ITEM> | Randomize starting weapon. If set, a random sword will be in the starting chest. Otherwise it will be Sword of Life. 
+-m <ITEM>  --magician_item <ITEM>   | Choose what the magician will drop. Use 'has_magic' for a random spell. Leave blank for random item. 
+-a         --world_type             | Determines the method for locating valid places to put checks. Try `--world_type help` for more detail.
+-t <MODE>  --trash_mode <MODE>      | Determines how trash is dispersed. Default vanilla. Use ''' + str(constants.TRASH_FILL_METHODS) + '''
+-u <ITEMs> --trash <ITEMs>          | A comma separated list (or list object) of all items to be used as trash.
+-p {plan}  --plan {plan}            | A dict or json object with pre-determined placements. Use --plan help for more detail.
+-o         --only_required          | Only add place required key items. Will exclude many swords, most armor, most magic, and goat food. Instead trash items will be placed. 
+-g <SCALE> --gem_scaling <SCALE>    | Multiply the gem/exp amounts from chests and NPCs by the input scale. Default 1 (gives vanilla gem amounts).
+-z         --randomize_hubs         | Randomize the world hub placement. Not implemented
+'''
 
-help_info  = "Help Info: \n"
-help_info += "This script handles item placement througout the world. \n"
-help_info += "The arguments are intended to be used for testing by running this script all by itself. \n"
-help_info += "The networkx package is in use to assist with graph creation and traversal. \n"
+help_info = '''Help Info: 
+This script handles item placement througout the world. 
+The arguments are intended to be used for testing by running this script all by itself. 
+The networkx package is in use to assist with graph creation and traversal. 
+'''
+
+plan_help = '''Plan Help:
+Here I will put more detail regarding how to pre-place whatever. For choosing beginning 
+weapon or magician item, use --starting_weapon or --magician_item.
+'''
+
+world_type_help = '''World Type Help:
+Uses graph logic to control which areas of the game can having progression at a given point in time.
+- vanilla  - All regions in an act can have logical progression.
+- balanced - Some regions will be excluded from having your current logical progression. However, there 
+             may be later-required progression in a region that could be excluded from current progression.
+- Advanced - Same as balanced, but there is a higher likelihood of having entirely "dead" regions that have 
+             no progression whatsoever.
+'''
+
+starting_weapon_help = '''Starting Weapon Help
+Determine the starting weapon in the first chest of the game.
+Default: SWORD_OF_LIFE (Sword of Life)
+Valid options are any of the swords in the game or "random"
+Valid swords:''' + str(map.SWORDS) + ''' 
+'''
+
+magician_item_help = '''Magician Item Help
+Determine the second item in the game as given by the magician. In the vanilla game this would be the 
+fireball magic. 
+Default: random
+Valid items include:
+RANDOM
+'''
+
+for ref_item in rom_data.ITEMS.keys():
+    magician_item_help += ref_item + ' \n'
+    # mag_item_list.append(ref_item)
+del ref_item
 
 def main(argv):
     arguments = {
         'seed': None,
-        'weapon': False,
-        'magician_item': '',
-        'advanced_world': False,
-        'all_trash': '',
+        'starting_weapon': 'SWORD_OF_LIFE',
+        'magician_item': 'RANDOM',
+        'world_type': 'vanilla',
+        'trash_mode': 'vanilla',
+        'trash': [],
+        'plan': [],
+        'only_required': False, 
+        'randomize_hubs': False, # Not an implemented feature yet...
+        'gem_scaling': 1, 
         'debug': False,
+        'verbose': False,
     }
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hs:wm:at:d',['help','seed=','weapon','magician_item=','advanced_world','all_trash=','debug'])
+        opts, args = getopt.getopt(argv,'hs:wm:a:t:u:p:ozg:dv',['help','seed=','starting_weapon=','magician_item=','world_type=','trash_mode=','trash=','plan=','only_required','randomize_hubs','gem_scaling=','debug','verbose'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -40,65 +87,106 @@ def main(argv):
             sys.exit()
         elif opt in ('-s', '--seed'):
             arguments['seed'] = arg.strip()
-        elif opt in ('-w', '--weapon'):
-            arguments['weapon'] = True
+        elif opt in ('-w', '--starting_weapon'):
+            arguments['starting_weapon'] = arg.strip().upper()
         elif opt in ('-m', '--magician_item'):
-            arguments['magician_item'] = arg.strip()
-        elif opt in ('-a', '--advanced_world'):
-            arguments['advanced_world'] = True
-        elif opt in ('-t', '--all_trash'):
-            arguments['all_trash'] = arg.strip()
+            arguments['magician_item'] = arg.strip().upper()
+        elif opt in ('-a', '--world_type'):
+            arguments['world_type'] = arg.strip().lower()
+        elif opt in ('-t', '--trash_mode'):
+            arguments['trash_mode'] = arg.strip().lower()
+        elif opt in ('-u', '--trash'):
+            arguments['trash'] = arg.strip().upper()
+        elif opt in ('-p', '--plan'):
+            arguments['plan'] = arg
+        elif opt in ('-o', '--only_required'):
+            arguments['only_required'] = True
+        elif opt in ('-z', '--randomize_hubs'):
+            arguments['randomize_hubs'] = True
+        elif opt in ('-g', '--gem_scaling'):
+            arguments['gem_scaling'] = float(arg)
         elif opt in ('-d', '--debug'):
             arguments['debug'] = True
+        elif opt in ('-v', '--verbose'):
+            arguments['verbose'] = True
     
-    if False: print(args) # Thank you, I hate it.
+    if False: print(args) # Thanks, I hate it.
+
+    if type(arguments['plan']) is str and arguments['plan'].strip().lower() == 'help':
+        print(plan_help)
+        sys.exit(2)
+
+    if arguments['world_type'].lower() == 'help':
+        print(world_type_help)
+        sys.exit(1)
+
+    if arguments['world_type'] not in constants.VALID_WORLD_TYPES:
+        print('Selected world type:', arguments['world_type'])
+        print('Valid world types:', constants.VALID_WORLD_TYPES)
+        print('Try --world_type help for additional detail.')
+        sys.exit(2)
+
+    if arguments['starting_weapon'].lower() == 'help':
+        print(starting_weapon_help)
+        sys.exit(1)
+
+    if arguments['starting_weapon'] not in map.SWORDS + ['RANDOM']:
+        print('Selected starting weapon:', arguments['starting_weapon'])
+        print('Valid starting weapons:', map.SWORDS)
+        print('Try --starting_weapon help for additional detail.')
+        sys.exit(2)
+
+    if arguments['magician_item'].lower() == 'help':
+        print(magician_item_help)
+        sys.exit(1)
 
     return arguments
     # End main
-
-# Returns a list of requirements associated with a given check.
-def get_check_requirements(check):
-    for region_id in map.REGIONS.keys():
-        if check in map.REGIONS[region_id]['checks']:
-            return map.REGIONS[region_id]['requirements']
-    return []
-
-# Returns bool stating that a requirement is compatible with a check or not.
-def check_is_compatible(requirement, check):
-    if requirement in get_check_requirements(check):
-        return False
-    if requirement['type'] in ['item', 'flag'] and check['type'] in ['chest', 'item']:
-        return True 
-    elif requirement['type'] in ['npc_id'] and check['type'] in ['lair']:
-        return True
-    return False
-
-# Returns bool stating whether a check's requirements are all fulfilled or not.
-def is_check_ok(check, fulfilled_reqs):
-    completed_reqs = []
-    for check_req in get_check_requirements(check):
-        if check_req in fulfilled_reqs:
-            completed_reqs.append(True)
-        else:
-            completed_reqs.append(False)
-    return all(completed_reqs)
-
 
 # Input a list which may or may not be unique.
 # Output a list which is definitely unique.
 # If input is not a list type, return the same thing without changes.
 def distinctify(non_unique_list):
+    '''
+    Takes a list object as input and returns a list containing 
+    only unique items from the original list.
+
+    Example:
+    input list: [1, 2, 3, 4, 5, 1, 2]
+    output list: [1, 2, 3, 4, 5]
+    '''
     if type(non_unique_list) is not list:
         return non_unique_list
-    else:
-        unique_list = []
-        for item in non_unique_list:
-            if item not in unique_list:
-                unique_list.append(item)
+    
+    unique_list = []
+    for item in non_unique_list:
+        if item not in unique_list:
+            unique_list.append(item)
     return unique_list
-
+    
 def get_all_neighbors(graph, node):
     # neighbor_list should also include self, in case there are unfulfilled reqs there.
+    '''
+    Takes a networkx graph and one of its nodes as input. 
+    Returns a list containing all neighboring nodes, including 
+    node specified in the input. In a digraph type, it will respect 
+    directional relationships and not go "upstream".
+
+    Graph example 6 -> 0 -> 1
+                         -> 2
+                         -> 3
+
+    graph: (see above)
+    input node: 0 
+    returns: [0, 1, 2, 3]
+
+    input node: 6 
+    returns: [6, 0, 1, 2, 3]
+
+    node: 2
+    returns: [2]
+
+    '''
     neighbor_list = [node]
     for neighbor in graph.neighbors(node):
         neighbor_list.append(neighbor)
@@ -106,410 +194,733 @@ def get_all_neighbors(graph, node):
     return distinctify(neighbor_list)
 
 def item_to_flag_reqs(item_name):
+    '''
+    Takes an item)id as defined in the key values of 
+    rom_data.ITEMS.keys() and returns a list of any 
+    flags that might be associated with that item.
+
+    input: foo
+    return: []
+
+    input: SOUL_BLADE
+    return: ['can_cut_metal', 'has_thunder', 'can_cut_spirit']
+
+    input: MEDICAL_HERB
+    return: []
+    '''
     if item_name in map.ITEM_TO_FLAGS:
         return map.ITEM_TO_FLAGS[item_name]
     return []
 
-def randomize_map(settings={'weapon': False, 'magician_item': '',}):
+def get_hub_by_act(act_num):
+    '''
+    Input an act number and get its hub's region id.
+    Returns false if none could be found.
+    Example:
+    input -> 1
+    return -> 0
+
+    input -> 2
+    return -> 6
+
+    input -> 3
+    return -> 12
+    '''
+    for region in map.REGIONS:
+        if 'is_act_hub' in map.REGIONS[region] and map.REGIONS[region]['act'] == act_num:
+            return region
+
+    return False
+
+def get_next_hub(world_graph, hub=0):
+    ''' 
+    Returns the next hub above the input hub. This assumes
+    that hubs descend from each other with 7 as the first, 
+    and that sub regions descend from hubs. If multiple 
+    parents exist, it will return the first match.
+
+    This is its own function because it requires backwards 
+    digraph traversal.
+    Graph example 6 -> 0 -> 1
+                         -> 2
+                         -> 3
+
+    world_graph: (see above)
+    child: 0 
+    returns: [6]
+
+    world_graph: (see above)
+    child: 2
+    returns: [0]
+    '''
+
+    for x in nx.all_neighbors(world_graph, hub):
+        if x not in nx.neighbors(world_graph, hub):
+            return x
+
+    return hub
+
+def check_is_compatible(location, requirement):
+    '''
+    Takes a location or 'check' input and requirement 
+    and determines if they are compatible with each 
+    other. The location and requirement should be 
+    formatted exactly like the map.REGIONS checks and 
+    requirements that are found there.
+    Returns boolean True or False.
+    '''
+    if requirement['type'] == 'item' and location['type'] in ['chest', 'item']:
+        return True 
+    elif requirement['type'] == 'npc_id' and location['type'] == 'lair':
+        return True
+
+    return False
+
+def initialize_world(settings={'world_type': 'vanilla'}):
+    '''
+    Takes a settings dict with 'world_type' key and generates 
+    a graph based on that setting. As of this writing, valid 
+    settings are vanilla, balanced, and advanced. Returns a 
+    networkx digraph object. See world_type_help in same script 
+    for additional detail.
+    '''
     debug = False
-    if 'debug' in settings and settings['debug']: debug = True
-    region_map = map.REGIONS
-    region_id_list = list(region_map.keys())
-    act_hubs = []
+    if 'debug' in settings and settings['debug']: 
+        debug = True 
+        print(json.dumps(settings, indent = 4))
 
-    if debug: print('Starting item randomization...')
-    
-    # 0. Initialize fulilled requirements and placed items...
-    # all_reqs = []
-    fulfilled_reqs = []
-    placed_checks = []
-    # valid_regions = []
-    placed_items = []
-    spoiler_log = []
-
-    # Starting weapon check.
-    sword_of_life_check = map.REGIONS[0]['checks'][0]
-    if settings['weapon']: # Randomize the starting weapon
-        start_weapon = random_manager.get_random_list_member(map.SWORDS)
-        for alt_flag in item_to_flag_reqs(start_weapon):
-            fulfilled_reqs.append({'type': 'flag', 'name': alt_flag})
-    else:
-        start_weapon = map.SWORDS[0] # Sword of Life
-    spoiler_log.append(
-        {
-            'act': 1,
-            'check': sword_of_life_check,
-            'requirement': {'type': 'item', 'name': start_weapon}
-        }
-    )
-    placed_items.append(start_weapon)
-    placed_checks.append(sword_of_life_check)
-
-    # Magician item check (if specified)
-    if settings['magician_item'] != '': # Do something I guess
-        magician_item_check = map.REGIONS[0]['checks'][1]
-        magician_item = None
-        if settings['magician_item'] in map.FLAGS:
-            # This is a flag of some kind.
-            magician_item = random_manager.get_random_list_member(map.FLAGS[settings['magician_item']])
-            for alt_flag in item_to_flag_reqs(magician_item):
-                fulfilled_reqs.append({'type': 'flag', 'name': alt_flag})
-        elif settings['magician_item'] in list(rom_data.ITEMS.keys()):
-            magician_item = settings['magician_item']
-        
-        if magician_item != None:
-            spoiler_log.append(
-                {
-                    'act': 1,
-                    'check': magician_item_check,
-                    'requirement': {'type': 'item', 'name': magician_item}
-                }
-            )
-            placed_items.append(magician_item)
-            placed_checks.append(magician_item_check)
-
-    # Identify region hubs
-    # print(region_id_list)
-    for region_id in region_id_list:
-        if 'is_act_hub' in region_map[region_id] and region_map[region_id]['is_act_hub']:
-            act_hub = {
-                'act': region_map[region_id]['act'],
-                'hub_region': region_id
-            }
-            act_hubs.append(act_hub)
-
-    # Add 'next hub region' to act hubs.
-    # Not super proud of this, but it does work.
-    idx = 0
-    for hub in act_hubs:
-        idx += 1
-        if hub['act'] != 7:
-            hub['next_hub_region'] = act_hubs[idx]['hub_region']
-        # else: # I don't think we need a self reference here.
-        #     hub['next_hub_region'] = hub['hub_region']
-    
-    # Map regions relative to the hub
-    for act in act_hubs:
-        act['sub_regions'] = []
-        # Go through the regions AGAIN
-        for region_id in region_id_list:
-            if region_map[region_id]['act'] == act['act']:
-                if act['hub_region'] != region_id:
-                    act['sub_regions'].append(region_id)
-
-    # Build a randomized directional graph for determining eligible areas 
-    # for requirement fulfillment (placing checks)
+    if debug: print('Building world...')
     world_graph = nx.DiGraph()
-    reference_graph = nx.DiGraph()
 
-    # Connect hubs...
-    previous_node = None 
-    used_regions = []
+    # Steps
+    # 1. Get a LIST of hub region_ids.
+    hub_regions = []
+    # 2. Get a LIST of sub region_ids. 
+    sub_regions = []
+    for region_id in map.REGIONS.keys():
+        if 'is_act_hub' in map.REGIONS[region_id] and map.REGIONS[region_id]['is_act_hub']:
+            hub_regions.append(region_id)
+        else:
+            sub_regions.append(region_id)
+    del region_id
 
-    # Hubs need to be chronological, not random.
-    for hub in act_hubs:
-        if previous_node is not None:
-            world_graph.add_edge(hub['hub_region'], previous_node['hub_region'])
-            reference_graph.add_edge(hub['hub_region'], previous_node['hub_region'])
-            pass
-        previous_node = hub
-        used_regions.append(hub['hub_region'])
-        # Connect sub regions for reference graph.
-        # Used in determining valid regions later.
-        # reference_graph = world_graph
-        for sub_region in hub['sub_regions']:
-            reference_graph.add_edge(hub['hub_region'], sub_region)
+    # 3. Add the regions 
+    previous_hub = -1 # a non-existent hub id that is less than 0
+    for hub_id in hub_regions:
+        if previous_hub >= 0:
+            world_graph.add_edge(hub_id, previous_hub)
+            if debug: print('Edge:', hub_id, '->', previous_hub)
+        previous_hub = hub_id
+    del hub_id
+    del previous_hub
 
-    # In the event we do an "advanced" world.
-    if settings['advanced_world']:
-        # Randomly connect all other regions...
-        for region in region_id_list:
-            if region not in used_regions: # It's safe to add this region to the network.
-                source_node = random_manager.get_random_list_member(used_regions)
-                world_graph.add_edge(source_node, region)
-                used_regions.append(region)
-    else:
-        world_graph = reference_graph
+    if settings['world_type'] == 'vanilla':
+        # a. In a vanilla world, connect all regions to their parent hub
+        for hub_id in hub_regions:
+            act_number = map.REGIONS[hub_id]['act']
+            previous_id = hub_id
+            for sub_id in sub_regions:
+                if map.REGIONS[sub_id]['act'] == act_number:
+                    world_graph.add_edge(previous_id, sub_id)
+                    previous_id = sub_id
+            del sub_id
+        del hub_id
 
-    # Discover the "next" hub region and record it in the current act.
-    # 1. Go to first hub area.
-    for hub in act_hubs:
-        if debug: print('  Starting act', hub['act'])
-        # Determine valid regions
-        # 2. Get list of all "connected" regions in the graph to that hub area.
-        current_neighbors = get_all_neighbors(world_graph, hub['hub_region'])
-        next_hub_reqs = []
-        if 'next_hub_region' in hub:
-            # 3. Get the 'next' hub region requirements.
-            next_hub_reqs = region_map[hub['next_hub_region']]['requirements']
+    if settings['world_type'] == 'balanced':
+        # b. In balanced world, tie each sub region to a random hub
+        for sub_id in sub_regions:
+            random_hub = random_manager.get_random_list_member(hub_regions)
+            world_graph.add_edge(random_hub, sub_id)
+        del sub_id
+        del random_hub
 
-        if debug: print('    Next Hub Requirements:', next_hub_reqs)
-
-        valid_neighbors = []#[hub['hub_region']]
-        all_neighbors = get_all_neighbors(reference_graph, hub['hub_region'])
-        for neighbor in current_neighbors:
-            if neighbor in all_neighbors:
-                valid_neighbors.append(neighbor)
-
-        if debug: 
-            print('    Valid Neighbor Count:', len(valid_neighbors))
-            print('    Valid Neighbor List:', valid_neighbors)
-
-        # 4. Get all known checks and requirements in neighboring regions.
-        # We can use requirements from next hub region, but not checks.
-        local_reqs = next_hub_reqs 
-        local_checks = []
-        for local_region in valid_neighbors:
-            local_reqs += region_map[local_region]['requirements']
-            local_checks += region_map[local_region]['checks']
+    if settings['world_type'] == 'advanced':
+        # c. In advanced world, randomly tie each sub region to any other placed region (parent or sub)
+        placed_regions = hub_regions
+        for sub_id in sub_regions:
+            random_parent = random_manager.get_random_list_member(placed_regions)
+            world_graph.add_edge(random_parent, sub_id)
+            placed_regions.append(sub_id)
+        del sub_id
+        del random_parent
+        del placed_regions
         
-        local_reqs = distinctify(local_reqs)
-        # Remove completed requirements from the current local list of reqs.
-        for completed in fulfilled_reqs:
-            if completed in local_reqs:
-                local_reqs.remove(completed)
+    # 4. Add the DATA from the actual regions as an attribute of each node
+    #   a. iterate through the nodes and add the region info based on the region id.
 
-        # Remove used checks from local checks.
-        for completed in placed_checks:
-            if completed in local_checks:
-                local_checks.remove(completed)
-
-        # 5. Pick a requirement at random and fulfill it in a random region which does NOT require it.
-        local_reqs = random_manager.shuffle_list(local_reqs)
-        local_checks = random_manager.shuffle_list(local_checks)
-
-        if debug: print('    Total local requirements:', len(local_reqs))
-
-        for current_req in local_reqs:
-            if debug: print('      Placing requirement:', current_req)
-
-            # Find a valid check to use.
-            use_check = {}
-            for check in local_checks:
-                if check_is_compatible(current_req, check) and is_check_ok(check, fulfilled_reqs) and check not in placed_checks:
-                    use_check = check
-                    if debug: print('      In check:', use_check)
-                    break
-            
-            if use_check != {}: # There was at least one compatible check. Proceed.
-                if current_req['type'] == 'flag':
-                    flag_items = map.FLAGS[current_req['name']]
-                    flag_items = random_manager.shuffle_list(flag_items)
-                    for item in flag_items:
-                        if item not in placed_items:
-                            placed_items.append(item)
-                            fulfilled_reqs.append({'type': 'item','name': item})
-                            current_req['item'] = item
-                            break
-                    # Some flag items can fulfill multiple flags.
-                    # Cycle through the possible flags based on the item and "fulfill" as needed.
-                    for alt_flag in map.ITEM_TO_FLAGS[current_req['item']]:
-                        flag_req_dict = {'type': 'flag', 'name': alt_flag}
-                        if flag_req_dict not in fulfilled_reqs:
-                            if debug: print('    Alt Flag Enabled:', flag_req_dict)
-                            fulfilled_reqs.append(flag_req_dict)
-                    # print(fulfilled_reqs)
-                elif current_req['type'] == 'item':
-                    placed_items.append(current_req['name'])                    
-                
-                # If the current requirement goes into a check,
-                # the check requirements are now also required for next hub access.
-                if current_req in next_hub_reqs:
-                    next_hub_reqs += get_check_requirements(use_check)
-                    next_hub_reqs = distinctify(next_hub_reqs)
-                    # if debug: print('        Expanding Next Hub Requirements...')
-
-                placed_checks.append(use_check)
-                fulfilled_reqs.append(current_req)
-                spoiler_log.append(
-                    {
-                        'act': hub['act'],
-                        'check': use_check,
-                        'requirement': current_req
-                    }
-                )
-
-            hub_reqs_met = []
-            for hub_req in next_hub_reqs:
-                if hub_req in fulfilled_reqs:
-                    hub_reqs_met.append(True)
-                else:
-                    hub_reqs_met.append(False)
-            if all(hub_reqs_met):
-                print('    Hub requirements met')
-                break
-
-    # Act 8. Place all the other items and NPCs in remaining checks.
-    all_checks = []
-    all_lair_checks = [] 
-    all_item_checks = []
-    for region in list(region_map.keys()):
-        for check in region_map[region]['checks']:
-            all_checks.append(check)
-            if check['type'] == 'lair': all_lair_checks.append(check)
-            if check['type'] in ['item', 'chest']: all_item_checks.append(check)
-
-    extra_npcs = random_manager.shuffle_list(map.NON_KEY_NPCS)
-    extra_lairs = []
-    for lair in all_lair_checks:
-        if lair not in placed_checks:
-            extra_lairs.append(lair)
-    
-    # print(len(extra_lairs))
-    # print(len(extra_npcs))
-
-    for idx in range(len(extra_npcs)):
-        placed_checks.append(extra_lairs[idx])
-        spoiler_log.append(
-            {
-                'act': 8,
-                'check': extra_lairs[idx],
-                'requirement': {'type': 'npc_id', 'name': extra_npcs[idx]}
-            }
-        )
-    
-    # Hard coding a placement for something in the final lair. 
-    # It will be a duplicate npc, for some reason.
-    placed_checks.append(extra_lairs[-1])
-    spoiler_log.append(
-        {
-                'act': 8,
-                'check': extra_lairs[-1],
-                'requirement': {'type': 'npc_id', 'name': random_manager.get_random_list_member(extra_npcs)},
-                'note': 'This npc was placed as a duplicate because there are more lairs than available NPCs.'
-        }
-    )
-
-    # Place Items
-    remaining_item_checks = []
-    for check in all_item_checks:
-        if check not in placed_checks:
-            remaining_item_checks.append(check)
-    remaining_item_checks = random_manager.shuffle_list(remaining_item_checks)
-    
-    use_all_trash = False
-    if 'all_trash' in settings:
-        if settings['all_trash'] != '':
-            if settings['all_trash'] in list(rom_data.ITEMS.keys()):
-                use_all_trash = True
-
-    if use_all_trash: # Load us up with trash
-        for check in remaining_item_checks:
-            placed_checks.append(check)
-            spoiler_log.append(
-                {
-                    'act': 8,
-                    'check': check,
-                    'requirement': {'type': 'item', 'name': settings['all_trash']}
-                }
-            )
-    else: # Legit place the remaining items.
-        # 85 items to place?
-        remaining_items = []
-        all_items = map.NPC_ITEMS + map.CHEST_ITEMS
-        for item in all_items:
-            if item['item_id'] not in placed_items:
-                # Check to see if it is a gems/xp
-                if item['item_id'] == 'GEMS_EXP':
-                    use_item = {'item_id': item['item_id'], 'amount': item['amount']}
-                else:
-                    use_item = item['item_id']
-                remaining_items.append(use_item)
-
-        # Put one of each item in remaining checks.
-        for idx in range(len(remaining_item_checks)):
-        
-            for item in list(rom_data.ITEMS.keys()):
-                if item not in placed_items:
-                    placed_items.append(item)
-                    placed_checks.append(remaining_item_checks[idx])
-                    if item == 'GEMS_EXP':
-                        spoiler_log.append(
-                            {
-                                'act': 8,
-                                'check': remaining_item_checks[idx],
-                                'requirement': {'type': 'item', 'name': item, 'amount': 1} # Gotta have the single gem...
-                            }
-                        )
-                    else:
-                        spoiler_log.append(
-                            {
-                                'act': 8,
-                                'check': remaining_item_checks[idx],
-                                'requirement': {'type': 'item', 'name': item}
-                            }
-                        )
-                    break
-        
-        # In still remaining checks, put random distributions of trash until complete.
-        # Use the weights in constants.DEFAULT_TRASH_WEIGHTS
-        trash_list = []
-        trash_weight = constants.DEFAULT_TRASH_WEIGHTS
-        for trash_item in trash_weight.keys():
-            for x in range(trash_weight[trash_item]):
-                trash_list.append(trash_item)
-        
-        trash_list += trash_list + trash_list
-        trash_list = random_manager.shuffle_list(trash_list)
-
-        # Redo the remaining checks.
-        remaining_item_checks = []
-        for check in all_checks:
-            if check not in placed_checks:
-                remaining_item_checks.append(check)
-
-        idx = 0
-        for use_check in remaining_item_checks:
-            placed_items.append(trash_list[idx])
-            placed_checks.append(use_check)
-            if trash_list[idx] == 'GEMS_EXP':
-                # Add a random amount of gem/exp
-                spoiler_log.append(
-                    {
-                        'act': 8,
-                        'check': use_check,
-                        'requirement': {
-                            'type': 'item', 
-                            'name': trash_list[idx], 
-                            'amount': random_manager.get_random_int(
-                                constants.RANDOM_GEM_LIMIT[0],
-                                constants.RANDOM_GEM_LIMIT[1]
-                            )
-                        }
-                    }
-                )
-            else:
-                spoiler_log.append(
-                    {
-                        'act': 8,
-                        'check': use_check,
-                        'requirement': {'type': 'item', 'name': trash_list[idx]}
-                    }
-                )
-            idx += 1
 
     if debug:
-        print('  Total Checks:', len(all_checks))
-        print('  Checks Placed:', len(placed_checks))
-        print('  Item Checks:', len(all_item_checks))
-        print('  Items Placed:', len(placed_items))
-        print('  Lair Checks:', len(all_lair_checks))
-        print('  Lairs Placed:', len(placed_checks) - len(placed_items))
+        print('Total regions:', len(map.REGIONS.keys()))
+        print('Placed regions:', nx.number_of_nodes(world_graph))
+        print('Hub Regions:', hub_regions)
+        print('All Nodes:', nx.nodes(world_graph))
+
+    return world_graph
+
+def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIFE', 'magician_item': 'RANDOM', 'trash_mode': 'vanilla'}):
+    '''
+    Takes a networkx digraph object as generated by initialize_world() 
+    and a settings dict with a minimum of settings: 'starting_weapon', 
+    'magician_item', and 'trash', and randomly assigns items and npcs 
+    to the locations specified in map.REGIONS. Returns a json object 
+    structured like this:
+    {
+        '0': [list of checks and locations],
+        '1': [list of checks and locations],
+        ...
+        '7': [list of checks and locations],
+    }
+    Additional keys may be added to track trash and enemy placement.
+    '''
+    debug = False 
+    if 'debug' in settings_dict and settings_dict['debug']:
+        debug = True
+        print(json.dumps(settings_dict, indent = 4))
+
+    verbose = False 
+    if 'verbose' in settings_dict and settings_dict['verbose']:
+        verbose = True
+    # Initialize states
+    placed_checks = {
+        0: [],
+        1: [],
+        2: [],
+        3: [],
+        4: [],
+        5: [],
+        6: [],
+        7: [],
+        # 'trash': [],
+    }
+
+    if 'gem_scaling' not in settings_dict:
+        settings_dict['gem_scaling'] = 1
+
+    if 'trash_mode' not in settings_dict:
+        settings_dict['trash_mode'] = 'vanilla'
+
+    if debug:
+        print('Initializing variables...')
+    placed_locations = []
+    fulfilled_requirements = []
+    all_requirements = []
+    all_check_locations = []
+    for region in map.REGIONS.keys():
+        all_check_locations += map.REGIONS[region]['checks']
+        for req in map.REGIONS[region]['requirements']:
+            if req['type'] != 'flag':
+                all_requirements.append(req)
+    del region
+    if debug: print('all_check_locations: DONE')
+
+    all_requirements = distinctify(all_requirements)
+    if debug: print('all_requirements: DONE')
+
+    key_items_to_place = []
+    if debug: print('Gathering key items...')
+    for key_item in map.KEY_ITEMS:
+        key_items_to_place.append({'type': 'item', 'name': key_item})
+    del key_item
+    if debug: print('DONE')
+
+    if debug: print('Gathering key NPCs...')
+    for key_npc in map.NPC_ID.keys():
+        key_items_to_place.append({'type': 'npc_id', 'name': key_npc})
+    del key_npc
+    if debug: print('DONE')
+
+    key_items_to_place = random_manager.shuffle_list(key_items_to_place)
+    plan = []
+
+    # Specific functions for item randomization section.
+    def get_placements():
+        '''
+        Returns a flat list of all placement json objects.
+        See place_check() for an example of a placement 
+        json object.
+
+        This function should only be used within the 
+        context of the parent function
+        '''
+        placements = []
+        for key in placed_checks.keys():
+            placements += placed_checks[key]
+        del key
+
+        return placements
+
+    def place_check(placement_dict):
+        ''' 
+        Places an item or npc and appends all the correct lists.
+        A placement dict will look like this:
+        {
+            'act': 1, # (exclusively 1-7)
+            'location': {'type': 'chest', 'id': 0}, # (as seen in map.REGIONS under "checks")
+            'placement': {'type': 'npc_id', 'name': 'NPC_BRIDGE_GUARD'} # (as seen in map.REGEIONS under "requirements")
+        }
+
+        This function should only be used within the 
+        context of the parent function
+        '''
+        act_number = placement_dict['act']
+        del placement_dict['act']
+
+        for alt_flag in item_to_flag_reqs(placement_dict['placement']['name']):
+            flag_dict = {'type': 'flag', 'name': alt_flag}
+            if flag_dict not in fulfilled_requirements:
+                fulfilled_requirements.append({'type': 'flag', 'name': alt_flag})
+
+        if placement_dict['placement'] not in fulfilled_requirements:
+            fulfilled_requirements.append(placement_dict['placement'])
+
+        if placement_dict['placement'] not in all_requirements:
+            all_requirements.append(placement_dict['placement'])
+
+        # Pretty up the chest name...
+        if placement_dict['location']['type'] == 'chest' and 'name' not in placement_dict['location']:
+            placement_dict['location']['name'] = map.CHEST_ITEMS[placement_dict['location']['id']]['item_id']
+
+        placed_checks[act_number].append(placement_dict)
+        placed_locations.append(placement_dict['location'])
+        return True
+
+    def unplace_act(act):
+        '''
+        Resets the state of placed checks in an act. This is done to 
+        prevent a deadlock where non-essential checks get made, 
+        filling all the spots for essential ones. Flag-based ones 
+        and next hub requirement ones do not get reset.
+        '''
+        if act in placed_checks:
+            placements_to_remove = []
+            next_hub = get_next_hub(world_graph, get_hub_by_act(act))
+            for placement in placed_checks[act]:
+                if placement['placement']['type'] == 'item' and (item_to_flag_reqs(placement['placement']['name'])
+                                                                or placement['placement']['name'] in ['LUCKY_BLADE', 'BUBBLE_ARMOR']):
+                    # This logic states that if the type is an item 
+                    # and the item is related to flags,  or is 
+                    # bubble armor/ lucky blade, do nothing
+                    pass
+                elif placement['placement']['type'] == 'npc_id' and placement['placement'] in map.REGIONS[next_hub]['requirements']:
+                    # Check to see if the npc is one of the 
+                    # required ones for the next hub.
+                    # If so, do nothing.
+                    pass
+                else:
+                    # destroy that placement...
+                    placements_to_remove.append(placement)
+            del placement
+            
+            for removal in placements_to_remove:
+                placed_checks[act].remove(removal)
+                if removal['location'] in placed_locations:
+                    placed_locations.remove(removal['location'])
+                if removal['placement'] in fulfilled_requirements:
+                    fulfilled_requirements.remove(removal['placement'])
+            del removal
+            return True
+        return False
+
+    # Do starting weapon...
+    if debug: print('Placing starting_weapon...')
+    if settings_dict['starting_weapon'] == 'RANDOM':
+        settings_dict['starting_weapon'] = random_manager.get_random_list_member(map.SWORDS)
+
+    plan_member_sol = {
+        'act': 0,
+        'location': map.REGIONS[0]['checks'][0],
+        'placement': {'type': 'item', 'name': settings_dict['starting_weapon']}
+    }
+    plan.append(plan_member_sol)
+    if debug: print('DONE')
     
-    # Mise en place ^_^
-    return spoiler_log
+    if settings_dict['magician_item'] != 'RANDOM':
+        if debug: print('Placing magician_item...')
+        # Take the item setting and add it to the plan
+        plan_member_mag_item = {
+            'act': 0,
+            'location': map.REGIONS[0]['checks'][1],
+            'placement': {'type': 'item', 'name': settings_dict['magician_item']}
+        }
+        plan.append(plan_member_mag_item)
+        if debug: print('DONE')
+
+    if 'plan' in settings_dict:
+        plan += list(settings_dict['plan'])
+
+    if debug: print('Placing plan_members:', len(plan))
+    for plan_member in plan:
+        place_check(plan_member)
+    del plan_member
+    if debug: print('DONE')
+
+
+    def get_local_requirements(hub_region):
+        '''
+        Takes a node id as input and returns the non-fullfilled 
+        requirements associated with that node and all neighbors.
+        Also includes requirements for the parent node that is 
+        "upstream" one position in the digraph.
+
+        This was intended to be used with hub regions, but the 
+        function will still work just fine with any node in the 
+        graph.
+        '''
+        
+        # Get a list of valid regions, then gather up all 
+        valid_regions = [get_next_hub(world_graph, hub_region)]
+        all_neighbors = get_all_neighbors(world_graph, hub_region)
+        for region_id in all_neighbors:
+            if 'is_act_hub' in map.REGIONS[region_id]:
+                valid_regions.append(region_id)
+                for sub_region in map.REGIONS[region_id]['connected_regions']:
+                    if sub_region in all_neighbors:
+                        valid_regions.append(sub_region)
+        del region_id
+
+        # the possible placements (requirements) for those regions
+        valid_requirements = []
+        for valid_id in valid_regions:
+            for req in map.REGIONS[valid_id]['requirements']:
+                if req not in fulfilled_requirements:
+                    valid_requirements.append(req)
+        del valid_id
+
+        return distinctify(valid_requirements)
+
+    def get_local_locations(hub_region):
+        '''
+        Takes a hub region (again, doesn't have to be a hub) 
+        and returns all checks (or locations) that are not 
+        already placed that are also logically available 
+        based on already fulfilled requirements.
+        '''
+        # Get a list of regions (not including anything upstream)
+        valid_regions = []
+        all_neighbors = get_all_neighbors(world_graph, hub_region)
+        for region_id in all_neighbors:
+            if 'is_act_hub' in map.REGIONS[region_id]:
+                valid_regions.append(region_id)
+                for sub_region in map.REGIONS[region_id]['connected_regions']:
+                    if sub_region in all_neighbors:
+                        valid_regions.append(sub_region)
+        del region_id
+
+        # Get a list of checks that are currently compatible with the world 
+        # and with the list of fulfilled requirements.
+        valid_locations = []
+        for valid_id in valid_regions:
+            region_is_ok = True
+            for region_req in map.REGIONS[valid_id]['requirements']:
+                if region_req not in fulfilled_requirements:
+                    region_is_ok = False 
+                    break 
+            if region_is_ok:
+                valid_locations += map.REGIONS[valid_id]['checks']
+        del valid_id
+
+        # Make sure each check/location is not already placed.
+        return_locations = []
+        for loc in valid_locations:
+            if loc not in placed_locations:
+                return_locations.append(loc)
+        del loc
+
+        return distinctify(return_locations)
+
+    def region_requirements_fulfilled(region_id):
+        '''
+        Returns True if all requirements in a region 
+        have been met in fulfilled_requirements[].
+        Returns False if not.
+        '''
+        if 'requirements' in map.REGIONS[region_id]:
+            for req in map.REGIONS[region_id]['requirements']:
+                if req not in fulfilled_requirements:
+                    return False
+            return True
+        return False
+
+    current_hub = 0
+    current_act = map.REGIONS[current_hub]['act']
+
+    # Now we need to do the following:
+    # 1. We need to compile a list of available placemenets (requirements) (items and npcs)
+    #    this list may be customized at some point based on input. For now it includes everything...
+    #   a. Start a loop and iterate until complete...
+    if debug: 
+        print('Starting full randomization...')
+        print('Act:', current_act)
+
+    total_restarts = 0
+    region_restarts = 0
+    while len(get_placements()) < len(all_requirements):
+        next_hub = get_next_hub(world_graph, current_hub)
+        if region_restarts >= constants.MAX_LOOPS:
+            print('ERROR: maximum region re-rolls reached. There is an issue with the logic...')
+            sys.exit(2)
+        # 2. get a list of requirements we need to fulfill
+        next_requirement = random_manager.get_random_list_member(get_local_requirements(current_hub))
+        # if debug: print('next_requirement:', json.dumps(next_requirement))
+        # Is next requirement a flag? if so, choose a random item to fullfill it.
+        is_flag = False
+        if next_requirement and next_requirement['type'] == 'flag':
+            is_flag = True
+            # if debug and verbose: print('next requirement is a flag...')
+            actual_item = random_manager.get_random_list_member(map.FLAGS[next_requirement['name']])
+            flag_requirement = next_requirement
+            next_requirement = {'type': 'item', 'name': actual_item}
+        possible_locations = random_manager.shuffle_list(get_local_locations(current_hub))
+        # if debug and verbose: print('possible_locations:', json.dumps(possible_locations))
+        
+        placed_check_count = len(placed_locations)
+        
+        # Loop through the locations until we find one that is compatible 
+        # with the randomly selected item/npc
+        for use_loc in possible_locations:
+            if check_is_compatible(use_loc, next_requirement):
+                # Place that check.
+                placement = {
+                    'act': current_act,
+                    'location': use_loc,
+                    'placement': next_requirement,
+                }
+                place_check(placement)
+                if is_flag:
+                    fulfilled_requirements.append(flag_requirement)
+                # Break the loop because the check has been placed.
+                break
+        del use_loc
+
+        if len(placed_locations) == placed_check_count:
+            # We couldn't place the thing, so there was no place for it.
+            # Let's reset some checks and try the randomization again.
+            if debug:
+                print('Unplacing act checks...')
+
+            # Possibly need to pick a "next hub" requirement to fulfill.
+            # For now just rerolling the rng seems to work.
+            unplace_act(current_act)
+            region_restarts += 1
+            total_restarts += 1
+
+        if region_requirements_fulfilled(next_hub):
+            current_hub = next_hub
+            current_act = map.REGIONS[current_hub]['act']
+            if debug: print('Act Restarts:', region_restarts)
+            region_restarts = 0
+
+    if debug or verbose: print('Total Restarts:', total_restarts)
+
+    ###########
+    ## TRASH ##
+    ###########
+    # Now time to dole out the "trash"
+    
+    # Place useless NPCs
+    placed_checks['trash_npcs'] = []
+    remaining_npcs = random_manager.shuffle_list(map.NON_KEY_NPCS)
+
+    for npc_name in remaining_npcs:
+
+        for loc in all_check_locations:
+            if loc not in placed_locations and loc['type'] == 'lair':
+                npc_placement = {
+                    'act': 'trash_npcs',
+                    'location': loc,
+                    'placement': {'type': 'npc_id', 'name': npc_name}
+                }
+                place_check(npc_placement)
+    del npc_name
+
+    # Now place slightly less useless trash items.
+    if 'only_required' in settings_dict and settings_dict['only_required']:
+        # Place trash instead of non-placed key items
+        pass
+    else:
+        # place non-required key items
+        # Includes most armor, most magic, goat food, many swords, bracelets, etc
+        if debug: print('Placing non-required key items...')
+        placed_checks['non_required'] = []
+        placed_items = []
+        for placement in get_placements():
+            if placement['placement']['type'] == 'item':
+                placed_items.append(placement['placement']['name'])
+        del placement
+
+        # Cycle through all key items...
+        for item in map.KEY_ITEMS:
+            # Key item must not have been placed already.
+            if item not in placed_items:
+                # Cycle through all locations
+                for loc in all_check_locations:
+                    # Is the location compatible?
+                    if loc not in placed_locations and loc['type'] in ['chest', 'item']:
+                        non_required = {
+                            'act': 'non_required',
+                            'location': loc,
+                            'placement': {'type': 'item', 'name': item}
+                        }
+                        place_check(non_required)
+                        break
+        del item
+        if debug: print('DONE')
+
+    # Now place the really useless trash
+    # 1. Decide the trash list...
+    trash_list = list(constants.VANILLA_TRASH_WEIGHTS.keys())
+    if 'trash' in settings_dict:
+        new_trash = False
+        if type(settings_dict['trash']) is list and settings_dict['trash'] != []:
+            trash_list = settings_dict['trash']
+            new_trash = True
+        elif type(settings_dict['trash']) is str:
+            # Check for commas, else just use the string.
+            if ',' in settings_dict['trash']:
+                trash_list = settings_dict['trash'].upper().split(',')
+            else:
+                trash_list = [settings_dict['trash']].upper()
+            new_trash = True
+        # Now check the trash list to make sure it's ok.
+        if new_trash:
+            new_list = []
+            for item in trash_list:
+                if item in rom_data.ITEMS.keys():
+                    new_list.append(item)
+            trash_list = new_list
+            del new_list
+
+    if len(trash_list) == 0:
+        trash_list = ['NOTHING']
+
+    # Assign weights...
+    use_trash = []
+    trash_weights = {}
+    for item in trash_list:
+        if 'trash_mode' not in settings_dict or settings_dict['trash_mode'] == 'vanilla':
+            if item in constants.VANILLA_TRASH_WEIGHTS.keys():
+                trash_weights[item] = constants.VANILLA_TRASH_WEIGHTS[item]
+            else:
+                trash_weights[item] = 1
+        elif settings_dict['trash_mode'] == 'equalized':
+            trash_weights[item] = 1
+        elif settings_dict['trash_mode'] == 'chaotic':
+            trash_weights[item] = random_manager.get_random_int(constants.CHAOS_TRASH_MIN_MAX[0], constants.CHAOS_TRASH_MIN_MAX[1])
+    del item
+
+    for key in trash_weights.keys():
+        for x in range(trash_weights[key]):
+            use_trash.append(key)
+    del key
+
+    gem_amounts = []
+    for key in constants.GEM_EXP_AMOUNTS.keys():
+        for x in range(constants.GEM_EXP_AMOUNTS[key]):
+            amount = int(int(key) * settings_dict['gem_scaling'])
+            gem_amounts.append(amount)
+
+    if verbose: print('Gem/EXP Amounts:', gem_amounts)
+    if debug: print('Distinct Trash Count:', len(trash_list))
+    if debug and verbose: print('Trash List:', trash_list)
+    if debug: print('Actual Trash Count:', len(use_trash))
+
+    # Finally, place the trash in locations...
+    placed_checks['trash_items'] = []
+
+    trash_queue = []
+    gem_exp_queue = []
+    while len(get_placements()) < len(all_check_locations):
+        if len(trash_queue) == 0:
+            if debug: print('Refilling Trash...')
+            trash_queue += random_manager.shuffle_list(use_trash)
+        if len(gem_exp_queue) == 0:
+            if debug: print('Refilling Gem/EXP...')
+            gem_exp_queue += random_manager.shuffle_list(gem_amounts)
+
+        trash_item = trash_queue.pop(0)
+        for loc in all_check_locations:
+            # Make sure we can actually place it there...
+            if loc['type'] in ['item', 'chest'] and loc not in placed_locations:
+                trash_placement = {
+                    'act': 'trash_items',
+                    'location': loc,
+                    'placement': {'type': 'item', 'name': trash_item}
+                }
+                # Check to see if item is GEM_EXP
+                if trash_item == 'GEMS_EXP':
+                    # Assign a gem/exp amount from the queue
+                    trash_placement['placement']['amount'] = gem_exp_queue.pop(0)
+                place_check(trash_placement)
+                break
+
+    flags_fulfilled = 0
+    total_placements = 0
+    item_placement_count = 0
+    total_item_locations = 0
+    item_locations_filled = 0
+    npc_placement_count = 0
+    total_npc_locations = 0
+    npc_locations_filled = 0
+
+    for req in fulfilled_requirements:
+        if req['type'] == 'flag': flags_fulfilled += 1
+    del req
+
+    for placement in get_placements():
+        total_placements += 1
+        # Locations
+        if placement['location']['type'] in ['chest', 'item']: item_locations_filled += 1
+        if placement['location']['type'] == 'lair': npc_locations_filled += 1
+
+        # Check/Placement
+        if placement['placement']['type'] == 'npc_id': npc_placement_count += 1
+        if placement['placement']['type'] == 'item': item_placement_count += 1
+    del placement
+
+    for region in map.REGIONS.keys():
+        for check in map.REGIONS[region]['checks']:
+            if check['type'] in ['chest', 'item']: total_item_locations += 1
+            if check['type'] == 'lair': total_npc_locations += 1
+    del region
+
+
+    if debug or verbose:
+        print('Total Requirements:', len(all_requirements), '(no flag items)')
+        print('Actual Requirements Fulfilled:', len(fulfilled_requirements), '(includes flags and flag items)')
+        print('Placed Check Locations:', len(get_placements()))
+        print('Total Check Locations:', len(all_check_locations))
+        print('Remaining Locations to Populate:', len(all_check_locations) - len(get_placements()))
+
+    if verbose:
+        print('Extra Stats:')
+        print('Flags Fulfilled:', flags_fulfilled)
+        print('Items Placed:', item_placement_count)
+        print('Item Locations Filled:', item_locations_filled)
+        print('Total Item Locations:', total_item_locations)
+        print('NPCs Placed:', npc_placement_count)
+        print('NPC Locations Filled:', npc_locations_filled)
+        print('Total NPC Locations:', total_npc_locations)
+        print('Total Placements:', total_placements)
+        
+    # Add the settings to the spoiler log...
+    placed_checks['settings'] = settings_dict
+    placed_checks['settings']['trash_weights'] = trash_weights
+    placed_checks['settings']['trash'] = trash_list
+
+    return placed_checks
 
 if __name__ == '__main__':
     settings_dict = main(sys.argv[1:])
     settings_dict['seed'] = random_manager.start_randomization(settings_dict['seed'])
     print('Seed:', settings_dict['seed'])
-    print('Randomize Starting Weapon:', settings_dict['weapon'])
+    print('Starting Weapon:', settings_dict['starting_weapon'])
     print('Magician Item:', settings_dict['magician_item'])
-    print('Advanced World:', settings_dict['advanced_world'])
+    print('World Type:', settings_dict['world_type'])
     print('Debug:', settings_dict['debug'])
 
-    randomize_result = randomize_map(settings_dict)
+    world_graph = initialize_world(settings_dict)
+    randomization = randomize_items(world_graph, settings_dict)
+
     output_file = os.path.join(constants.REPOSITORY_ROOT_DIR, 'check_spoiler.json')
     with open(output_file, 'w') as f:
-        f.write(json.dumps(randomize_result, indent = 4))
-    # print(json.dumps(randomize_result, indent = 4))
+        f.write(json.dumps(randomization, indent = 4))

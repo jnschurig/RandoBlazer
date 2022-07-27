@@ -73,3 +73,40 @@ BASE_LOOKUP = {
 	34: 'y',
 	35: 'z'
 }
+
+VALID_WORLD_TYPES = ['vanilla', 'balanced', 'advanced']
+
+VALID_TRASH_SETTINGS = ['vanilla', 'random', '<ITEM>', 'none']
+
+DEFAULT_RANDO_SETTINGS = {
+    'world_type': 'balanced',
+    'starting_weapon': 'RANDOM',
+    'magician_item': 'RANDOM',
+}
+
+TRASH_FILL_METHODS = ['vanilla', 'equalized', 'chaotic',]
+
+VANILLA_TRASH_WEIGHTS = {
+	'MEDICAL_HERB': 19,
+	'STRANGE_BOTTLE': 7,
+	'GEMS_EXP': 33,
+	'NOTHING': 3,
+}
+
+CHAOS_TRASH_MIN_MAX = [1, 10]
+
+GEM_EXP_AMOUNTS = {
+	'1': 2,
+	'12': 1,
+	'30': 1,
+	'40': 1,
+	'50': 5,
+	'60': 2,
+	'80': 6,
+	'100': 4,
+	'150': 2,
+	'200': 2,
+	'250': 1,
+	'300': 5,
+	'400': 1,
+}
