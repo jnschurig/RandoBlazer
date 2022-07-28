@@ -1,4 +1,5 @@
 
+# Each 'Sprite' address seems to require 3 bytes. 
 SPRITE_ADDRESSES = {
     "act1": [
         0x9CCA, 0x9CCE, 0x9CD2, 0x9CD6, 0x9CDA, 0x9CDE, 0x9CE2, 0x9CE6, 0x9CEA, 0x9CEE,
@@ -106,5 +107,5 @@ ITEMS = {
     "PURPLE_STONE"   : {"rom_value": b'\x3E', "pretty_name": "Purple Stone"},
     "BLACK_STONE"    : {"rom_value": b'\x3F', "pretty_name": "Black Stone"},
     "MAGIC_BELL"     : {"rom_value": b'\x40', "pretty_name": "Magic Bell"},
-    "GEMS_EXP"       : {"rom_value": b'\xFF'}
- }
+    "GEMS_EXP"       : {"rom_value": b'\xFF', "pretty_name": "Gems/EXP"},
+}
