@@ -513,9 +513,12 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         # disappear if you do the Dr Leo cutscene 
         # before talking to the queen.
         if 'name' in placement_dict['location'] and placement_dict['location']['name'] == 'ITEM_SUPER_BRACELET':
+            queen_loc = {'type': 'item', 'name': 'ITEM_QUEEN_MAGRIDD'}
+            # The queen magridd location needs to be added to the "all locations" list.
+            all_check_locations.append(queen_loc)
             new_dict = {
                 'act': act_number,
-                'location': {'type': 'item', 'name': 'ITEM_QUEEN_MAGRIDD'},
+                'location': queen_loc,
                 'placement': placement_dict['placement']
                 }
             place_check(new_dict)
