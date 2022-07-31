@@ -99,26 +99,30 @@ def write_checks(rom_data, placement_dict):
         else:
             # Cycle through the list...
             for placement in placement_dict[key]:
-                # 1. Set the location based on the location id...
-                address_offset = constants.CHEST_DATA_ADDRESS + (placement['location']['id'] * 3)
+                if placement['location']['type'] in ['chest', 'item']:
+                    # 1. Set the location based on the location id...
+                    address_offset = constants.CHEST_DATA_ADDRESS + (placement['location']['id'] * 3)
 
-                amount = 0
-                if placement['placement']['name'] == 'GEMS_EXP':
-                    # Gem exp amount is handled in decimal as hex.
-                    # We have to trick the system into thinking our 
-                    # decimal amount is a hex amount, then convert 
-                    # that back to decimal and set that. 
-                    # ie, to get 40 gems in-game, we have to set 
-                    # decimal amount 64.
-                    amount = int(str(placement['placement']['amount']), 16)
+                    amount = 0
+                    if placement['placement']['name'] == 'GEMS_EXP':
+                        # Gem exp amount is handled in decimal as hex.
+                        # We have to trick the system into thinking our 
+                        # decimal amount is a hex amount, then convert 
+                        # that back to decimal and set that. 
+                        # ie, to get 40 gems in-game, we have to set 
+                        # decimal amount 64.
+                        amount = int(str(placement['placement']['amount']), 16)
 
-                try:
-                    middle_part = placement['placement']['id'].to_bytes(1, 'little') + amount.to_bytes(2, 'little')
-                    rom_data = rom_data[:address_offset] + middle_part + rom_data[address_offset+3:]
-                except:
-                    print('Failed to convert the byte data')
-                    print('Placement:', json.dumps(placement))
-                    sys.exit(2)
+                    try:
+                        middle_part = placement['placement']['id'].to_bytes(1, 'little') + amount.to_bytes(2, 'little')
+                        rom_data = rom_data[:address_offset] + middle_part + rom_data[address_offset+3:]
+                    except:
+                        print('Failed to convert the byte data')
+                        print('Placement:', json.dumps(placement))
+                        sys.exit(2)
+                else:
+                    # We want to handle monster and lair and npc stuff eventually...
+                    pass
 
     return rom_data
 
