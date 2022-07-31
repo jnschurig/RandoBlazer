@@ -1,7 +1,5 @@
-from concurrent.futures.process import _threads_wakeups
 import os, sys, getopt
-from random import sample
-import hashlib
+import hashlib, json
 
 from nbformat import write
 from reference import constants
@@ -106,10 +104,21 @@ def write_checks(rom_data, placement_dict):
 
                 amount = 0
                 if placement['placement']['name'] == 'GEMS_EXP':
+                    # Gem exp amount is handled in decimal as hex.
+                    # We have to trick the system into thinking our 
+                    # decimal amount is a hex amount, then convert 
+                    # that back to decimal and set that. 
+                    # ie, to get 40 gems in-game, we have to set 
+                    # decimal amount 64.
                     amount = int(str(placement['placement']['amount']), 16)
 
-                print(placement['placement']['id'].to_bytes(1, 'little') + amount.to_bytes(2, 'little'))
-                rom_data = rom_data[:address_offset] + placement['placement']['id'].to_bytes(1, 'little') + amount.to_bytes(2, 'little') + rom_data[address_offset+3:]
+                try:
+                    middle_part = placement['placement']['id'].to_bytes(1, 'little') + amount.to_bytes(2, 'little')
+                    rom_data = rom_data[:address_offset] + middle_part + rom_data[address_offset+3:]
+                except:
+                    print('Failed to convert the byte data')
+                    print('Placement:', json.dumps(placement))
+                    sys.exit(2)
 
     return rom_data
 

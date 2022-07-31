@@ -165,28 +165,30 @@ def randomizer(settings):
         friendly hash for putting it in the file select screen.
         '''
 
+        rom_data = rom_writer.write_checks(rom_info['rom_data'], item_placements)
+
         # Iterate through item placementes
-        for key in item_placements.keys():
-            if key == 'settings':
-                # Do nothing. This is for reader convenience.
-                pass
-            else:
-                for item in item_placements[key]:
-                    # Process placements.
-                    if item['location']['type'] == 'chest':
-                        print('i am a chest')
-                        if 'id' not in item['location']:
-                            # try to look it up in map.py...
-                            if item['location']['name'] in map.LOCATION_ID_LOOKUP.keys():
-                                item['location']['id'] = map.LOCATION_ID_LOOKUP[item['location']['name']]
-                        # step 1, get the location address...
+        # for key in item_placements.keys():
+        #     if key == 'settings':
+        #         # Do nothing. This is for reader convenience.
+        #         pass
+        #     else:
+        #         for item in item_placements[key]:
+        #             # Process placements.
+        #             if item['location']['type'] == 'chest':
+        #                 print('i am a chest')
+        #                 if 'id' not in item['location']:
+        #                     # try to look it up in map.py...
+        #                     if item['location']['name'] in map.LOCATION_ID_LOOKUP.keys():
+        #                         item['location']['id'] = map.LOCATION_ID_LOOKUP[item['location']['name']]
+        #                 # step 1, get the location address...
 
 
 
-                    # Only do the first check for now...
-                    break
-            # Only doing one act...
-            break
+        #             # Only do the first check for now...
+        #             break
+        #     # Only doing one act...
+        #     break
 
     # Output spoiler
     if ('race_mode' not in settings or not settings['race_mode']) and randomize:
@@ -195,10 +197,10 @@ def randomizer(settings):
             f.write(json.dumps(item_placements, indent = 4))
 
     # Initialize Rom
-    rom_created = rom_writer.initialize_file(source_rom_path, target_rom_path, rom_info['headered'])
-    if debug: 
-        print('Output ROM created:', rom_created)
-        print('Output ROM location:', target_rom_path)
+    # rom_created = rom_writer.initialize_file(source_rom_path, target_rom_path, rom_info['headered'])
+    # if debug: 
+    #     print('Output ROM created:', rom_created)
+    #     print('Output ROM location:', target_rom_path)
 
 
     # Get a seed hash
@@ -221,19 +223,18 @@ def randomizer(settings):
 
 
 
-    if rom_created:
-        # Do QOL Replacements
-        if 'qol' in settings and settings['qol'] != '':
-            rom_writer.modify_rom_data(target_rom_path, get_qol_changes(settings['qol']))
-        # All Randomizations
-        if randomize:
-            # Text Replacement
-            # rom_writer.modify_rom_data(target_rom_path, get_text_changes(settings))
-            rom_writer.modify_rom_data(target_rom_path, update_rom.rom_rando_update(settings))
+    # if rom_created:
+    #     # Do QOL Replacements
+    #     if 'qol' in settings and settings['qol'] != '':
+    #         rom_writer.modify_rom_data(target_rom_path, get_qol_changes(settings['qol']))
+    #     # All Randomizations
+    #     if randomize:
+    #         # Text Replacement
+    #         # rom_writer.modify_rom_data(target_rom_path, get_text_changes(settings))
+    #         rom_writer.modify_rom_data(target_rom_path, update_rom.rom_rando_update(settings))
 
-
-
-    return True
+    success = rom_writer.finalize_rom(rom_data, target_rom_path)
+    return success
 
 if __name__ == '__main__':
     # Run this with creds built in.
