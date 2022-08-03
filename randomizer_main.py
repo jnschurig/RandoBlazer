@@ -1,15 +1,16 @@
 import os, sys, getopt, json
 import rom_writer, random_manager, hash_maker, update_rom, generate_map
-from reference import qol, text_and_hacks, constants
+from reference import qol, text_and_hacks, constants, map
 
 valid_args = '''Valid Arguments:
 -h                --help                       | Information about the script. 
 -r <ROM Location> --rom_path    <ROM Location> | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc 
 -t <Target ROM>   --target_path <Target ROM>   | Path to target ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/output_rom.smc 
--d                --debug                      | Enable detailed output for debugging. Default is False. 
 -z <Setting JSON> --randomize   <Setting JSON> | Apply Randomization with settings in json format. Submitted string will be hashed as JSON.
 -q <QOL String>   --qol         <QOL String>   | Quality of Life Settings. Use colon(:) separated list for QoL items. Text speed (Tnormal,Tfast,Tfaster,Tinstant) 
 -s <Seed>         --seed        <Seed>         | The seed used to prime the random number generator. If one is not specified, one will be provided. 
+-a                --race_mode                  | Don't output a spoiler log because it is race mode.
+-d                --debug                      | Enable detailed output for debugging. Default is False. 
 '''
 
 help_info = '''Help Info: 
@@ -23,13 +24,14 @@ def main(argv):
         'target_path': 'Soul Blazer.smc',
         'randomize': False,
         'qol': '',
+        'seed': None,
+        'race_mode': False,
         'debug': False,
-        'seed': None
     }
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hr:t:z:q:ds:',['help','rom_path=','target_path=','randomize=','qol=','debug','seed='])
+        opts, args = getopt.getopt(argv,'hr:t:z:q:s:ad',['help','rom_path=','target_path=','randomize=','qol=','seed=','race_mode','debug'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -46,10 +48,12 @@ def main(argv):
             arguments['randomize'] = arg
         elif opt in ('-q', '--qol'):
             arguments['qol'] = arg
-        elif opt in ('-d', '--debug'):
-            arguments['debug'] = True
         elif opt in ('-s', '--seed'):
             arguments['seed'] = arg
+        elif opt in ('-a', '--race_mode'):
+            arguments['race_mode'] = True
+        elif opt in ('-d', '--debug'):
+            arguments['debug'] = True
     
     if False: # Thank you, I hate it.
         print(args)
@@ -128,6 +132,8 @@ def randomizer(settings):
     if 'randomize' in settings and settings['randomize']:
         randomize = True
         # Start up the rng
+        if 'seed' not in settings:
+            settings['seed'] = None
         seed = random_manager.start_randomization(settings['seed'])
         settings['seed'] = seed
         if debug: print('Seed:', seed)
@@ -137,7 +143,7 @@ def randomizer(settings):
             # Randomize is true, but no settings exist. Use defaults
             settings['randomize'] = constants.DEFAULT_RANDO_SETTINGS
         elif type(settings['randomize']) is str:
-            if settings['randomize'] == 'True':
+            if settings['randomize'].lower() == 'true':
                 # Randomize is true, but no settings exist. Use defaults
                 settings['randomize'] = constants.DEFAULT_RANDO_SETTINGS
             else:
@@ -159,12 +165,42 @@ def randomizer(settings):
         friendly hash for putting it in the file select screen.
         '''
 
-    # Initialize Rom
-    rom_created = rom_writer.initialize_file(source_rom_path, target_rom_path, rom_info['headered'])
-    if debug: 
-        print('Output ROM created:', rom_created)
-        print('Output ROM location:', target_rom_path)
+        rom_data = rom_writer.write_checks(rom_info['rom_data'], item_placements)
 
+        # Iterate through item placementes
+        # for key in item_placements.keys():
+        #     if key == 'settings':
+        #         # Do nothing. This is for reader convenience.
+        #         pass
+        #     else:
+        #         for item in item_placements[key]:
+        #             # Process placements.
+        #             if item['location']['type'] == 'chest':
+        #                 print('i am a chest')
+        #                 if 'id' not in item['location']:
+        #                     # try to look it up in map.py...
+        #                     if item['location']['name'] in map.LOCATION_ID_LOOKUP.keys():
+        #                         item['location']['id'] = map.LOCATION_ID_LOOKUP[item['location']['name']]
+        #                 # step 1, get the location address...
+
+
+
+        #             # Only do the first check for now...
+        #             break
+        #     # Only doing one act...
+        #     break
+
+    # Output spoiler
+    if ('race_mode' not in settings or not settings['race_mode']) and randomize:
+        spoiler_file_name = target_rom_path.replace('.smc', '.json')
+        with open(spoiler_file_name, 'w') as f:
+            f.write(json.dumps(item_placements, indent = 4))
+
+    # Initialize Rom
+    # rom_created = rom_writer.initialize_file(source_rom_path, target_rom_path, rom_info['headered'])
+    # if debug: 
+    #     print('Output ROM created:', rom_created)
+    #     print('Output ROM location:', target_rom_path)
 
 
     # Get a seed hash
@@ -187,19 +223,18 @@ def randomizer(settings):
 
 
 
-    if rom_created:
-        # Do QOL Replacements
-        if 'qol' in settings and settings['qol'] != '':
-            rom_writer.modify_rom_data(target_rom_path, get_qol_changes(settings['qol']))
-        # All Randomizations
-        if randomize:
-            # Text Replacement
-            # rom_writer.modify_rom_data(target_rom_path, get_text_changes(settings))
-            rom_writer.modify_rom_data(target_rom_path, update_rom.rom_rando_update(settings))
+    # if rom_created:
+    #     # Do QOL Replacements
+    #     if 'qol' in settings and settings['qol'] != '':
+    #         rom_writer.modify_rom_data(target_rom_path, get_qol_changes(settings['qol']))
+    #     # All Randomizations
+    #     if randomize:
+    #         # Text Replacement
+    #         # rom_writer.modify_rom_data(target_rom_path, get_text_changes(settings))
+    #         rom_writer.modify_rom_data(target_rom_path, update_rom.rom_rando_update(settings))
 
-
-
-    return True
+    success = rom_writer.finalize_rom(rom_data, target_rom_path)
+    return success
 
 if __name__ == '__main__':
     # Run this with creds built in.

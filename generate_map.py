@@ -476,12 +476,53 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         if placement_dict['placement'] not in all_requirements:
             all_requirements.append(placement_dict['placement'])
 
+        placed_locations.append(placement_dict['location'])
+
         # Pretty up the chest name...
         if placement_dict['location']['type'] == 'chest' and 'name' not in placement_dict['location']:
             placement_dict['location']['name'] = map.CHEST_ITEMS[placement_dict['location']['id']]['item_id']
+            placement_dict['location']['pretty_name'] = 'placeholder text'
+
+        # Every location needs an ID...
+        if 'id' not in placement_dict['location']:
+            # Check which type of thing it is...
+            if placement_dict['location']['type'] in ['chest', 'item']:
+                placement_dict['location']['id'] = map.LOCATION_ID_LOOKUP[placement_dict['location']['name']]['id']
+                placement_dict['location']['pretty_name'] = map.LOCATION_ID_LOOKUP[placement_dict['location']['name']]['pretty_name']
+            elif placement_dict['location']['type'] == 'lair':
+                placement_dict['location']['id'] = map.NPC_ID[placement_dict['location']['name']]
+            else:
+                print('Help! We found a missing location!')
+
+        # Every item and npc needs an ID...
+        if 'id' not in placement_dict['placement']:
+            if placement_dict['placement']['type'] == 'item':
+                placement_dict['placement']['id'] = ord(rom_data.ITEMS[placement_dict['placement']['name']]['rom_value'])
+                placement_dict['placement']['pretty_name'] = rom_data.ITEMS[placement_dict['placement']['name']]['pretty_name']
+            elif placement_dict['placement']['type'] == 'npc_id':
+                # I hope the npc id is the same for the location and the npc itself.
+                placement_dict['placement']['id'] = map.NPC_ID[placement_dict['placement']['name']]
+                # At some point it may be nice to include the npc placement text here.
+                # We'll see if that works out.
 
         placed_checks[act_number].append(placement_dict)
-        placed_locations.append(placement_dict['location'])
+
+        # Set the Queen Magridd item the same as the 
+        # super bracelet tile. This way the Queen 
+        # can have a meaningful item, but it won't 
+        # disappear if you do the Dr Leo cutscene 
+        # before talking to the queen.
+        if 'name' in placement_dict['location'] and placement_dict['location']['name'] == 'ITEM_SUPER_BRACELET':
+            queen_loc = {'type': 'item', 'name': 'ITEM_QUEEN_MAGRIDD'}
+            # The queen magridd location needs to be added to the "all locations" list.
+            all_check_locations.append(queen_loc)
+            new_dict = {
+                'act': act_number,
+                'location': queen_loc,
+                'placement': placement_dict['placement']
+                }
+            place_check(new_dict)
+
         return True
 
     def unplace_act(act):
@@ -530,7 +571,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         'act': 0,
         'location': map.REGIONS[0]['checks'][0],
         'placement': {'type': 'item', 'name': settings_dict['starting_weapon']}
-    }
+        }
     plan.append(plan_member_sol)
     if debug: print('DONE')
     
@@ -541,7 +582,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
             'act': 0,
             'location': map.REGIONS[0]['checks'][1],
             'placement': {'type': 'item', 'name': settings_dict['magician_item']}
-        }
+            }
         plan.append(plan_member_mag_item)
         if debug: print('DONE')
 
@@ -731,11 +772,12 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                     'placement': {'type': 'npc_id', 'name': npc_name}
                 }
                 place_check(npc_placement)
+                break
     del npc_name
 
-    # Now place slightly less useless trash items.
+    # Now place non-required key items.
     if 'only_required' in settings_dict and settings_dict['only_required']:
-        # Place trash instead of non-placed key items
+        # Place trash instead of non-required key items
         pass
     else:
         # place non-required key items

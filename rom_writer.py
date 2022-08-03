@@ -1,28 +1,31 @@
 import os, sys, getopt
-import hashlib
+import hashlib, json
+
+from nbformat import write
 from reference import constants
 
-valid_args =  "-h                  --help                         | Information about the script. \n"
-valid_args += "-r <ROM Location>   --rom_path    <ROM Location>   | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc \n"
-valid_args += "-t <Target ROM>     --target_path <Target ROM>     | Path to target ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/output_rom.smc \n"
-valid_args += "-d                  --debug                        | Enable detailed output for debugging. Default is False. \n"
-valid_args += "-z <Setting String> --randomize   <Setting String> | Apply Randomization with settings. \n"
+valid_args =  '''Valid Arguments: 
+-h                  --help                         | Information about the script. 
+-r <ROM Location>   --rom_path    <ROM Location>   | Path to the source ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/Soul Blazer (U) [!].smc
+-t <Target ROM>     --target_path <Target ROM>     | Path to target ROM. Can be fully qualified or relative to repository root. Defaults to ./REPOSITORY_ROOT_DIR/output_rom.smc
+-d                  --debug                        | Enable detailed output for debugging. 
+'''
 
-help_info  = "Help Info: \n"
-help_info += "This script will modify the contents ROM data and replace bits of it with other data. \n"
-help_info += "The arguments are intended to be used for testing by running this script all by itself. \n"
+help_info  = '''Help Info:
+This script will modify the contents ROM data and replace bits of it with other data.
+The arguments are intended to be used for testing by running this script all by itself.
+'''
 
 def main(argv):
     arguments = {
         'rom_path': 'Soul Blazer (U) [!].smc',
         'target_path': 'output_rom.smc',
-        'randomize': False,
         'debug': False
     }
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hr:t:z:d',['help','rom_path=','target_path=','randomize=','debug'])
+        opts, args = getopt.getopt(argv,'hr:t:d',['help','rom_path=','target_path=','debug'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -35,8 +38,6 @@ def main(argv):
             arguments['rom_path'] = arg
         elif opt in ('-t', '--target_path'):
             arguments['target_path'] = arg
-        elif opt in ('-z', '--randomize'):
-            arguments['randomize'] = arg
         elif opt in ('-d', '--debug'):
             arguments['debug'] = True
     
@@ -44,93 +45,12 @@ def main(argv):
         print(args)
 
     return arguments
-    # End main
-
-def modify_rom_data(target_rom_location, change_list):
-    with open(target_rom_location, 'r+b') as f:
-        for change in change_list:
-            if type(change) is not dict:
-                # Not going to make this change because it isn't formatted right.
-                pass
-            else:
-                # We really want the values to be a list, even if it's only one.
-                if type(change['value']) is list:
-                    value_list = change['value']
-                else:
-                    value_list = [change['value']]
-
-                # Go to the address.
-                f.seek(change['address'])
-                # Iterate through values and write changes.
-                for change_val in value_list:
-                    # If I have been good about the data compiler function, data will be 'bytes' or 'bytes-like'
-                    f.write(change_val)
-        
-    return target_rom_location
-
-def to_bytes(data):
-    # Check main data types and convert it to a byte-like object (hopefully)
-    # Lists utilize recursion to convert every item in the list to byte-like objects.
-
-    data_dict = {}
-    if type(data) is dict:
-        # We should search for the 'value' field and attempt to process it as data.
-        if 'value' in data:
-            data_dict = data 
-            data = data['value']
-        else:
-            # The default, for when we don't know what is in a dict.
-            data = 0x00
-        
-    if type(data) is list:
-        # Use recursion to compile every item in the list.
-        # The only case in which the function will return
-        # something other than a bytes-like object.
-        new_list = []
-        for value in data:
-            new_list.append(to_bytes(value))
-        return new_list
-    elif type(data) is int:
-        # Detect the minimum number of bytes required
-        # Unless the number of bytes is specified in the data_dict
-        if 'length' in data_dict:
-            # The length in bytes has already been provided.
-            data = data.to_bytes(data_dict['length'], 'big')
-        else:
-            length = 1
-            while True:
-                # Cycle through exponents until 
-                if data < (256 ** length):
-                    break
-                # Increment by two because rom uses two byte pairs at each address.
-                length += 1
-            data = data.to_bytes(length, 'big')
-    elif type(data) is str:
-        if 'length' in data_dict: # We need to do some padding...
-            # for change_val in data_dict:
-            data = data[:data_dict['length']] # truncate to the length, if needed.
-            if 'pad_value' not in data_dict:
-                data_dict['pad_value'] = ' '
-            if 'pad_dir' not in data_dict:
-                data_dict['pad_dir'] = 'right'
-            if data_dict['pad_dir'] == 'right':
-                data = data.ljust(data_dict['length'], data_dict['pad_value'])
-            elif data_dict['pad_dir'] == 'left':
-                data = data.rjust(data_dict['length'], data_dict['pad_value'])
-            elif data_dict['pad_dir'] == 'center':
-                data = data.center(data_dict['length'], data_dict['pad_value'])
-        
-        # Convert to bytes-like object
-        data = bytearray(data, 'utf-8')
-        # this ^ returns a bytearray, which I'm pretty sure is right for strings.
-        # data = binascii.hexlify(data)
-        # This ^ will convert the bytearray into bytes, which I think is wrong.
-    return data
 
 def check_hash(source_rom_path, debug=False):
     with open(source_rom_path, 'rb') as f:
-        # rom_data = f.read()
-        rom_md5 = hashlib.md5(f.read()).hexdigest()
+        rom_data = f.read()
+    
+    rom_md5 = hashlib.md5(rom_data).hexdigest()
 
     if debug:
         print('DEBUG - Rom Hash: ' + rom_md5)
@@ -144,48 +64,125 @@ def check_hash(source_rom_path, debug=False):
     if rom_md5 == constants.ROM_HASH_MD5_UNHEADERED:
         payload['is_ok'] = True
         payload['headered'] = False
+        payload['rom_data'] = rom_data
     elif rom_md5 == constants.ROM_HASH_MD5_HEADERED:
         payload['is_ok'] = True
         payload['headered'] = True 
+        payload['rom_data'] = rom_data[512:]
 
     return payload
 
-def initialize_file(source_rom_path, target_rom_path, file_has_header):
-    # Remove the target file if it exists.
-    try:
-        os.remove(target_rom_path)
-    except:
-        pass
+# def initialize_file(source_rom_path, target_rom_path, file_has_header):
+#     # Remove the target file if it exists.
+#     try:
+#         os.remove(target_rom_path)
+#     except:
+#         pass
 
-    with open(source_rom_path, 'rb') as f: 
-        with open(target_rom_path, 'wb') as g:
-            if file_has_header:
-                print('Header Detected. Removing...')
-                # This assumes a hex(200)/512 byte header.
-                g.write(f.read()[512:])
-            else:
-                g.write(f.read())
+#     with open(source_rom_path, 'rb') as f: 
+#         with open(target_rom_path, 'wb') as g:
+#             if file_has_header:
+#                 print('Header Detected. Removing...')
+#                 # This assumes a hex(200)/512 byte header.
+#                 g.write(f.read()[512:])
+#             else:
+#                 g.write(f.read())
 
-    return True
+#     return True
+    
+def write_checks(rom_data, placement_dict):
+    # Iterate through keys. Skip 'settings'...
+    for key in placement_dict.keys():
+        if key == 'settings':
+            # Do nothing
+            pass
+        else:
+            # Cycle through the list...
+            for placement in placement_dict[key]:
+                if placement['location']['type'] in ['chest', 'item']:
+                    # 1. Set the location based on the location id...
+                    address_offset = constants.CHEST_DATA_ADDRESS + (placement['location']['id'] * 3)
+
+                    amount = 0
+                    if placement['placement']['name'] == 'GEMS_EXP':
+                        # Gem exp amount is handled in decimal as hex.
+                        # We have to trick the system into thinking our 
+                        # decimal amount is a hex amount, then convert 
+                        # that back to decimal and set that. 
+                        # ie, to get 40 gems in-game, we have to set 
+                        # decimal amount 64.
+                        amount = int(str(placement['placement']['amount']), 16)
+
+                    try:
+                        middle_part = placement['placement']['id'].to_bytes(1, 'little') + amount.to_bytes(2, 'little')
+                        rom_data = rom_data[:address_offset] + middle_part + rom_data[address_offset+3:]
+                    except:
+                        print('Failed to convert the byte data')
+                        print('Placement:', json.dumps(placement))
+                        sys.exit(2)
+                else:
+                    # We want to handle monster and lair and npc stuff eventually...
+                    pass
+
+    return rom_data
+
+def finalize_rom(rom_data, file_name):
+    with open(file_name, 'wb') as f:
+        f.write(rom_data)
+    return file_name 
 
 if __name__ == '__main__':
-    # Run this with creds built in.
+    # Get settings
     settings_dict = main(sys.argv[1:])
+
+    # Use default paths...
     source_rom_path = os.path.join(constants.REPOSITORY_ROOT_DIR, settings_dict['rom_path'])
     target_rom_path = os.path.join(constants.REPOSITORY_ROOT_DIR, settings_dict['target_path'])
 
     # all_changes = compile_changes(settings_dict)
-    rom_info = check_hash(source_rom_path)
+    rom_info = check_hash(source_rom_path, settings_dict['debug'])
     if settings_dict['debug']:
         print('DEBUG - ROM INFO')
         for key in rom_info.keys():
-            print('DEBUG - ' + str(key) + ': ' + str(rom_info[key]))
+            if key != 'rom_data': # This sucker is too big to write out.
+                print('DEBUG - ' + str(key) + ': ' + str(rom_info[key]))
 
-    # print(0x13B2B)
-    initialize_file(source_rom_path, target_rom_path, rom_info['headered'])
+    sample_placement = {
+    "0": [
+            {
+                "location": {
+                    "type": "chest",
+                    "id": 0,
+                    "name": "SWORD_OF_LIFE",
+                    "pretty_name": "placeholder text"
+                },
+                "placement": {
+                    "type": "item",
+                    "name": "RECOVERY_SWORD",
+                    "id": 7,
+                    "pretty_name": "Recovery Sword"
+                }
+        }],
+    "1": [
+        {
+            "location": {
+                "type": "item",
+                "name": "ITEM_CHEST_OF_DRAWERS_HERB",
+                "id": 102,
+                "pretty_name": "Medical Herb Drawers"
+            },
+            "placement": {
+                "type": "item",
+                "name": "GEMS_EXP",
+                "amount": 600,
+                "id": 255,
+                "pretty_name": "Gems/EXP"
+            }
+            }
+        ]
+    }
 
-    # result_path = modify_rom_data(target_rom_path, all_changes)
-    # print(result_path)
+    rom_data = write_checks(rom_info['rom_data'], sample_placement)
 
-    # with open(target_rom_path, 'wb') as f:
-    #     f.write(rom_content)
+    file_path = finalize_rom(rom_data, target_rom_path)
+    print(file_path)
