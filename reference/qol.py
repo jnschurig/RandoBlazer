@@ -5,10 +5,10 @@ TEXT_SCROLL = [
         'address': 0x02796C,
         'note': 'General text speed set at game start. Covers 90 percent of text boxes.',
         'speed': {
-            'normal': b'\x03',
-            'fast': b'\x02',
-            'faster': b'\x01',
-            'instant': b'\x00'
+            'normal': ord(b'\x03'),
+            'fast': ord(b'\x02'),
+            'faster': ord(b'\x01'),
+            'instant': ord(b'\x00')
         },
         'credit': 'Tranqulite'
     },
@@ -16,10 +16,10 @@ TEXT_SCROLL = [
         'address': 0x025F0F,
         'note': 'Dr Leo before he explodes Slow text start.',
         'speed': {
-            'normal': b'\x03',
-            'fast': b'\x02',
-            'faster': b'\x01',
-            'instant': b'\x00'
+            'normal': ord(b'\x03'),
+            'fast': ord(b'\x02'),
+            'faster': ord(b'\x01'),
+            'instant': ord(b'\x00')
         },
         'credit': 'Tranqulite'
     },
@@ -27,10 +27,10 @@ TEXT_SCROLL = [
         'address': 0x025F19,
         'note': 'Dr Leo after explode text speed restore',
         'speed': {
-            'normal': b'\x03',
-            'fast': b'\x02',
-            'faster': b'\x01',
-            'instant': b'\x00'
+            'normal': ord(b'\x03'),
+            'fast': ord(b'\x02'),
+            'faster': ord(b'\x01'),
+            'instant': ord(b'\x00')
         },
         'credit': 'Tranqulite'
     },
@@ -38,10 +38,10 @@ TEXT_SCROLL = [
         'address': 0x026004,
         'note': 'Dr Leo before death slow text',
         'speed': {
-            'normal': b'\x03',
-            'fast': b'\x02',
-            'faster': b'\x01',
-            'instant': b'\x00'
+            'normal': ord(b'\x03'),
+            'fast': ord(b'\x02'),
+            'faster': ord(b'\x01'),
+            'instant': ord(b'\x00')
         },
         'credit': 'Tranqulite'
     },
@@ -49,10 +49,10 @@ TEXT_SCROLL = [
         'address': 0x02600E,
         'note': 'Dr Leo post death text speed restore',
         'speed': {
-            'normal': b'\x03',
-            'fast': b'\x02',
-            'faster': b'\x01',
-            'instant': b'\x00'
+            'normal': ord(b'\x03'),
+            'fast': ord(b'\x02'),
+            'faster': ord(b'\x01'),
+            'instant': ord(b'\x00')
         },
         'credit': 'Tranqulite'
     },
@@ -60,10 +60,10 @@ TEXT_SCROLL = [
         'address': 0x02796C,
         'note': 'General text speed. Covers 90 percent of text boxes.',
         'speed': {
-            'normal': b'\x03',
-            'fast': b'\x02',
-            'faster': b'\x01',
-            'instant': b'\x00'
+            'normal': ord(b'\x03'),
+            'fast': ord(b'\x02'),
+            'faster': ord(b'\x01'),
+            'instant': ord(b'\x00')
         },
         'credit': 'Tranqulite'
     },
@@ -71,10 +71,10 @@ TEXT_SCROLL = [
         'address': 0x01BA48,
         'note': 'In Green Wood. "You" are on the menu',
         'speed': {
-            'normal': b'\x03',
-            'fast': b'\x02',
-            'faster': b'\x01',
-            'instant': b'\x01' # Can't be speed 0, so "instant" turns into faster.
+            'normal': ord(b'\x03'),
+            'fast': ord(b'\x02'),
+            'faster': ord(b'\x01'),
+            'instant': ord(b'\x01') # Can't be speed 0, so "instant" turns into faster.
         },
         'credit': 'Tranqulite'
     }
