@@ -1,7 +1,6 @@
 import os, sys, getopt
 import hashlib, json
-
-from nbformat import write
+# import random_manager
 from reference import constants
 
 valid_args =  '''Valid Arguments: 
@@ -99,7 +98,7 @@ def write_checks(rom_data, placement_dict):
         else:
             # Cycle through the list...
             for placement in placement_dict[key]:
-                if placement['location']['type'] in ['chest', 'item']:
+                if placement['location']['type'] in ['chest']:
                     # 1. Set the location based on the location id...
                     address_offset = constants.CHEST_DATA_ADDRESS + (placement['location']['id'] * 3)
 
@@ -115,7 +114,7 @@ def write_checks(rom_data, placement_dict):
 
                     try:
                         middle_part = placement['placement']['id'].to_bytes(1, 'little') + amount.to_bytes(2, 'little')
-                        rom_data = rom_data[:address_offset] + middle_part + rom_data[address_offset+3:]
+                        rom_data = modify_rom(rom_data, address_offset, middle_part)
                     except:
                         print('Failed to convert the byte data')
                         print('Placement:', json.dumps(placement))
@@ -126,10 +125,25 @@ def write_checks(rom_data, placement_dict):
 
     return rom_data
 
+def replace_rom_text(rom_data, hack_name='ALL'):
+    if hack_name != 'ALL':
+        # find the one hack
+        pass
+    else:
+        # Do them all
+        pass
+
+    return rom_data
+
 def finalize_rom(rom_data, file_name):
     with open(file_name, 'wb') as f:
         f.write(rom_data)
     return file_name 
+
+def modify_rom(rom_data, starting_edit_address, byte_array):
+    end_edit_address = starting_edit_address + len(byte_array)
+
+    return rom_data[:starting_edit_address] + byte_array + rom_data[end_edit_address:]
 
 if __name__ == '__main__':
     # Get settings

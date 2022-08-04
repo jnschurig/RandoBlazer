@@ -276,6 +276,12 @@ def check_is_compatible(location, requirement):
 
     return False
 
+def find_location_name_by_chest_id(chest_id):
+    for chest_name in map.LOCATION_ID_LOOKUP.keys():
+        if map.LOCATION_ID_LOOKUP[chest_name]['id'] == chest_id:
+            return chest_name
+    return False
+
 def initialize_world(settings={'world_type': 'vanilla'}):
     '''
     Takes a settings dict with 'world_type' key and generates 
@@ -479,20 +485,28 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         placed_locations.append(placement_dict['location'])
 
         # Pretty up the chest name...
-        if placement_dict['location']['type'] == 'chest' and 'name' not in placement_dict['location']:
-            placement_dict['location']['name'] = map.CHEST_ITEMS[placement_dict['location']['id']]['item_id']
-            placement_dict['location']['pretty_name'] = 'placeholder text'
+        if placement_dict['location']['type'] == 'chest': # and 'name' not in placement_dict['location']:
+            placement_dict['location']['name'] = find_location_name_by_chest_id(placement_dict['location']['id'])
+            
+            if placement_dict['location']['name']:
+                placement_dict['location']['pretty_name'] = map.LOCATION_ID_LOOKUP[placement_dict['location']['name']]['pretty_name']
+            else:
+                print('ERROR: Missing chest location lookup.')
+                print(json.dumps(placement_dict))
+                sys.exit(2)
 
         # Every location needs an ID...
         if 'id' not in placement_dict['location']:
             # Check which type of thing it is...
-            if placement_dict['location']['type'] in ['chest', 'item']:
+            # We fixed all the chests. They should be getting a lookup from above...
+            if placement_dict['location']['type'] in ['item']:
                 placement_dict['location']['id'] = map.LOCATION_ID_LOOKUP[placement_dict['location']['name']]['id']
                 placement_dict['location']['pretty_name'] = map.LOCATION_ID_LOOKUP[placement_dict['location']['name']]['pretty_name']
             elif placement_dict['location']['type'] == 'lair':
                 placement_dict['location']['id'] = map.NPC_ID[placement_dict['location']['name']]
             else:
                 print('Help! We found a missing location!')
+                print()
 
         # Every item and npc needs an ID...
         if 'id' not in placement_dict['placement']:
@@ -501,7 +515,8 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
                 placement_dict['placement']['pretty_name'] = rom_data.ITEMS[placement_dict['placement']['name']]['pretty_name']
             elif placement_dict['placement']['type'] == 'npc_id':
                 # I hope the npc id is the same for the location and the npc itself.
-                placement_dict['placement']['id'] = map.NPC_ID[placement_dict['placement']['name']]
+                placement_dict['placement']['id'] = map.NPC_ID[placement_dict['placement']['name']]['id']
+                placement_dict['placement']['pretty_name'] = map.NPC_ID[placement_dict['placement']['name']]['pretty_name']
                 # At some point it may be nice to include the npc placement text here.
                 # We'll see if that works out.
 
@@ -572,6 +587,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
         'location': map.REGIONS[0]['checks'][0],
         'placement': {'type': 'item', 'name': settings_dict['starting_weapon']}
         }
+    # plan_member_sol['location']['pretty_name'] = 
     plan.append(plan_member_sol)
     if debug: print('DONE')
     

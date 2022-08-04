@@ -50,19 +50,71 @@ CHECK_TYPE_LOOKUP = {
 
 LOCATION_ID_LOOKUP = {
     "CHEST_SWORD_OF_LIFE"               : {"id": 0  , "pretty_name": "Sword of Life Chest"},
+    "CHEST_IRON_ARMOR"                  : {"id": 1  , "pretty_name": "Iron Armor Chest"},
+    "CHEST_GV_CHEST_ROOM_GEMS"          : {"id": 2  , "pretty_name": "Grass Valley Chest Room Gems"},
+    "CHEST_UC_12_GEMS"                  : {"id": 3  , "pretty_name": "Underground Castle 12 Gems Chest"},
+    "CHEST_UC_EARLY_HERB"               : {"id": 4  , "pretty_name": "Underground Castle Early Herb Chest"},
     "CHEST_DREAM_ROD"                   : {"id": 5  , "pretty_name": "Dream Rod Chest"},
     "CHEST_LEOS_BRUSH"                  : {"id": 6  , "pretty_name": "Leo's Brush Chest"},
+    "CHEST_PAINTING_HERB"               : {"id": 7  , "pretty_name": "Leo's Paintings Herb Chest"},
+    "CHEST_TORNADO"                     : {"id": 8  , "pretty_name": "Tornado Chest"},
+    "CHEST_ICE_ARMOR"                   : {"id": 9  , "pretty_name": "Ice Armor Chest"},
     "CHEST_MOLES_RIBBON"                : {"id": 10 , "pretty_name": "Mole's Ribbon Chest"},
+    "CHEST_MARSHES_GEMS_1"              : {"id": 11 , "pretty_name": "Lost Marshes First Gems Chest (50)"}, # Likely in water/fire shrine
+    "CHEST_MARSHES_GEMS_2"              : {"id": 12 , "pretty_name": "Lost Marshes Second Gems Chest (150)"}, # Likely in water/fire shrine
+    "CHEST_MARSHES_HERB_1"              : {"id": 13 , "pretty_name": "Lost Marshes First Herb Chest"}, # Likely in water/fire shrine
     "CHEST_DELICIOUS_SEEDS"             : {"id": 14 , "pretty_name": "Delicious Seeds Chest"},
+    "CHEST_MARSHES_GEMS_3"              : {"id": 15 , "pretty_name": "Lost Marshes Third Gems Chest (50)"}, # Likely in water/fire shrine
+    "CHEST_MARSHES_HERB_2"              : {"id": 16 , "pretty_name": "Lost Marshes Second Herb Chest"}, # Likely in water/fire shrine
+    "CHEST_MARSHES_NOTHING"             : {"id": 17 , "pretty_name": "Lost Marshes Nothing Chest"}, # Likely in water/fire shrine
+    "CHEST_FIRE_SHRINE_BOTTLE"          : {"id": 18 , "pretty_name": "Fire Shrine Strange Bottle Chest"}, 
+    "CHEST_MARSHES_GEMS_4"              : {"id": 19 , "pretty_name": "Lost Marshes Fourth Gems Chest (100)"},
+    "CHEST_MARSHES_GEMS_5"              : {"id": 20 , "pretty_name": "Lost Marshes Fifth Gems Chest (60)"},
+    "CHEST_FLAME_PILLAR"                : {"id": 21 , "pretty_name": "Flame Pillar Chest"},
+    "CHEST_MERMAID_TEARS"               : {"id": 22 , "pretty_name": "Mermaid's Tears Chest"},
     "CHEST_BIG_PEARL"                   : {"id": 23 , "pretty_name": "Big Pearl Chest"},
     "CHEST_EMBLEM_D"                    : {"id": 24 , "pretty_name": "Emblem D Chest"},
+    "CHEST_HYPE_CAVE_GEMS"              : {"id": 25 , "pretty_name": "Hype Cave 80 Gems Chest"},
+    "CHEST_HYPE_CAVE_HERB"              : {"id": 26 , "pretty_name": "Hype Cave Herb Chest"},
+    "CHEST_HYPE_CAVE_NOTHING"           : {"id": 27 , "pretty_name": "Hype Cave Nothing Chest"},
+    "CHEST_SOUTHERTA_HERB"              : {"id": 28 , "pretty_name": "Southerta Herb Chest"},
+    "CHEST_ROCKBIRD_HERB"               : {"id": 29 , "pretty_name": "Rockbird Herb Chest"},
+    "CHEST_ROCKBIRD_GEMS"               : {"id": 30 , "pretty_name": "Rockbird 60 Gems Chest"},
+    "CHEST_CRITICAL_SWORD"              : {"id": 31 , "pretty_name": "Critical Sword Chest"},
+    "CHEST_DUREAN_BOTTLE"               : {"id": 32 , "pretty_name": "Durean Strange Bottle Chest"},
+    "CHEST_GHOST_SHIP_GEMS"             : {"id": 33 , "pretty_name": "Ghost Ship 1 Gem Chest"},
+    "CHEST_POWER_BRACELET"              : {"id": 34 , "pretty_name": "Power Bracelet Chest"},
+    "CHEST_MOUNTAIN_OF_SOULS_GEMS_1"    : {"id": 35 , "pretty_name": "Mountain of Souls 40 Gems Chest"},
+    "CHEST_MAGIC_ARMOR"                 : {"id": 36 , "pretty_name": "Magic Armor Chest"},
+    "CHEST_MOUNTAIN_OF_SOULS_NOTHING"   : {"id": 37 , "pretty_name": "Mountain of Souls Nothing Chest"},
+    "CHEST_MOUNTAIN_OF_SOULS_HERB"      : {"id": 38 , "pretty_name": "Mountain of Souls Herb Chest"},
+    "CHEST_MOUNTAIN_OF_SOULS_GEMS_2"    : {"id": 39 , "pretty_name": "Mountain of Souls 50 Gems Chest"},
     "CHEST_LUCKY_BLADE"                 : {"id": 40 , "pretty_name": "Lucky Blade Chest"},
+    "CHEST_LUNE_BOTTLE"                 : {"id": 41 , "pretty_name": "Lune Strange Bottle Chest"},
+    "CHEST_ROTATOR"                     : {"id": 42 , "pretty_name": "Rotator Chest"},
     "CHEST_ZANTETSU_SWORD"              : {"id": 43 , "pretty_name": "Zantetsu Sword Chest"},
+    "CHEST_LIGHT_ARMOR"                 : {"id": 44 , "pretty_name": "Light Armor Chest"},
+    "CHEST_MODEL_TOWN_1_GEMS_1"         : {"id": 45 , "pretty_name": "Model Town 1 50 Gems Chest"},
+    "CHEST_MODEL_TOWN_1_HERB"           : {"id": 46 , "pretty_name": "Model Town 1 Herb Chest"},
+    "CHEST_MODEL_TOWN_1_GEMS_2"         : {"id": 47 , "pretty_name": "Model Town 1 80 Gems Chest"},
+    "CHEST_MODEL_TOWN_2_BOTTLE"         : {"id": 48 , "pretty_name": "Model Town 2 Strange Bottle Chest"},
+    "CHEST_MODEL_TOWN_2_HERB"           : {"id": 49 , "pretty_name": "Model Town 2 Herb Chest"},
+    "CHEST_MAGRIDD_BASEMENT_GEMS_1"     : {"id": 50 , "pretty_name": "Magridd Basement 80 Gems Chest"},
     "CHEST_SPIRIT_SWORD"                : {"id": 51 , "pretty_name": "Spirit Sword Chest"},
+    "CHEST_MAGRIDD_BASEMENT_BOTTLE"     : {"id": 52 , "pretty_name": "Magridd Basement Strange Bottle Chest"},
+    "CHEST_MAGRIDD_BASEMENT_HERB"       : {"id": 53 , "pretty_name": "Magridd Basement Herb Chest"},
+    "CHEST_MAGRIDD_BASEMENT_GEMS_2"     : {"id": 54 , "pretty_name": "Magridd Basement 100 Gems Chest"},
     "CHEST_EMBLEM_B"                    : {"id": 55 , "pretty_name": "Emblem B Chest"},
+    "CHEST_MAGRIDD_R_TOWER_GEMS_1"      : {"id": 56 , "pretty_name": "Magridd Right Tower First 80 Gems Chest"},
+    "CHEST_MAGRIDD_R_TOWER_GEMS_2"      : {"id": 57 , "pretty_name": "Magridd Right Tower Second 80 Gems Chest"},
+    "CHEST_MAGRIDD_R_TOWER_GEMS_3"      : {"id": 58 , "pretty_name": "Magridd Right Tower 100 Gems Chest"},
+    "CHEST_MAGRIDD_R_TOWER_HERB"        : {"id": 59 , "pretty_name": "Magridd Right Tower Herb Chest"},
+    "CHEST_WORLD_OF_EVIL_HERB"          : {"id": 60 , "pretty_name": "World of Evil Herb Chest"},
+    "CHEST_WORLD_OF_EVIL_GEMS"          : {"id": 61 , "pretty_name": "World of Evil 200 Gems Chest"},
     "CHEST_RED_HOT_BALL"                : {"id": 62 , "pretty_name": "Red Hot Ball Chest"},
     "CHEST_SOUL_ARMOR"                  : {"id": 63 , "pretty_name": "Soul Armor Chest"},
     "CHEST_SOUL_BLADE"                  : {"id": 64 , "pretty_name": "Soul Blade Chest"},
+    "CHEST_DAZZLING_SPACE_GEMS"         : {"id": 65 , "pretty_name": "Dazzling Space 100 Gems Chest"},
     "ITEM_TOOL_SHOP_OWNER"              : {"id": 66 , "pretty_name": "Tool Shop Owner"},
     "ITEM_EMBLEM_A"                     : {"id": 67 , "pretty_name": "Emblem A Tile"},
     "ITEM_GOAT_PEN"                     : {"id": 68 , "pretty_name": "Goat Pen Tile"},
@@ -126,175 +178,175 @@ LOCATION_ID_LOOKUP = {
 }
 
 NPC_ID = {
-    "NPC_OLD_WOMAN"                     : 2,
-    "NPC_TOOL_SHOP_OWNER"               : 6,
-    "NPC_TULIP"                         : 7,
-    "NPC_BRIDGE_GUARD"                  : 8,
-    "NPC_VILLAGE_CHIEF"                 : 9,
-    "NPC_IVY_CHEST_ROOM"                : 13,
-    "NPC_WATER_MILL"                    : 14,
-    "NPC_GOAT_HERB"                     : 15,
-    "NPC_LISA"                          : 16,
-    "NPC_TULIP2"                        : 17,
-    "NPC_ARCHITECT"                     : 18,
-    "NPC_IVY"                           : 19,
-    "NPC_GOAT"                          : 21,
-    "NPC_TEDDY"                         : 22,
-    "NPC_TULIP3"                        : 24,
-    "NPC_LEOS_HOUSE"                    : 26,
-    "NPC_LONELY_GOAT"                   : 29,
-    "NPC_TULIP_PASS"                    : 34,
-    "NPC_BOY_CABIN"                     : 35,
-    "NPC_BOY_CAVE"                      : 37,
-    "NPC_OLD_MAN"                       : 40,
-    "NPC_OLD_MAN2"                      : 41,
-    "NPC_IVY2"                          : 42,
-    "NPC_IVY_EMBLEM_A"                  : 43,
-    "NPC_IVY_RECOVERY_SWORD"            : 44,
-    "NPC_TULIP4"                        : 46,
-    "NPC_GOAT2"                         : 47,
-    "NPC_BIRD_RED_HOT_MIRROR"           : 55,
-    "NPC_BIRD"                          : 56,
-    "NPC_DOG"                           : 60,
-    "NPC_DOG2"                          : 61,
-    "NPC_DOG3"                          : 63,
-    "NPC_MOLE_SHIELD_BRACELET"          : 64,
-    "NPC_SQUIRREL_EMBLEM_C"             : 65,
-    "NPC_SQUIRREL_PSYCHO_SWORD"         : 67,
-    "NPC_BIRD2"                         : 70,
-    "NPC_MOLE_SOUL_OF_LIGHT"            : 73,
-    "NPC_DEER"                          : 74,
-    "NPC_CROCODILE"                     : 78,
-    "NPC_SQUIRREL"                      : 79,
-    "NPC_GREENWOODS_GUARDIAN"           : 80,
-    "NPC_MOLE"                          : 81,
-    "NPC_DOG4"                          : 86,
-    "NPC_SQUIRREL_ICE_ARMOR"            : 88,
-    "NPC_SQUIRREL2"                     : 89,
-    "NPC_DOG5"                          : 90,
-    "NPC_CROCODILE2"                    : 91,
-    "NPC_MOLE2"                         : 92,
-    "NPC_SQUIRREL3"                     : 93,
-    "NPC_BIRD_GREENWOOD_LEAF"           : 97,
-    "NPC_MOLE3"                         : 98,
-    "NPC_DEER_MAGIC_BELL"               : 99,
-    "NPC_BIRD3"                         : 100,
-    "NPC_CROCODILE3"                    : 111,
-    "NPC_MONMO"                         : 114,
-    "NPC_DOLPHIN"                       : 124,
-    "NPC_ANGELFISH"                     : 131,
-    "NPC_MERMAID"                       : 132,
-    "NPC_ANGELFISH2"                    : 134,
-    "NPC_MERMAID_PEARL"                 : 138,
-    "NPC_MERMAID2"                      : 139,
-    "NPC_DOLPHIN_SAVES_LUE"             : 140,
-    "NPC_MERMAID_STATUE_BLESTER"        : 141,
-    "NPC_MERMAID_RED_HOT_STICK"         : 142,
-    "NPC_LUE"                           : 143,
-    "NPC_MERMAID3"                      : 146,
-    "NPC_MERMAID_NANA"                  : 149,
-    "NPC_MERMAID4"                      : 153,
-    "NPC_DOLPHIN2"                      : 155,
-    "NPC_MERMAID_STATUE_ROCKBIRD"       : 157,
-    "NPC_MERMAID_BUBBLE_ARMOR"          : 161,
-    "NPC_MERMAID5"                      : 164,
-    "NPC_MERMAID6"                      : 165,
-    "NPC_MERMAID_TEARS"                 : 167,
-    "NPC_MERMAID_STATUE_DUREAN"         : 171,
-    "NPC_ANGELFISH3"                    : 173,
-    "NPC_ANGELFISH_SOUL_OF_SHIELD"      : 177,
-    "NPC_MERMAID_MAGIC_FLARE"           : 181,
-    "NPC_MERMAID_QUEEN"                 : 182,
-    "NPC_MERMAID_STATUE_GHOST_SHIP"     : 185,
-    "NPC_DOLPHIN_SECRET_CAVE"           : 187,
-    "NPC_MERMAID7"                      : 189,
-    "NPC_ANGELFISH4"                    : 190,
-    "NPC_MERMAID8"                      : 192,
-    "NPC_DOLPHIN_PEARL"                 : 193,
-    "NPC_MERMAID9"                      : 194,
-    "NPC_GRANDPA"                       : 201,
-    "NPC_GIRL"                          : 202,
-    "NPC_MUSHROOM"                      : 203,
-    "NPC_BOY"                           : 204,
-    "NPC_GRANDPA2"                      : 211,
-    "NPC_SNAIL_JOCKEY"                  : 212,
-    "NPC_NOME"                          : 214,
-    "NPC_BOY2"                          : 215,
-    "NPC_MUSHROOM_EMBLEM_F"             : 221,
-    "NPC_DANCING_GRANDMA"               : 225,
-    "NPC_DANCING_GRANDMA2"              : 230,
-    "NPC_SNAIL_EMBLEM_E"                : 232,
-    "NPC_BOY_MUSHROOM_SHOES"            : 233,
-    "NPC_GRANDMA"                       : 234,
-    "NPC_GIRL2"                         : 235,
-    "NPC_MUSHROOM2"                     : 238,
-    "NPC_SNAIL_RACER"                   : 239,
-    "NPC_SNAIL_RACER2"                  : 240,
-    "NPC_GIRL3"                         : 242,
-    "NPC_MUSHROOM3"                     : 246,
-    "NPC_SNAIL"                         : 247,
-    "NPC_GRANDPA3"                      : 248,
-    "NPC_SNAIL2"                        : 250,
-    "NPC_GRANDPA4"                      : 252,
-    "NPC_GRANDPA_LUNE"                  : 254,
-    "NPC_GRANDPA5"                      : 255,
-    "NPC_MOUNTAIN_KING"                 : 259,
-    "NPC_PLANT_HERB"                    : 265,
-    "NPC_PLANT"                         : 267,
-    "NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR" : 268,
-    "NPC_CAT"                           : 269,
-    "NPC_GREAT_DOOR_ZANTETSU_SWORD"     : 274,
-    "NPC_CAT2"                          : 276,
-    "NPC_GREAT_DOOR"                    : 282,
-    "NPC_CAT3"                          : 283,
-    "NPC_MODEL_TOWN1"                   : 286,
-    "NPC_GREAT_DOOR_MODEL_TOWNS"        : 288,
-    "NPC_STEPS_UPSTAIRS"                : 290,
-    "NPC_CAT_DOOR_KEY"                  : 294,
-    "NPC_MOUSE"                         : 297,
-    "NPC_MARIE"                         : 303,
-    "NPC_DOLL"                          : 310,
-    "NPC_CHEST_OF_DRAWERS"              : 311,
-    "NPC_PLANT2"                        : 313,
-    "NPC_MOUSE2"                        : 315,
-    "NPC_MOUSE_SPARK_BOMB"              : 316,
-    "NPC_MOUSE3"                        : 318,
-    "NPC_GREAT_DOOR_SOUL_OF_DETECTION"  : 322,
-    "NPC_MODEL_TOWN2"                   : 325,
-    "NPC_MOUSE4"                        : 330,
-    "NPC_STEPS_MARIE"                   : 331,
-    "NPC_CHEST_OF_DRAWERS2"             : 332,
-    "NPC_PLANT_ACTINIDIA_LEAVES"        : 333,
-    "NPC_MOUSE5"                        : 338,
-    "NPC_CAT4"                          : 339,
-    "NPC_STAIRS_POWER_PLANT"            : 341,
-    "NPC_SOLDIER"                       : 345,
-    "NPC_SOLDIER2"                      : 346,
-    "NPC_SOLDIER3"                      : 351,
-    "NPC_SOLDIER_ELEMENTAL_MAIL"        : 353,
-    "NPC_SOLDIER4"                      : 354,
-    "NPC_SOLDIER5"                      : 358,
-    "NPC_SINGER_CONCERT_HALL"           : 359,
-    "NPC_SOLDIER6"                      : 360,
-    "NPC_MAID"                          : 363,
-    "NPC_SOLDIER_LEFT_TOWER"            : 365,
-    "NPC_SOLDIER_DOK"                   : 366,
-    "NPC_SOLDIER_PLATINUM_CARD"         : 368,
-    "NPC_SINGER"                        : 370,
-    "NPC_SOLDIER_SOUL_OF_REALITY"       : 377,
-    "NPC_MAID2"                         : 382,
-    "NPC_QUEEN_MAGRIDD"                 : 383,
-    "NPC_SOLDIER_WITH_LEO"              : 385,
-    "NPC_SOLDIER_RIGHT_TOWER"           : 386,
-    "NPC_DR_LEO"                        : 387,
-    "NPC_SOLDIER7"                      : 389,
-    "NPC_SOLDIER8"                      : 390,
-    "NPC_MAID_HERB"                     : 391,
-    "NPC_SOLDIER_CASTLE"                : 396,
-    "NPC_SOLDIER9"                      : 397,
-    "NPC_SOLDIER10"                     : 399,
-    "NPC_SOLDIER11"                     : 402,
-    "NPC_KING_MAGRIDD"                  : 405
+    "NPC_OLD_WOMAN"                     : {"id": 2  , "pretty_name": "placeholder"},
+    "NPC_TOOL_SHOP_OWNER"               : {"id": 6  , "pretty_name": "placeholder"},
+    "NPC_TULIP"                         : {"id": 7  , "pretty_name": "placeholder"},
+    "NPC_BRIDGE_GUARD"                  : {"id": 8  , "pretty_name": "placeholder"},
+    "NPC_VILLAGE_CHIEF"                 : {"id": 9  , "pretty_name": "placeholder"},
+    "NPC_IVY_CHEST_ROOM"                : {"id": 13 , "pretty_name": "placeholder"},
+    "NPC_WATER_MILL"                    : {"id": 14 , "pretty_name": "placeholder"},
+    "NPC_GOAT_HERB"                     : {"id": 15 , "pretty_name": "placeholder"},
+    "NPC_LISA"                          : {"id": 16 , "pretty_name": "placeholder"},
+    "NPC_TULIP2"                        : {"id": 17 , "pretty_name": "placeholder"},
+    "NPC_ARCHITECT"                     : {"id": 18 , "pretty_name": "placeholder"},
+    "NPC_IVY"                           : {"id": 19 , "pretty_name": "placeholder"},
+    "NPC_GOAT"                          : {"id": 21 , "pretty_name": "placeholder"},
+    "NPC_TEDDY"                         : {"id": 22 , "pretty_name": "placeholder"},
+    "NPC_TULIP3"                        : {"id": 24 , "pretty_name": "placeholder"},
+    "NPC_LEOS_HOUSE"                    : {"id": 26 , "pretty_name": "placeholder"},
+    "NPC_LONELY_GOAT"                   : {"id": 29 , "pretty_name": "placeholder"},
+    "NPC_TULIP_PASS"                    : {"id": 34 , "pretty_name": "placeholder"},
+    "NPC_BOY_CABIN"                     : {"id": 35 , "pretty_name": "placeholder"},
+    "NPC_BOY_CAVE"                      : {"id": 37 , "pretty_name": "placeholder"},
+    "NPC_OLD_MAN"                       : {"id": 40 , "pretty_name": "placeholder"},
+    "NPC_OLD_MAN2"                      : {"id": 41 , "pretty_name": "placeholder"},
+    "NPC_IVY2"                          : {"id": 42 , "pretty_name": "placeholder"},
+    "NPC_IVY_EMBLEM_A"                  : {"id": 43 , "pretty_name": "placeholder"},
+    "NPC_IVY_RECOVERY_SWORD"            : {"id": 44 , "pretty_name": "placeholder"},
+    "NPC_TULIP4"                        : {"id": 46 , "pretty_name": "placeholder"},
+    "NPC_GOAT2"                         : {"id": 47 , "pretty_name": "placeholder"},
+    "NPC_BIRD_RED_HOT_MIRROR"           : {"id": 55 , "pretty_name": "placeholder"},
+    "NPC_BIRD"                          : {"id": 56 , "pretty_name": "placeholder"},
+    "NPC_DOG"                           : {"id": 60 , "pretty_name": "placeholder"},
+    "NPC_DOG2"                          : {"id": 61 , "pretty_name": "placeholder"},
+    "NPC_DOG3"                          : {"id": 63 , "pretty_name": "placeholder"},
+    "NPC_MOLE_SHIELD_BRACELET"          : {"id": 64 , "pretty_name": "placeholder"},
+    "NPC_SQUIRREL_EMBLEM_C"             : {"id": 65 , "pretty_name": "placeholder"},
+    "NPC_SQUIRREL_PSYCHO_SWORD"         : {"id": 67 , "pretty_name": "placeholder"},
+    "NPC_BIRD2"                         : {"id": 70 , "pretty_name": "placeholder"},
+    "NPC_MOLE_SOUL_OF_LIGHT"            : {"id": 73 , "pretty_name": "placeholder"},
+    "NPC_DEER"                          : {"id": 74 , "pretty_name": "placeholder"},
+    "NPC_CROCODILE"                     : {"id": 78 , "pretty_name": "placeholder"},
+    "NPC_SQUIRREL"                      : {"id": 79 , "pretty_name": "placeholder"},
+    "NPC_GREENWOODS_GUARDIAN"           : {"id": 80 , "pretty_name": "placeholder"},
+    "NPC_MOLE"                          : {"id": 81 , "pretty_name": "placeholder"},
+    "NPC_DOG4"                          : {"id": 86 , "pretty_name": "placeholder"},
+    "NPC_SQUIRREL_ICE_ARMOR"            : {"id": 88 , "pretty_name": "placeholder"},
+    "NPC_SQUIRREL2"                     : {"id": 89 , "pretty_name": "placeholder"},
+    "NPC_DOG5"                          : {"id": 90 , "pretty_name": "placeholder"},
+    "NPC_CROCODILE2"                    : {"id": 91 , "pretty_name": "placeholder"},
+    "NPC_MOLE2"                         : {"id": 92 , "pretty_name": "placeholder"},
+    "NPC_SQUIRREL3"                     : {"id": 93 , "pretty_name": "placeholder"},
+    "NPC_BIRD_GREENWOOD_LEAF"           : {"id": 97 , "pretty_name": "placeholder"},
+    "NPC_MOLE3"                         : {"id": 98 , "pretty_name": "placeholder"},
+    "NPC_DEER_MAGIC_BELL"               : {"id": 99 , "pretty_name": "placeholder"},
+    "NPC_BIRD3"                         : {"id": 100, "pretty_name": "placeholder"},
+    "NPC_CROCODILE3"                    : {"id": 111, "pretty_name": "placeholder"},
+    "NPC_MONMO"                         : {"id": 114, "pretty_name": "placeholder"},
+    "NPC_DOLPHIN"                       : {"id": 124, "pretty_name": "placeholder"},
+    "NPC_ANGELFISH"                     : {"id": 131, "pretty_name": "placeholder"},
+    "NPC_MERMAID"                       : {"id": 132, "pretty_name": "placeholder"},
+    "NPC_ANGELFISH2"                    : {"id": 134, "pretty_name": "placeholder"},
+    "NPC_MERMAID_PEARL"                 : {"id": 138, "pretty_name": "placeholder"},
+    "NPC_MERMAID2"                      : {"id": 139, "pretty_name": "placeholder"},
+    "NPC_DOLPHIN_SAVES_LUE"             : {"id": 140, "pretty_name": "placeholder"},
+    "NPC_MERMAID_STATUE_BLESTER"        : {"id": 141, "pretty_name": "placeholder"},
+    "NPC_MERMAID_RED_HOT_STICK"         : {"id": 142, "pretty_name": "placeholder"},
+    "NPC_LUE"                           : {"id": 143, "pretty_name": "placeholder"},
+    "NPC_MERMAID3"                      : {"id": 146, "pretty_name": "placeholder"},
+    "NPC_MERMAID_NANA"                  : {"id": 149, "pretty_name": "placeholder"},
+    "NPC_MERMAID4"                      : {"id": 153, "pretty_name": "placeholder"},
+    "NPC_DOLPHIN2"                      : {"id": 155, "pretty_name": "placeholder"},
+    "NPC_MERMAID_STATUE_ROCKBIRD"       : {"id": 157, "pretty_name": "placeholder"},
+    "NPC_MERMAID_BUBBLE_ARMOR"          : {"id": 161, "pretty_name": "placeholder"},
+    "NPC_MERMAID5"                      : {"id": 164, "pretty_name": "placeholder"},
+    "NPC_MERMAID6"                      : {"id": 165, "pretty_name": "placeholder"},
+    "NPC_MERMAID_TEARS"                 : {"id": 167, "pretty_name": "placeholder"},
+    "NPC_MERMAID_STATUE_DUREAN"         : {"id": 171, "pretty_name": "placeholder"},
+    "NPC_ANGELFISH3"                    : {"id": 173, "pretty_name": "placeholder"},
+    "NPC_ANGELFISH_SOUL_OF_SHIELD"      : {"id": 177, "pretty_name": "placeholder"},
+    "NPC_MERMAID_MAGIC_FLARE"           : {"id": 181, "pretty_name": "placeholder"},
+    "NPC_MERMAID_QUEEN"                 : {"id": 182, "pretty_name": "placeholder"},
+    "NPC_MERMAID_STATUE_GHOST_SHIP"     : {"id": 185, "pretty_name": "placeholder"},
+    "NPC_DOLPHIN_SECRET_CAVE"           : {"id": 187, "pretty_name": "placeholder"},
+    "NPC_MERMAID7"                      : {"id": 189, "pretty_name": "placeholder"},
+    "NPC_ANGELFISH4"                    : {"id": 190, "pretty_name": "placeholder"},
+    "NPC_MERMAID8"                      : {"id": 192, "pretty_name": "placeholder"},
+    "NPC_DOLPHIN_PEARL"                 : {"id": 193, "pretty_name": "placeholder"},
+    "NPC_MERMAID9"                      : {"id": 194, "pretty_name": "placeholder"},
+    "NPC_GRANDPA"                       : {"id": 201, "pretty_name": "placeholder"},
+    "NPC_GIRL"                          : {"id": 202, "pretty_name": "placeholder"},
+    "NPC_MUSHROOM"                      : {"id": 203, "pretty_name": "placeholder"},
+    "NPC_BOY"                           : {"id": 204, "pretty_name": "placeholder"},
+    "NPC_GRANDPA2"                      : {"id": 211, "pretty_name": "placeholder"},
+    "NPC_SNAIL_JOCKEY"                  : {"id": 212, "pretty_name": "placeholder"},
+    "NPC_NOME"                          : {"id": 214, "pretty_name": "placeholder"},
+    "NPC_BOY2"                          : {"id": 215, "pretty_name": "placeholder"},
+    "NPC_MUSHROOM_EMBLEM_F"             : {"id": 221, "pretty_name": "placeholder"},
+    "NPC_DANCING_GRANDMA"               : {"id": 225, "pretty_name": "placeholder"},
+    "NPC_DANCING_GRANDMA2"              : {"id": 230, "pretty_name": "placeholder"},
+    "NPC_SNAIL_EMBLEM_E"                : {"id": 232, "pretty_name": "placeholder"},
+    "NPC_BOY_MUSHROOM_SHOES"            : {"id": 233, "pretty_name": "placeholder"},
+    "NPC_GRANDMA"                       : {"id": 234, "pretty_name": "placeholder"},
+    "NPC_GIRL2"                         : {"id": 235, "pretty_name": "placeholder"},
+    "NPC_MUSHROOM2"                     : {"id": 238, "pretty_name": "placeholder"},
+    "NPC_SNAIL_RACER"                   : {"id": 239, "pretty_name": "placeholder"},
+    "NPC_SNAIL_RACER2"                  : {"id": 240, "pretty_name": "placeholder"},
+    "NPC_GIRL3"                         : {"id": 242, "pretty_name": "placeholder"},
+    "NPC_MUSHROOM3"                     : {"id": 246, "pretty_name": "placeholder"},
+    "NPC_SNAIL"                         : {"id": 247, "pretty_name": "placeholder"},
+    "NPC_GRANDPA3"                      : {"id": 248, "pretty_name": "placeholder"},
+    "NPC_SNAIL2"                        : {"id": 250, "pretty_name": "placeholder"},
+    "NPC_GRANDPA4"                      : {"id": 252, "pretty_name": "placeholder"},
+    "NPC_GRANDPA_LUNE"                  : {"id": 254, "pretty_name": "placeholder"},
+    "NPC_GRANDPA5"                      : {"id": 255, "pretty_name": "placeholder"},
+    "NPC_MOUNTAIN_KING"                 : {"id": 259, "pretty_name": "placeholder"},
+    "NPC_PLANT_HERB"                    : {"id": 265, "pretty_name": "placeholder"},
+    "NPC_PLANT"                         : {"id": 267, "pretty_name": "placeholder"},
+    "NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR" : {"id": 268, "pretty_name": "placeholder"},
+    "NPC_CAT"                           : {"id": 269, "pretty_name": "placeholder"},
+    "NPC_GREAT_DOOR_ZANTETSU_SWORD"     : {"id": 274, "pretty_name": "placeholder"},
+    "NPC_CAT2"                          : {"id": 276, "pretty_name": "placeholder"},
+    "NPC_GREAT_DOOR"                    : {"id": 282, "pretty_name": "placeholder"},
+    "NPC_CAT3"                          : {"id": 283, "pretty_name": "placeholder"},
+    "NPC_MODEL_TOWN1"                   : {"id": 286, "pretty_name": "placeholder"},
+    "NPC_GREAT_DOOR_MODEL_TOWNS"        : {"id": 288, "pretty_name": "placeholder"},
+    "NPC_STEPS_UPSTAIRS"                : {"id": 290, "pretty_name": "placeholder"},
+    "NPC_CAT_DOOR_KEY"                  : {"id": 294, "pretty_name": "placeholder"},
+    "NPC_MOUSE"                         : {"id": 297, "pretty_name": "placeholder"},
+    "NPC_MARIE"                         : {"id": 303, "pretty_name": "placeholder"},
+    "NPC_DOLL"                          : {"id": 310, "pretty_name": "placeholder"},
+    "NPC_CHEST_OF_DRAWERS"              : {"id": 311, "pretty_name": "placeholder"},
+    "NPC_PLANT2"                        : {"id": 313, "pretty_name": "placeholder"},
+    "NPC_MOUSE2"                        : {"id": 315, "pretty_name": "placeholder"},
+    "NPC_MOUSE_SPARK_BOMB"              : {"id": 316, "pretty_name": "placeholder"},
+    "NPC_MOUSE3"                        : {"id": 318, "pretty_name": "placeholder"},
+    "NPC_GREAT_DOOR_SOUL_OF_DETECTION"  : {"id": 322, "pretty_name": "placeholder"},
+    "NPC_MODEL_TOWN2"                   : {"id": 325, "pretty_name": "placeholder"},
+    "NPC_MOUSE4"                        : {"id": 330, "pretty_name": "placeholder"},
+    "NPC_STEPS_MARIE"                   : {"id": 331, "pretty_name": "placeholder"},
+    "NPC_CHEST_OF_DRAWERS2"             : {"id": 332, "pretty_name": "placeholder"},
+    "NPC_PLANT_ACTINIDIA_LEAVES"        : {"id": 333, "pretty_name": "placeholder"},
+    "NPC_MOUSE5"                        : {"id": 338, "pretty_name": "placeholder"},
+    "NPC_CAT4"                          : {"id": 339, "pretty_name": "placeholder"},
+    "NPC_STAIRS_POWER_PLANT"            : {"id": 341, "pretty_name": "placeholder"},
+    "NPC_SOLDIER"                       : {"id": 345, "pretty_name": "placeholder"},
+    "NPC_SOLDIER2"                      : {"id": 346, "pretty_name": "placeholder"},
+    "NPC_SOLDIER3"                      : {"id": 351, "pretty_name": "placeholder"},
+    "NPC_SOLDIER_ELEMENTAL_MAIL"        : {"id": 353, "pretty_name": "placeholder"},
+    "NPC_SOLDIER4"                      : {"id": 354, "pretty_name": "placeholder"},
+    "NPC_SOLDIER5"                      : {"id": 358, "pretty_name": "placeholder"},
+    "NPC_SINGER_CONCERT_HALL"           : {"id": 359, "pretty_name": "placeholder"},
+    "NPC_SOLDIER6"                      : {"id": 360, "pretty_name": "placeholder"},
+    "NPC_MAID"                          : {"id": 363, "pretty_name": "placeholder"},
+    "NPC_SOLDIER_LEFT_TOWER"            : {"id": 365, "pretty_name": "placeholder"},
+    "NPC_SOLDIER_DOK"                   : {"id": 366, "pretty_name": "placeholder"},
+    "NPC_SOLDIER_PLATINUM_CARD"         : {"id": 368, "pretty_name": "placeholder"},
+    "NPC_SINGER"                        : {"id": 370, "pretty_name": "placeholder"},
+    "NPC_SOLDIER_SOUL_OF_REALITY"       : {"id": 377, "pretty_name": "placeholder"},
+    "NPC_MAID2"                         : {"id": 382, "pretty_name": "placeholder"},
+    "NPC_QUEEN_MAGRIDD"                 : {"id": 383, "pretty_name": "placeholder"},
+    "NPC_SOLDIER_WITH_LEO"              : {"id": 385, "pretty_name": "placeholder"},
+    "NPC_SOLDIER_RIGHT_TOWER"           : {"id": 386, "pretty_name": "placeholder"},
+    "NPC_DR_LEO"                        : {"id": 387, "pretty_name": "placeholder"},
+    "NPC_SOLDIER7"                      : {"id": 389, "pretty_name": "placeholder"},
+    "NPC_SOLDIER8"                      : {"id": 390, "pretty_name": "placeholder"},
+    "NPC_MAID_HERB"                     : {"id": 391, "pretty_name": "placeholder"},
+    "NPC_SOLDIER_CASTLE"                : {"id": 396, "pretty_name": "placeholder"},
+    "NPC_SOLDIER9"                      : {"id": 397, "pretty_name": "placeholder"},
+    "NPC_SOLDIER10"                     : {"id": 399, "pretty_name": "placeholder"},
+    "NPC_SOLDIER11"                     : {"id": 402, "pretty_name": "placeholder"},
+    "NPC_KING_MAGRIDD"                  : {"id": 405, "pretty_name": "placeholder"},
 }
 
 KEY_ITEMS = [
@@ -365,6 +417,7 @@ KEY_ITEMS = [
 REGIONS = {
 	# Region 0 - Act 1 start, Underground Castle before elevator
 	0: {
+        "description": "Underground Castle",
 		"checks": [ 
 			{"type": "chest", "id": 0}, # SWORD_OF_LIFE
 			{"type": "item", "name": "ITEM_MAGICIAN"},
@@ -376,7 +429,7 @@ REGIONS = {
 			{"type": "lair", "name": "NPC_WATER_MILL"},
 			{"type": "chest", "id": 3}, # GEMS_EXP 12
 			{"type": "chest", "id": 4}, # MEDICAL_HERB
-			{"type": "chest", "name": "CHEST_DREAM_ROD"},
+			{"type": "chest", "id": 5}, #"name": "CHEST_DREAM_ROD"},
 			{"type": "item", "name": "ITEM_CRYSTAL_UNDERGROUND_CASTLE"},
 		],
 		"requirements": [],
@@ -386,6 +439,7 @@ REGIONS = {
 	},
     # Region 1 - Underground chest room
 	1: {
+        "description": "Grass Valley",
         "checks": [ 
 			{"type": "chest", "id": 1}, # IRON_ARMOR
 			{"type": "chest", "id": 2}, # GEMS_EXP 50
@@ -399,6 +453,7 @@ REGIONS = {
     },
     # Region 2 - Underground Castle after elevator
 	2: {
+        "description": "Underground Castle",
         "checks": [ 
 			{"type": "lair", "name": "NPC_OLD_MAN2"}, 
 			{"type": "lair", "name": "NPC_GOAT_HERB"},
@@ -419,6 +474,7 @@ REGIONS = {
     },
     # Region 3 - Leo's Paintings
 	3: {
+        "description": "Leo`s Paintings",
         "checks": [ 
 			{"type": "lair", "name": "NPC_TULIP4"}, 
 			{"type": "lair", "name": "NPC_LONELY_GOAT"}, 
@@ -440,9 +496,10 @@ REGIONS = {
     },
     # Region 4 - Last part of Underground Castle (originally region 5)
 	4: {
+        "description": "Underground Castle",
         "checks": [ 
 			{"type": "lair", "name": "NPC_OLD_MAN"}, 
-			{"type": "chest", "name": "CHEST_LEOS_BRUSH"},
+			{"type": "chest", "id": 6}, #"name": "CHEST_LEOS_BRUSH"},
         ],
         "requirements": [ 
             {"type": "npc_id", "name": "NPC_LISA"},
@@ -452,6 +509,7 @@ REGIONS = {
     },
     # Region 5 - Leo's Paintings Metal Enemies (originally region 6)
 	5: {
+        "description": "Leo`s Paintings",
         "checks": [ 
 			{"type": "lair", "name": "NPC_IVY_EMBLEM_A"}, 
 			{"type": "lair", "name": "NPC_IVY_RECOVERY_SWORD"}, 
@@ -480,6 +538,7 @@ REGIONS = {
     # },
     # Region 6 - Act 2 start, Lost Marshes + Water/Fire Shrines (originally region 4)
 	6: {
+        "description": "Lost Marshes",
         "checks": [ 
 			{"type": "item", "name": "ITEM_VILLAGE_CHIEF"}, 
 			{"type": "lair", "name": "NPC_BIRD"}, 
@@ -511,9 +570,9 @@ REGIONS = {
 			# {"type": "chest", "id": 17}, # NOTHING # WARNING: this (normally empty) chest can disappear!!!
 			{"type": "chest", "id": 19}, # GEMS_EXP 100
 			{"type": "chest", "id": 20}, # GEMS_EXP 60
-			{"type": "chest", "name": "ITEM_CRYSTAL_WATER_SHRINE"}, 
-			{"type": "chest", "name": "ITEM_WATER_SHRINE_TILE"}, 
-			{"type": "chest", "name": "ITEM_CRYSTAL_LIGHT_ARROW"}, 
+			{"type": "item", "name": "ITEM_CRYSTAL_WATER_SHRINE"}, 
+			{"type": "item", "name": "ITEM_WATER_SHRINE_TILE"}, 
+			{"type": "item", "name": "ITEM_CRYSTAL_LIGHT_ARROW"}, 
         ],
         "requirements": [ 
             {"type": "npc_id", "name": "NPC_VILLAGE_CHIEF"},
@@ -525,6 +584,7 @@ REGIONS = {
     },
     # Region 7 - Last part of Marshes + Light Shrine
 	7: {
+        "description": "Lost Marshes",
         "checks": [ 
 			{"type": "lair", "name": "NPC_MOLE_SHIELD_BRACELET"}, 
 			{"type": "lair", "name": "NPC_DOG3"}, 
@@ -541,6 +601,7 @@ REGIONS = {
     },
     # Region 8 - Fire Shrine Scorpions
 	8: {
+        "description": "Lost Marshes",
         "checks": [ 
 			{"type": "lair", "name": "NPC_BIRD3"}, 
 			{"type": "chest", "id": 18}, 
@@ -553,6 +614,7 @@ REGIONS = {
     },
     # Region 9 - Monmo's Treasure
 	9: {
+        "description": "Greenwood",
         "checks": [ 
 			{"type": "chest", "id": 10}, # MOLES_RIBBON
         ],
@@ -564,6 +626,7 @@ REGIONS = {
     },
     # Region 10 - Ice Armor chest
 	10: {
+        "description": "Greenwood",
         "checks": [ 
 			{"type": "chest", "id": 9}, # ICE_ARMOR
         ],
@@ -576,6 +639,7 @@ REGIONS = {
     },
     # Region 11 - Light Shrine Fire Spirits (previously region 12)
 	11: {
+        "description": "Lost Marshes",
         "checks": [ 
 			{"type": "lair", "name": "NPC_BIRD_RED_HOT_MIRROR"}, 
 			{"type": "chest", "id": 21}, # FLAME_PILLAR
@@ -588,6 +652,7 @@ REGIONS = {
     },
     # Region 12 - Act 3 start, Southerta (previously region 11)
 	12: {
+        "description": "Southerta",
         "checks": [ 
 			{"type": "item", "name": "ITEM_GREENWOODS_GUARDIAN"}, 
 			{"type": "lair", "name": "NPC_DOLPHIN2"}, 
@@ -606,6 +671,7 @@ REGIONS = {
     },
     # Region 13 - Last soul of Southerta
 	13: {
+        "description": "Southerta",
         "checks": [ 
 			{"type": "lair", "name": "NPC_MERMAID_STATUE_ROCKBIRD"}, 
         ],
@@ -616,8 +682,9 @@ REGIONS = {
     },
     # Region 14 - Big Pearl chest (previously region 15)
 	14: {
+        "description": "Seabed",
         "checks": [ 
-			{"type": "chest", "name": "CHEST_BIG_PEARL"}, 
+			{"type": "chest", "id": 23}, #"name": "CHEST_BIG_PEARL"}, 
         ],
         "requirements": [ 
             {"type": "npc_id", "name": "NPC_MERMAID_PEARL"},
@@ -628,6 +695,7 @@ REGIONS = {
     },
     # Region 15 - Rockbird (previously region 16)
 	15: {
+        "description": "Rockbird",
         "checks": [ 
 			{"type": "lair", "name": "NPC_MERMAID9"}, 
 			{"type": "lair", "name": "NPC_MERMAID_TEARS"}, 
@@ -646,6 +714,7 @@ REGIONS = {
     },
     # Region 16 - Blester (previously region 17)
 	16: {
+        "description": "Blester",
         "checks": [ 
 			{"type": "lair", "name": "NPC_ANGELFISH"}, 
 			{"type": "lair", "name": "NPC_ANGELFISH2"}, 
@@ -664,6 +733,7 @@ REGIONS = {
     },
     # Region 17 - Blester Metal Gorillas (previously region 20)
 	17: {
+        "description": "Blester",
         "checks": [ 
 			{"type": "lair", "name": "NPC_MERMAID_STATUE_GHOST_SHIP"}, 
         ],
@@ -677,6 +747,7 @@ REGIONS = {
     },
     # Region 18 - Durean
 	18: {
+        "description": "Durean",
         "checks": [ 
 			{"type": "lair", "name": "NPC_DOLPHIN_PEARL"}, 
 			{"type": "lair", "name": "NPC_LUE"}, 
@@ -699,6 +770,7 @@ REGIONS = {
     },
     # Region 19 - Durean Metal Gorillas (previously region 21)
 	19: {
+        "description": "Durean",
         "checks": [ 
 			{"type": "lair", "name": "NPC_MERMAID_RED_HOT_STICK"}, 
         ],
@@ -711,6 +783,7 @@ REGIONS = {
     },
     # Region 20 - Ghost Ship (previously region 19)
 	20: {
+        "description": "Ghost Ship",
         "checks": [ 
 			{"type": "lair", "name": "NPC_ANGELFISH3"}, 
 			{"type": "lair", "name": "NPC_DOLPHIN"}, 
@@ -727,6 +800,7 @@ REGIONS = {
     },
     # Region 21 - Seabed Secret Cave (previously region 22)
 	21: {
+        "description": "Seabed",
         "checks": [ 
 			{"type": "chest", "id": 24}, # EMBLEM_D
 			{"type": "chest", "id": 25}, # GEMS_EXP 80
@@ -748,6 +822,7 @@ REGIONS = {
     # Region ^ was never neaded. I'm leaving a space here JIC.
     # Region 23 - Act 4 start, Mountain of Souls (previously region 14)
 	23: {
+        "description": "Mountain of Souls",
         "checks": [ 
 			{"type": "item", "name": "ITEM_MERMAID_QUEEN"}, 
 			{"type": "lair", "name": "NPC_GIRL"}, 
@@ -774,6 +849,7 @@ REGIONS = {
     },
     # Region 24 - Mountain of Souls last lair + Laynole
 	24: {
+        "description": "Laynole",
         "checks": [ 
 			{"type": "lair", "name": "NPC_GRANDMA"}, 
 			{"type": "lair", "name": "NPC_MUSHROOM2"}, 
@@ -787,7 +863,7 @@ REGIONS = {
 			{"type": "lair", "name": "NPC_GRANDPA_LUNE"}, 
 			{"type": "lair", "name": "NPC_SNAIL2"}, 
 			{"type": "lair", "name": "NPC_GRANDPA5"}, 
-			{"type": "chest", "name": "CHEST_LUCKY_BLADE"}, 
+			{"type": "chest", "id": 40,}, #"name": "CHEST_LUCKY_BLADE"}, 
         ],
         "requirements": [ 
             {"type": "item", "name": "MUSHROOM_SHOES"},
@@ -796,6 +872,7 @@ REGIONS = {
     },
     # Region 25 - Last part of Laynole + Lune
 	25: {
+        "description": "Lune",
         "checks": [ 
 			{"type": "lair", "name": "NPC_BOY2"}, 
 			{"type": "lair", "name": "NPC_NOME"}, 
@@ -817,6 +894,7 @@ REGIONS = {
     },
     # Region 26 - Act 5 start, first lairs of Leo's Lab Basement
 	26: {
+        "description": "Lab Basement",
         "checks": [ 
 			{"type": "lair", "name": "NPC_PLANT"}, 
 			{"type": "lair", "name": "NPC_CAT"}, 
@@ -837,6 +915,7 @@ REGIONS = {
     },
     # Region 27 - Leo's Lab Basement (previously region 28)
 	27: {
+        "description": "Lab Basement",
         "checks": [ 
 			{"type": "lair", "name": "NPC_PLANT_HERB"}, 
 			{"type": "lair", "name": "NPC_CAT2"}, 
@@ -857,6 +936,7 @@ REGIONS = {
     },
     # Region 28 - Leo's Lab main room (previously region 27)
 	28: {
+        "description": "Leo`s Lab",
         "checks": [ 
 			{"type": "chest", "id": 43}, # ZANTETSU_SWORD
         ],
@@ -867,6 +947,7 @@ REGIONS = {
     },
     # Region 29 - Model Town 1
 	29: {
+        "description": "Model Town",
         "checks": [ 
 			{"type": "lair", "name": "NPC_CHEST_OF_DRAWERS"}, 
 			{"type": "lair", "name": "NPC_PLANT2"}, 
@@ -892,6 +973,7 @@ REGIONS = {
     },
     # Region 30 - Model Town 2
     30: {
+        "description": "Model Town",
         "checks": [ 
 			{"type": "lair", "name": "NPC_CHEST_OF_DRAWERS2"}, 
 			{"type": "lair", "name": "NPC_PLANT_ACTINIDIA_LEAVES"}, 
@@ -911,6 +993,7 @@ REGIONS = {
     },
     # Region 31 - Light Armor chest
     31: {
+        "description": "Power Plant",
         "checks": [ 
 			{"type": "chest", "id": 44}, # LIGHT_ARMOR
         ],
@@ -922,6 +1005,7 @@ REGIONS = {
     },
     # Region 32 - Power Plant
     32: {
+        "description": "Power Plant",
         "checks": [ 
 			{"type": "lair", "name": "NPC_DOLL"}, 
 			{"type": "lair", "name": "NPC_MARIE"}, 
@@ -935,6 +1019,7 @@ REGIONS = {
     },
     # Region 33 - Act 6 start, first lairs of Magridd Castle Basement
     33: {
+        "description": "Castle Basement",
         "checks": [ 
 			{"type": "item", "name": "ITEM_MARIE"}, 
 			{"type": "lair", "name": "NPC_SOLDIER"}, 
@@ -954,6 +1039,7 @@ REGIONS = {
     },
     # Region 34 - Magridd Castle Basement
     34: {
+        "description": "Castle Basement",
         "checks": [ 
 			{"type": "lair", "name": "NPC_SOLDIER2"}, 
 			{"type": "lair", "name": "NPC_SINGER_CONCERT_HALL"}, 
@@ -979,6 +1065,7 @@ REGIONS = {
     },
     # Region 35 - Magridd Castle Left Tower
     35: {
+        "description": "Castle Tower",
         "checks": [ 
 			{"type": "lair", "name": "NPC_SOLDIER_SOUL_OF_REALITY"}, 
 			{"type": "lair", "name": "NPC_QUEEN_MAGRIDD"}, 
@@ -996,6 +1083,7 @@ REGIONS = {
     },
     # Region 36 - Magridd Castle Right Tower
     36: {
+        "description": "Castle Tower",
         "checks": [ 
 			{"type": "lair", "name": "NPC_MAID_HERB"}, 
 			{"type": "lair", "name": "NPC_SOLDIER8"}, 
@@ -1016,12 +1104,13 @@ REGIONS = {
     },
     # Region 37 - Act 7 start, World of Evil
     37: {
+        "description": "World of Evil",
         "checks": [ 
 			{"type": "item", "name": "ITEM_KING_MAGRIDD"}, 
 			{"type": "chest", "id": 60}, # MEDICAL_HERB
 			{"type": "chest", "id": 61}, # GEMS_EXP 200
-			{"type": "chest", "name": "CHEST_RED_HOT_BALL"}, 
-			{"type": "chest", "name": "CHEST_SOUL_ARMOR"}, 
+			{"type": "chest", "id": 62}, #"name": "CHEST_RED_HOT_BALL"}, 
+			{"type": "chest", "id": 63}, #"name": "CHEST_SOUL_ARMOR"}, 
         ],
         "requirements": [ 
             {"type": "npc_id", "name": "NPC_KING_MAGRIDD"},
@@ -1039,6 +1128,7 @@ REGIONS = {
     },
     # Region 38 - Dr Leo + Queen Magridd cutscene
     38: {
+        "description": "Magridd Castle",
         "checks": [ 
 			{"type": "item", "name": "ITEM_DR_LEO"}, 
         ],
@@ -1051,8 +1141,9 @@ REGIONS = {
     },
     # Region 39 - Dazzling Space
     39: {
+        "description": "World of Evil",
         "checks": [ 
-			{"type": "chest", "name": "CHEST_SOUL_BLADE"}, 
+			{"type": "chest", "id": 64}, #"name": "CHEST_SOUL_BLADE"}, 
 			{"type": "chest", "id": 65}, # GEMS_EXP 100
         ],
         "requirements": [ 
@@ -1062,6 +1153,7 @@ REGIONS = {
     },
     # Region 40 - Last Lair in Lune
     40: {
+        "description": "Lune",
         "checks": [ 
 			{"type": "lair", "name": "NPC_SNAIL_EMBLEM_E"}, 
 			{"type": "item", "name": "ITEM_EMBLEM_F"}, 
@@ -1076,6 +1168,7 @@ REGIONS = {
     },
     # Region 41 - End of the game (NOTHING here)
     41: {
+        "description": "End of the line...",
         "checks": [ # No checks, but this area needs to be accessible.
         ],
         "requirements": [ 
@@ -1088,6 +1181,7 @@ REGIONS = {
     },
     # Region 42 - Tool Shop Owner
     42: {
+        "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_TOOL_SHOP_OWNER"}
         ],
@@ -1098,6 +1192,7 @@ REGIONS = {
     },
     # Region 43 - Tool Shop Owner's son Teddy
     43: {
+        "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_TEDDY"}
         ],
@@ -1108,6 +1203,7 @@ REGIONS = {
     },
     # Region 44 - Emblem A tile
     44: {
+        "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_EMBLEM_A"}
         ],
@@ -1121,6 +1217,7 @@ REGIONS = {
     },
     # Region 45 - Secret Cave pass
     45: {
+        "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_PASS"}
         ],
@@ -1133,6 +1230,7 @@ REGIONS = {
     },
     # Region 46 - Goat pen corner tile
     46: {
+        "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_GOAT_PEN"}
         ],
@@ -1144,6 +1242,7 @@ REGIONS = {
     },
     # Region 47 - Secret Cave
     47: {
+        "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_SECRET_CAVE_TILE"}
         ],
@@ -1156,6 +1255,7 @@ REGIONS = {
     },
     # Region 48 - Recovery Sword crystal
     48: {
+        "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_CRYSTAL_RECOVERY_SWORD"}
         ],
@@ -1169,6 +1269,7 @@ REGIONS = {
     },
     # Region 49 - Red-Hot Mirror bird
     49: {
+        "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_BIRD_RED_HOT_MIRROR"}
         ],
@@ -1179,6 +1280,7 @@ REGIONS = {
     },
     # Region 50 - Magic Bell crystal
     50: {
+        "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_CRYSTAL_MAGIC_BELL"}
         ],
@@ -1198,6 +1300,7 @@ REGIONS = {
     },
     # Region 51 - Woodstin Trio
     51: {
+        "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_WOODSTIN_TRIO"}
         ],
@@ -1210,6 +1313,7 @@ REGIONS = {
     },
     # Region 52 - Shield Bracelet mole
     52: {
+        "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_MOLE_SHIELD_BRACELET"}
         ],
@@ -1222,6 +1326,7 @@ REGIONS = {
     },
     # Region 53 - Psycho Sword squirrel
     53: {
+        "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_SQUIRREL_PSYCHO_SWORD"}
         ],
@@ -1233,6 +1338,7 @@ REGIONS = {
     },
     # Region 54 - Emblem C squirrel
     54: {
+        "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_SQUIRREL_EMBLEM_C"}
         ],
@@ -1244,6 +1350,7 @@ REGIONS = {
     },
     # Region 55 - Medical Herb mermaid (north-eastern house of St Elles)
     55: {
+        "description": "St Elles",
         "checks": [
             {"type": "item", "name": "ITEM_MERMAID_HERB"}
         ],
@@ -1255,6 +1362,7 @@ REGIONS = {
     },
     # Region 56 - Common Mermaid house
     56: {
+        "description": "St Elles",
         "checks": [
             {"type": "chest", "id": 22}, # MERMAIDS_TEARS /* WARNING: I hope this chest is safe */
             {"type": "item", "name": "ITEM_MERMAID_BUBBLE_ARMOR"}
@@ -1266,6 +1374,7 @@ REGIONS = {
     },
     # Region 57 - Magic Flare mermaid
     57: {
+        "description": "St Elles",
         "checks": [
             {"type": "item", "name": "ITEM_MERMAID_MAGIC_FLARE"}
         ],
@@ -1277,6 +1386,7 @@ REGIONS = {
     },
     # Region 58 - Red-Hot Stick mermaid
     58: {
+        "description": "St Elles",
         "checks": [
             {"type": "item", "name": "ITEM_MERMAID_RED_HOT_STICK"}
         ],
@@ -1288,6 +1398,7 @@ REGIONS = {
     },
     # Region 59 - Lue
     59: {
+        "description": "St Elles",
         "checks": [
             {"type": "item", "name": "ITEM_LUE"}
         ],
@@ -1300,6 +1411,7 @@ REGIONS = {
     },
     # Region 60 - Emblem E snail
     60: {
+        "description": "Mountain of Souls",
         "checks": [
             {"type": "item", "name": "ITEM_SNAIL_EMBLEM_E"}
         ],
@@ -1310,6 +1422,7 @@ REGIONS = {
     },
     # Region 61 - Mushroom Shoes boy
     61: {
+        "description": "Mountain of Souls",
         "checks": [
             {"type": "item", "name": "ITEM_BOY_MUSHROOM_SHOES"}
         ],
@@ -1320,6 +1433,7 @@ REGIONS = {
     },
     # Region 62 - Mountain King's item + Deathtoll appears!
     62: {
+        "description": "Mountain of Souls",
         "checks": [
             {"type": "item", "name": "ITEM_MOUNTAIN_KING"}
         ],
@@ -1338,6 +1452,7 @@ REGIONS = {
     },
     # Region 63 - Locked dining room
     63: {
+        "description": "Leo`s Lab",
         "checks": [
             {"type": "item", "name": "ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR"},
             {"type": "item", "name": "ITEM_EMBLEM_G"},
@@ -1351,6 +1466,7 @@ REGIONS = {
     },
     # Region 64 - Spark Magic mouse
     64: {
+        "description": "Leo`s Lab",
         "checks": [
             {"type": "item", "name": "ITEM_MOUSE_SPARK_BOMB"},
         ],
@@ -1366,6 +1482,7 @@ REGIONS = {
     },
     # Region 65 - Medical Herb plant
     65: {
+        "description": "Leo`s Lab",
         "checks": [
             {"type": "item", "name": "ITEM_PLANT_HERB"},
         ],
@@ -1390,6 +1507,7 @@ REGIONS = {
     # },
     # Region 67 - Leo's Cat
     67: {
+        "description": "Leo`s Lab",
         "checks": [
             {"type": "item", "name": "ITEM_CAT_DOOR_KEY"},
         ],
@@ -1403,6 +1521,7 @@ REGIONS = {
     },
     # Region 68 - Actinidia Plant
     68: {
+        "description": "Leo`s Lab",
         "checks": [
             {"type": "item", "name": "ITEM_PLANT_ACTINIDIA_LEAVES"},
         ],
@@ -1415,6 +1534,7 @@ REGIONS = {
     },
     # Region 69 - Elemental Mail soldier
     69: {
+        "description": "Magridd Castle",
         "checks": [
             {"type": "item", "name": "ITEM_SOLDIER_ELEMENTAL_MAIL"},
         ],
@@ -1436,6 +1556,7 @@ REGIONS = {
     # },
     # Region 71 - Platinum Card soldier
     71: {
+        "description": "Magridd Castle",
         "checks": [
             {"type": "item", "name": "ITEM_SOLDIER_PLATINUM_CARD"},
         ],
@@ -1448,6 +1569,7 @@ REGIONS = {
     },
     # Region 72 - Medical Herb maid
     72: {
+        "description": "Magridd Castle",
         "checks": [
             {"type": "item", "name": "ITEM_MAID_HERB"},
         ],
@@ -1458,6 +1580,7 @@ REGIONS = {
     },
     # Region 73 - Magridd Castle + Emblem H tile
     73: {
+        "description": "Magridd Castle",
         "checks": [
             {"type": "item", "name": "ITEM_EMBLEM_H"},
         ],
@@ -1468,6 +1591,7 @@ REGIONS = {
     },
     # Region 74 - Super Bracelet tile
     74: {
+        "description": "Magridd Castle",
         "checks": [
             {"type": "item", "name": "ITEM_SUPER_BRACELET"},
         ],
@@ -1481,6 +1605,7 @@ REGIONS = {
     },
     # Region 75 - Greenwood Leaf tile
     75: {
+        "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_GREENWOOD_LEAVES"},
         ],
@@ -1495,6 +1620,7 @@ REGIONS = {
     },
     # Region 76 - Demon Bird's lair
     76: {
+        "description": "Magridd Castle",
         "checks": [
             {"type": "lair", "name": "NPC_KING_MAGRIDD"},
         ],
@@ -1519,6 +1645,7 @@ REGIONS = {
     # },
     # Region 78 - Chest of Drawers in Attic
     78: {
+        "description": "Leo`s Lab",
         "checks": [
             {"type": "item", "name": "ITEM_CHEST_OF_DRAWERS_HERB"},
         ],

@@ -297,12 +297,14 @@ OLD_WOMAN_PLACEMENT_HACK = {
     "value": b'\x3C\x20'
 }
 
+# ~~NOT DONE~~
 # Tool shop owner text condition
 TOOL_SHOP_OWNER_TEXT = {
     "address": 0x1839B,
     "value": map.LOCATION_ID_LOOKUP['ITEM_TOOL_SHOP_OWNER']
 }
 
+# ~~NOT DONE~~
 TOOL_SHOP_OWNER_SON_TEXT = [ 
     {
         "address": 0x1922E,
@@ -386,7 +388,7 @@ VILLAGE_CHIEF = [
 LISA_DREAM_TEXT = [
     {
         "address": 0x1A522,
-        "value": [ord(b'\x3C'), b'Lisa, you must\rhelp this man.', ord(b'\x3E')] # Closing quotation marks
+        "value": [ord(b'\x3C'), b'Lisa, you must\rhelp this one.', ord(b'\x3E')] # Closing quotation marks
                + TEXT_END_MULTI["ENDTYPE_88B9"]
     },
     {
@@ -402,7 +404,7 @@ MAGICIAN_TEXT = {
 
 UNDERGROUND_CRYSTAL_FAIRY_1 = {
     "address": 0x1AC5B,
-    "value": ord(b'\x00')
+    "value": ord(b'\x00') # An item id I think...
 }
 
 UNDERGROUND_CRYSTAL_FAIRY_2 = {

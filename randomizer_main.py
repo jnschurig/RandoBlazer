@@ -159,7 +159,7 @@ def randomizer(settings):
 
         world_graph = generate_map.initialize_world(settings['randomize'])
         item_placements = generate_map.randomize_items(world_graph, settings['randomize'])
-        print(len(item_placements))
+        # print(len(item_placements))
         '''
         This is where we put ALL the randomization stuff. Then at the very end we'll generate the 
         friendly hash for putting it in the file select screen.
