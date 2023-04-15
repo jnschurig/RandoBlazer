@@ -1,5 +1,5 @@
 import sys, getopt
-import json, os, math
+import json, os
 import networkx as nx
 from reference import map, constants, rom_data
 import random_manager
@@ -9,7 +9,7 @@ valid_args = '''Valid Arguments:
 -s <Seed>  --seed <Seed>            | The seed used to prime the random number generator. If one is not specified, one will be provided. 
 -w <ITEM>  --starting_weapon <ITEM> | Randomize starting weapon. If set, a random sword will be in the starting chest. Otherwise it will be Sword of Life. 
 -m <ITEM>  --magician_item <ITEM>   | Choose what the magician will drop. Use 'has_magic' for a random spell. Leave blank for random item. 
--a         --world_type             | Determines the method for locating valid places to put checks. Try `--world_type help` for more detail.
+-a <TYPE>  --world_type <TYPE>      | Determines the method for locating valid places to put checks. Try `--world_type help` for more detail.
 -t <MODE>  --trash_mode <MODE>      | Determines how trash is dispersed. Default vanilla. Use ''' + str(constants.TRASH_FILL_METHODS) + '''
 -u <ITEMs> --trash <ITEMs>          | A comma separated list (or list object) of all items to be used as trash.
 -p {plan}  --plan {plan}            | A dict or json object with pre-determined placements. Use --plan help for more detail.
@@ -19,44 +19,57 @@ valid_args = '''Valid Arguments:
 '''
 
 help_info = '''Help Info: 
+
 This script handles item placement througout the world. 
 The arguments are intended to be used for testing by running this script all by itself. 
 The networkx package is in use to assist with graph creation and traversal. 
 '''
 
 plan_help = '''Plan Help:
+
 Here I will put more detail regarding how to pre-place whatever. For choosing beginning 
-weapon or magician item, use --starting_weapon or --magician_item.
+weapon or magician item, use `--starting_weapon` or `--magician_item`.
 '''
 
 world_type_help = '''World Type Help:
-Uses graph logic to control which areas of the game can having progression at a given point in time.
-- vanilla  - All regions in an act can have logical progression.
-- balanced - Some regions will be excluded from having your current logical progression. However, there 
-             may be later-required progression in a region that could be excluded from current progression.
-- Advanced - Same as balanced, but there is a higher likelihood of having entirely "dead" regions that have 
-             no progression whatsoever.
+
+Uses graph logic to control which areas of the game can have progression at a given point in time.
+- **Vanilla**  - All regions in an act can have logical progression.
+- **Balanced** - Some regions will be excluded from having your current logical progression. However, there 
+                 may be later-required progression in a region that could be excluded from current progression.
+- **Advanced** - Same as balanced, but there is a higher likelihood of having entirely "dead" regions that have 
+                 no progression whatsoever.
 '''
 
-starting_weapon_help = '''Starting Weapon Help
+starting_weapon_help = '''Starting Weapon Help:
+
 Determine the starting weapon in the first chest of the game.
 Default: SWORD_OF_LIFE (Sword of Life)
-Valid options are any of the swords in the game or "random"
+Valid options are any of the swords in the game or "RANDOM"
 Valid swords:''' + str(map.SWORDS) + ''' 
 '''
 
-magician_item_help = '''Magician Item Help
+magician_item_help = '''Magician Item Help:
+
 Determine the second item in the game as given by the magician. In the vanilla game this would be the 
 fireball magic. 
 Default: random
-Valid items include:
-RANDOM
+Valid items include anything at all.
 '''
 
-for ref_item in rom_data.ITEMS.keys():
-    magician_item_help += ref_item + ' \n'
-    # mag_item_list.append(ref_item)
-del ref_item
+# for ref_item in rom_data.ITEMS.keys():
+#     magician_item_help += ref_item + ' \n'
+#     # mag_item_list.append(ref_item)
+# del ref_item
+
+trash_mode_help = '''Trash Mode Help:
+
+Choose which trash item(s) get used to populate "trash" item checks.
+- **vanilla** - Uses the vanilla trash items including ''' + str(constants.VANILLA_TRASH_WEIGHTS.keys()) + '''
+- **random**  - Picks a random item as trash.
+- **<ITEM>**  - An item, comma-separated list, or list object containing all items to use as trash fill. 
+- **none**    - Fill all trash items with NOTHING.
+'''
 
 def main(argv):
     arguments = {
@@ -76,7 +89,7 @@ def main(argv):
 
     # get arguments
     try:
-        opts, args = getopt.getopt(argv,'hs:wm:a:t:u:p:ozg:dv',['help','seed=','starting_weapon=','magician_item=','world_type=','trash_mode=','trash=','plan=','only_required','randomize_hubs','gem_scaling=','debug','verbose'])
+        opts, args = getopt.getopt(argv,'hs:w:m:a:t:u:p:ozg:dv',['help','seed=','starting_weapon=','magician_item=','world_type=','trash_mode=','trash=','plan=','only_required','randomize_hubs','gem_scaling=','debug','verbose'])
     except getopt.GetoptError:
         print('Unknown argument. Valid arguments: ' + valid_args)
         sys.exit(2)
@@ -837,7 +850,7 @@ def randomize_items(world_graph, settings_dict={'starting_weapon': 'SWORD_OF_LIF
             if ',' in settings_dict['trash']:
                 trash_list = settings_dict['trash'].upper().split(',')
             else:
-                trash_list = [settings_dict['trash']].upper()
+                trash_list = [settings_dict['trash'].upper()]
             new_trash = True
         # Now check the trash list to make sure it's ok.
         if new_trash:
