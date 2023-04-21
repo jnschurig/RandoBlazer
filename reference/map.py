@@ -415,8 +415,8 @@ KEY_ITEMS = [
 ]
 
 REGIONS = {
-	# Region 0 - Act 1 start, Underground Castle before elevator
 	0: {
+        "detail": "Region 0 - Act 1 start, Underground Castle before elevator",
         "description": "Underground Castle",
 		"checks": [ 
 			{"type": "chest", "id": 0}, # SWORD_OF_LIFE
@@ -437,8 +437,8 @@ REGIONS = {
         "is_act_hub": True,
         "connected_regions": [1, 2, 3, 4, 5, 42, 43, 44, 45, 46, 47, 48]
 	},
-    # Region 1 - Underground chest room
 	1: {
+        "detail": "Region 1 - Underground chest room",
         "description": "Grass Valley",
         "checks": [ 
 			{"type": "chest", "id": 1}, # IRON_ARMOR
@@ -451,8 +451,8 @@ REGIONS = {
         ],
         "act": 1
     },
-    # Region 2 - Underground Castle after elevator
 	2: {
+        "detail": "Region 2 - Underground Castle after elevator",
         "description": "Underground Castle",
         "checks": [ 
 			{"type": "lair", "name": "NPC_OLD_MAN2"}, 
@@ -472,8 +472,8 @@ REGIONS = {
         ],
         "act": 1
     },
-    # Region 3 - Leo's Paintings
 	3: {
+        "detail": "Region 3 - Leo's Paintings",
         "description": "Leo`s Paintings",
         "checks": [ 
 			{"type": "lair", "name": "NPC_TULIP4"}, 
@@ -494,8 +494,8 @@ REGIONS = {
         ],
         "act": 1
     },
-    # Region 4 - Last part of Underground Castle (originally region 5)
 	4: {
+        "detail": "Region 4 - Last part of Underground Castle",
         "description": "Underground Castle",
         "checks": [ 
 			{"type": "lair", "name": "NPC_OLD_MAN"}, 
@@ -507,8 +507,8 @@ REGIONS = {
         ],
         "act": 1
     },
-    # Region 5 - Leo's Paintings Metal Enemies (originally region 6)
 	5: {
+        "detail": "Region 5 - Leo's Paintings Metal Enemies",
         "description": "Leo`s Paintings",
         "checks": [ 
 			{"type": "lair", "name": "NPC_IVY_EMBLEM_A"}, 
@@ -536,8 +536,8 @@ REGIONS = {
     #     ],
     #     "act": 1,
     # },
-    # Region 6 - Act 2 start, Lost Marshes + Water/Fire Shrines (originally region 4)
 	6: {
+        "detail": "Region 6 - Act 2 start, Lost Marshes + Water/Fire Shrines",
         "description": "Lost Marshes",
         "checks": [ 
 			{"type": "item", "name": "ITEM_VILLAGE_CHIEF"}, 
@@ -582,8 +582,8 @@ REGIONS = {
         "is_act_hub": True,
         "connected_regions": [7, 8, 9, 10, 11, 49, 50, 51, 52, 53, 54]
     },
-    # Region 7 - Last part of Marshes + Light Shrine
 	7: {
+        "detail": "Region 7 - Last part of Marshes + Light Shrine",
         "description": "Lost Marshes",
         "checks": [ 
 			{"type": "lair", "name": "NPC_MOLE_SHIELD_BRACELET"}, 
@@ -599,8 +599,8 @@ REGIONS = {
         ],
         "act": 2
     },
-    # Region 8 - Fire Shrine Scorpions
 	8: {
+        "detail": "Region 8 - Fire Shrine Scorpions",
         "description": "Lost Marshes",
         "checks": [ 
 			{"type": "lair", "name": "NPC_BIRD3"}, 
@@ -612,8 +612,8 @@ REGIONS = {
         ],
         "act": 2
     },
-    # Region 9 - Monmo's Treasure
 	9: {
+        "detail": "Region 9 - Monmo's Treasure",
         "description": "Greenwood",
         "checks": [ 
 			{"type": "chest", "id": 10}, # MOLES_RIBBON
@@ -624,8 +624,8 @@ REGIONS = {
         ],
         "act": 2
     },
-    # Region 10 - Ice Armor chest
 	10: {
+        "detail": "Region 10 - Ice Armor chest",
         "description": "Greenwood",
         "checks": [ 
 			{"type": "chest", "id": 9}, # ICE_ARMOR
@@ -637,8 +637,8 @@ REGIONS = {
         ],
         "act": 2
     },
-    # Region 11 - Light Shrine Fire Spirits (previously region 12)
 	11: {
+        "detail": "Region 11 - Light Shrine Fire Spirits",
         "description": "Lost Marshes",
         "checks": [ 
 			{"type": "lair", "name": "NPC_BIRD_RED_HOT_MIRROR"}, 
@@ -650,8 +650,8 @@ REGIONS = {
        ],
         "act": 2
     },
-    # Region 12 - Act 3 start, Southerta (previously region 11)
 	12: {
+        "detail": "Region 12 - Act 3 start, Southerta",
         "description": "Southerta",
         "checks": [ 
 			{"type": "item", "name": "ITEM_GREENWOODS_GUARDIAN"}, 
@@ -669,8 +669,8 @@ REGIONS = {
         "is_act_hub": True,
         "connected_regions": [13, 14, 15, 16, 17, 18, 19, 20, 21, 55, 56, 57, 58, 59]
     },
-    # Region 13 - Last soul of Southerta
 	13: {
+        "detail": "Region 13 - Last soul of Southerta",
         "description": "Southerta",
         "checks": [ 
 			{"type": "lair", "name": "NPC_MERMAID_STATUE_ROCKBIRD"}, 
@@ -680,8 +680,8 @@ REGIONS = {
        ],
         "act": 3
     },
-    # Region 14 - Big Pearl chest (previously region 15)
 	14: {
+        "detail": "Region 14 - Big Pearl chest",
         "description": "Seabed",
         "checks": [ 
 			{"type": "chest", "id": 23}, #"name": "CHEST_BIG_PEARL"}, 
@@ -693,8 +693,8 @@ REGIONS = {
        ],
         "act": 3
     },
-    # Region 15 - Rockbird (previously region 16)
 	15: {
+        "detail": "Region 15 - Rockbird",
         "description": "Rockbird",
         "checks": [ 
 			{"type": "lair", "name": "NPC_MERMAID9"}, 
@@ -712,8 +712,8 @@ REGIONS = {
        ],
         "act": 3
     },
-    # Region 16 - Blester (previously region 17)
 	16: {
+        "detail": "Region 16 - Blester",
         "description": "Blester",
         "checks": [ 
 			{"type": "lair", "name": "NPC_ANGELFISH"}, 
@@ -731,8 +731,8 @@ REGIONS = {
        ],
         "act": 3
     },
-    # Region 17 - Blester Metal Gorillas (previously region 20)
 	17: {
+        "detail": "Region 17 - Blester Metal Gorillas",
         "description": "Blester",
         "checks": [ 
 			{"type": "lair", "name": "NPC_MERMAID_STATUE_GHOST_SHIP"}, 
@@ -745,8 +745,8 @@ REGIONS = {
        ],
         "act": 3
     },
-    # Region 18 - Durean
 	18: {
+        "detail": "Region 18 - Durean",
         "description": "Durean",
         "checks": [ 
 			{"type": "lair", "name": "NPC_DOLPHIN_PEARL"}, 
@@ -768,8 +768,8 @@ REGIONS = {
        ],
         "act": 3
     },
-    # Region 19 - Durean Metal Gorillas (previously region 21)
 	19: {
+        "detail": "Region 19 - Durean Metal Gorillas",
         "description": "Durean",
         "checks": [ 
 			{"type": "lair", "name": "NPC_MERMAID_RED_HOT_STICK"}, 
@@ -781,8 +781,8 @@ REGIONS = {
        ],
         "act": 3
     },
-    # Region 20 - Ghost Ship (previously region 19)
 	20: {
+        "detail": "Region 20 - Ghost Ship",
         "description": "Ghost Ship",
         "checks": [ 
 			{"type": "lair", "name": "NPC_ANGELFISH3"}, 
@@ -798,8 +798,8 @@ REGIONS = {
        ],
         "act": 3
     },
-    # Region 21 - Seabed Secret Cave (previously region 22)
 	21: {
+        "detail": "Region 21 - Seabed Secret Cave",
         "description": "Seabed",
         "checks": [ 
 			{"type": "chest", "id": 24}, # EMBLEM_D
@@ -820,8 +820,8 @@ REGIONS = {
     },
     # Region 22 - Used to be Mermaid's Tears chest, now useless (previously region 23)
     # Region ^ was never neaded. I'm leaving a space here JIC.
-    # Region 23 - Act 4 start, Mountain of Souls (previously region 14)
 	23: {
+        "detail": "Region 23 - Act 4 start, Mountain of Souls",
         "description": "Mountain of Souls",
         "checks": [ 
 			{"type": "item", "name": "ITEM_MERMAID_QUEEN"}, 
@@ -847,8 +847,8 @@ REGIONS = {
         "is_act_hub": True,
         "connected_regions": [24, 25, 40, 60, 61, 62]
     },
-    # Region 24 - Mountain of Souls last lair + Laynole
 	24: {
+        "detail": "Region 24 - Mountain of Souls last lair + Laynole",
         "description": "Laynole",
         "checks": [ 
 			{"type": "lair", "name": "NPC_GRANDMA"}, 
@@ -870,8 +870,8 @@ REGIONS = {
        ],
         "act": 4,
     },
-    # Region 25 - Last part of Laynole + Lune
 	25: {
+        "detail": "Region 25 - Last part of Laynole + Lune",
         "description": "Lune",
         "checks": [ 
 			{"type": "lair", "name": "NPC_BOY2"}, 
@@ -892,8 +892,8 @@ REGIONS = {
        ],
         "act": 4,
     },
-    # Region 26 - Act 5 start, first lairs of Leo's Lab Basement
 	26: {
+        "detail": "Region 26 - Act 5 start, first lairs of Leo's Lab Basement",
         "description": "Lab Basement",
         "checks": [ 
 			{"type": "lair", "name": "NPC_PLANT"}, 
@@ -913,8 +913,8 @@ REGIONS = {
         "is_act_hub": True,
         "connected_regions": [27, 28, 29, 30, 31, 32, 63, 64, 65, 67, 68]
     },
-    # Region 27 - Leo's Lab Basement (previously region 28)
 	27: {
+        "detail": "Region 27 - Leo's Lab Basement",
         "description": "Lab Basement",
         "checks": [ 
 			{"type": "lair", "name": "NPC_PLANT_HERB"}, 
@@ -934,8 +934,8 @@ REGIONS = {
        ],
         "act": 5,
     },
-    # Region 28 - Leo's Lab main room (previously region 27)
 	28: {
+        "detail": "Region 28 - Leo's Lab main room",
         "description": "Leo`s Lab",
         "checks": [ 
 			{"type": "chest", "id": 43}, # ZANTETSU_SWORD
@@ -945,8 +945,8 @@ REGIONS = {
        ],
         "act": 5,
     },
-    # Region 29 - Model Town 1
 	29: {
+        "detail": "Region 29 - Model Town 1",
         "description": "Model Town",
         "checks": [ 
 			{"type": "lair", "name": "NPC_CHEST_OF_DRAWERS"}, 
@@ -971,8 +971,8 @@ REGIONS = {
        ],
         "act": 5,
     },
-    # Region 30 - Model Town 2
     30: {
+        "detail": "Region 30 - Model Town 2",
         "description": "Model Town",
         "checks": [ 
 			{"type": "lair", "name": "NPC_CHEST_OF_DRAWERS2"}, 
@@ -991,8 +991,8 @@ REGIONS = {
        ],
         "act": 5,
     },
-    # Region 31 - Light Armor chest
     31: {
+        "detail": "Region 31 - Light Armor chest",
         "description": "Power Plant",
         "checks": [ 
 			{"type": "chest", "id": 44}, # LIGHT_ARMOR
@@ -1003,8 +1003,8 @@ REGIONS = {
        ],
         "act": 5,
     },
-    # Region 32 - Power Plant
     32: {
+        "detail": "Region 32 - Power Plant",
         "description": "Power Plant",
         "checks": [ 
 			{"type": "lair", "name": "NPC_DOLL"}, 
@@ -1017,8 +1017,8 @@ REGIONS = {
         ],
         "act": 5,
     },
-    # Region 33 - Act 6 start, first lairs of Magridd Castle Basement
     33: {
+        "detail": "Region 33 - Act 6 start, first lairs of Magridd Castle Basement",
         "description": "Castle Basement",
         "checks": [ 
 			{"type": "item", "name": "ITEM_MARIE"}, 
@@ -1037,8 +1037,8 @@ REGIONS = {
         "is_act_hub": True,
         "connected_regions": [34, 35, 36, 38, 69, 71, 72, 73, 74, 75, 76, 78]
     },
-    # Region 34 - Magridd Castle Basement
     34: {
+        "detail": "Region 34 - Magridd Castle Basement",
         "description": "Castle Basement",
         "checks": [ 
 			{"type": "lair", "name": "NPC_SOLDIER2"}, 
@@ -1063,8 +1063,8 @@ REGIONS = {
         ],
         "act": 6,
     },
-    # Region 35 - Magridd Castle Left Tower
     35: {
+        "detail": "Region 35 - Magridd Castle Left Tower",
         "description": "Castle Tower",
         "checks": [ 
 			{"type": "lair", "name": "NPC_SOLDIER_SOUL_OF_REALITY"}, 
@@ -1081,8 +1081,8 @@ REGIONS = {
         ],
         "act": 6,
     },
-    # Region 36 - Magridd Castle Right Tower
     36: {
+        "detail": "Region 36 - Magridd Castle Right Tower",
         "description": "Castle Tower",
         "checks": [ 
 			{"type": "lair", "name": "NPC_MAID_HERB"}, 
@@ -1102,8 +1102,8 @@ REGIONS = {
         ],
         "act": 6,
     },
-    # Region 37 - Act 7 start, World of Evil
     37: {
+        "detail": "Region 37 - Act 7 start, World of Evil",
         "description": "World of Evil",
         "checks": [ 
 			{"type": "item", "name": "ITEM_KING_MAGRIDD"}, 
@@ -1126,8 +1126,8 @@ REGIONS = {
         "is_act_hub": True,
         "connected_regions": [39, 41]
     },
-    # Region 38 - Dr Leo + Queen Magridd cutscene
     38: {
+        "detail": "Region 38 - Dr Leo + Queen Magridd cutscene",
         "description": "Magridd Castle",
         "checks": [ 
 			{"type": "item", "name": "ITEM_DR_LEO"}, 
@@ -1139,8 +1139,8 @@ REGIONS = {
         ],
         "act": 6,
     },
-    # Region 39 - Dazzling Space
     39: {
+        "detail": "Region 39 - Dazzling Space",
         "description": "World of Evil",
         "checks": [ 
 			{"type": "chest", "id": 64}, #"name": "CHEST_SOUL_BLADE"}, 
@@ -1151,8 +1151,8 @@ REGIONS = {
         ],
         "act": 7,
     },
-    # Region 40 - Last Lair in Lune
     40: {
+        "detail": "Region 40 - Last Lair in Lune",
         "description": "Lune",
         "checks": [ 
 			{"type": "lair", "name": "NPC_SNAIL_EMBLEM_E"}, 
@@ -1166,8 +1166,8 @@ REGIONS = {
         ],
         "act": 4,
     },
-    # Region 41 - End of the game (NOTHING here)
     41: {
+        "detail": "Region 41 - End of the game",
         "description": "End of the line...",
         "checks": [ # No checks, but this area needs to be accessible.
         ],
@@ -1179,8 +1179,8 @@ REGIONS = {
         "act": 7,
         "is_end_region": True
     },
-    # Region 42 - Tool Shop Owner
     42: {
+        "detail": "Region 42 - Tool Shop Owner",
         "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_TOOL_SHOP_OWNER"}
@@ -1190,8 +1190,8 @@ REGIONS = {
         ],
         "act": 1
     },
-    # Region 43 - Tool Shop Owner's son Teddy
     43: {
+        "detail": "Region 43 - Tool Shop Owner's son Teddy",
         "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_TEDDY"}
@@ -1201,8 +1201,8 @@ REGIONS = {
         ],
         "act": 1
     },
-    # Region 44 - Emblem A tile
     44: {
+        "detail": "Region 44 - Emblem A tile",
         "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_EMBLEM_A"}
@@ -1215,8 +1215,8 @@ REGIONS = {
         ],
         "act": 1
     },
-    # Region 45 - Secret Cave pass
     45: {
+        "detail": "Region 45 - Secret Cave pass",
         "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_PASS"}
@@ -1228,8 +1228,8 @@ REGIONS = {
         ],
         "act": 1
     },
-    # Region 46 - Goat pen corner tile
     46: {
+        "detail": "Region 46 - Goat pen corner tile",
         "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_GOAT_PEN"}
@@ -1240,8 +1240,8 @@ REGIONS = {
         ],
         "act": 1
     },
-    # Region 47 - Secret Cave
     47: {
+        "detail": "Region 47 - Secret Cave",
         "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_SECRET_CAVE_TILE"}
@@ -1253,8 +1253,9 @@ REGIONS = {
         ],
         "act": 1
     },
-    # Region 48 - Recovery Sword crystal
+    # 
     48: {
+        "detail": "Region 48 - Recovery Sword crystal",
         "description": "Grass Valley",
         "checks": [
             {"type": "item", "name": "ITEM_CRYSTAL_RECOVERY_SWORD"}
@@ -1267,8 +1268,8 @@ REGIONS = {
         ],
         "act": 1
     },
-    # Region 49 - Red-Hot Mirror bird
     49: {
+        "detail": "Region 49 - Red-Hot Mirror bird",
         "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_BIRD_RED_HOT_MIRROR"}
@@ -1278,8 +1279,8 @@ REGIONS = {
         ],
         "act": 2
     },
-    # Region 50 - Magic Bell crystal
     50: {
+        "detail": "Region 50 - Magic Bell crystal",
         "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_CRYSTAL_MAGIC_BELL"}
@@ -1298,8 +1299,8 @@ REGIONS = {
         ],
         "act": 2
     },
-    # Region 51 - Woodstin Trio
     51: {
+        "detail": "Region 51 - Woodstin Trio",
         "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_WOODSTIN_TRIO"}
@@ -1311,8 +1312,8 @@ REGIONS = {
         ],
         "act": 2
     },
-    # Region 52 - Shield Bracelet mole
     52: {
+        "detail": "Region 52 - Shield Bracelet mole",
         "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_MOLE_SHIELD_BRACELET"}
@@ -1324,8 +1325,8 @@ REGIONS = {
         ],
         "act": 2
     },
-    # Region 53 - Psycho Sword squirrel
     53: {
+        "detail": "Region 53 - Psycho Sword squirrel",
         "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_SQUIRREL_PSYCHO_SWORD"}
@@ -1336,8 +1337,8 @@ REGIONS = {
         ],
         "act": 2
     },
-    # Region 54 - Emblem C squirrel
     54: {
+        "detail": "Region 54 - Emblem C squirrel",
         "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_SQUIRREL_EMBLEM_C"}
@@ -1348,9 +1349,9 @@ REGIONS = {
         ],
         "act": 2
     },
-    # Region 55 - Medical Herb mermaid (north-eastern house of St Elles)
     55: {
         "description": "St Elles",
+        "detail": "Region 55 - Medical Herb mermaid (north-eastern house of St Elles)",
         "checks": [
             {"type": "item", "name": "ITEM_MERMAID_HERB"}
         ],
@@ -1360,8 +1361,8 @@ REGIONS = {
         ],
         "act": 3
     },
-    # Region 56 - Common Mermaid house
     56: {
+        "detail": "Region 56 - Common Mermaid house",
         "description": "St Elles",
         "checks": [
             {"type": "chest", "id": 22}, # MERMAIDS_TEARS /* WARNING: I hope this chest is safe */
@@ -1372,8 +1373,8 @@ REGIONS = {
         ],
         "act": 3
     },
-    # Region 57 - Magic Flare mermaid
     57: {
+        "detail": "Region 57 - Magic Flare mermaid",
         "description": "St Elles",
         "checks": [
             {"type": "item", "name": "ITEM_MERMAID_MAGIC_FLARE"}
@@ -1384,9 +1385,9 @@ REGIONS = {
         ],
         "act": 3
     },
-    # Region 58 - Red-Hot Stick mermaid
     58: {
         "description": "St Elles",
+        "detail": "Region 58 - Red-Hot Stick mermaid",
         "checks": [
             {"type": "item", "name": "ITEM_MERMAID_RED_HOT_STICK"}
         ],
@@ -1396,9 +1397,9 @@ REGIONS = {
         ],
         "act": 3
     },
-    # Region 59 - Lue
     59: {
         "description": "St Elles",
+        "detail": "Region 59 - Lue",
         "checks": [
             {"type": "item", "name": "ITEM_LUE"}
         ],
@@ -1409,8 +1410,8 @@ REGIONS = {
         ],
         "act": 3
     },
-    # Region 60 - Emblem E snail
     60: {
+        "detail": "Region 60 - Emblem E snail",
         "description": "Mountain of Souls",
         "checks": [
             {"type": "item", "name": "ITEM_SNAIL_EMBLEM_E"}
@@ -1420,9 +1421,9 @@ REGIONS = {
         ],
         "act": 4
     },
-    # Region 61 - Mushroom Shoes boy
     61: {
         "description": "Mountain of Souls",
+        "detail": "Region 61 - Mushroom Shoes boy",
         "checks": [
             {"type": "item", "name": "ITEM_BOY_MUSHROOM_SHOES"}
         ],
@@ -1431,8 +1432,8 @@ REGIONS = {
         ],
         "act": 4
     },
-    # Region 62 - Mountain King's item + Deathtoll appears!
     62: {
+        "detail": "Region 62 - Mountain King's item + Deathtoll appears!",
         "description": "Mountain of Souls",
         "checks": [
             {"type": "item", "name": "ITEM_MOUNTAIN_KING"}
@@ -1450,8 +1451,8 @@ REGIONS = {
         ],
         "act": 4
     },
-    # Region 63 - Locked dining room
     63: {
+        "detail": "Region 63 - Locked dining room",
         "description": "Leo`s Lab",
         "checks": [
             {"type": "item", "name": "ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR"},
@@ -1464,8 +1465,8 @@ REGIONS = {
         ],
         "act": 5
     },
-    # Region 64 - Spark Magic mouse
     64: {
+        "detail": "Region 64 - Spark Magic mouse",
         "description": "Leo`s Lab",
         "checks": [
             {"type": "item", "name": "ITEM_MOUSE_SPARK_BOMB"},
@@ -1480,8 +1481,8 @@ REGIONS = {
         ],
         "act": 5
     },
-    # Region 65 - Medical Herb plant
     65: {
+        "detail": "Region 65 - Medical Herb plant",
         "description": "Leo`s Lab",
         "checks": [
             {"type": "item", "name": "ITEM_PLANT_HERB"},
@@ -1505,8 +1506,8 @@ REGIONS = {
     #     ],
     #     "act": 5
     # },
-    # Region 67 - Leo's Cat
     67: {
+        "detail": "Region 67 - Leo's Cat",
         "description": "Leo`s Lab",
         "checks": [
             {"type": "item", "name": "ITEM_CAT_DOOR_KEY"},
@@ -1519,8 +1520,8 @@ REGIONS = {
         ],
         "act": 5
     },
-    # Region 68 - Actinidia Plant
     68: {
+        "detail": "Region 68 - Actinidia Plant",
         "description": "Leo`s Lab",
         "checks": [
             {"type": "item", "name": "ITEM_PLANT_ACTINIDIA_LEAVES"},
@@ -1532,8 +1533,8 @@ REGIONS = {
         ],
         "act": 5
     },
-    # Region 69 - Elemental Mail soldier
     69: {
+        "detail": "Region 69 - Elemental Mail soldier",
         "description": "Magridd Castle",
         "checks": [
             {"type": "item", "name": "ITEM_SOLDIER_ELEMENTAL_MAIL"},
@@ -1554,8 +1555,8 @@ REGIONS = {
     #     ],
     #     "act": 6
     # },
-    # Region 71 - Platinum Card soldier
     71: {
+        "detail": "Region 71 - Platinum Card soldier",
         "description": "Magridd Castle",
         "checks": [
             {"type": "item", "name": "ITEM_SOLDIER_PLATINUM_CARD"},
@@ -1567,9 +1568,9 @@ REGIONS = {
         ],
         "act": 6
     },
-    # Region 72 - Medical Herb maid
     72: {
         "description": "Magridd Castle",
+        "detail": "Region 72 - Medical Herb maid",
         "checks": [
             {"type": "item", "name": "ITEM_MAID_HERB"},
         ],
@@ -1578,8 +1579,8 @@ REGIONS = {
         ],
         "act": 6
     },
-    # Region 73 - Magridd Castle + Emblem H tile
     73: {
+        "detail": "Region 73 - Magridd Castle + Emblem H tile",
         "description": "Magridd Castle",
         "checks": [
             {"type": "item", "name": "ITEM_EMBLEM_H"},
@@ -1589,8 +1590,8 @@ REGIONS = {
         ],
         "act": 6
     },
-    # Region 74 - Super Bracelet tile
     74: {
+        "detail": "Region 74 - Super Bracelet tile",
         "description": "Magridd Castle",
         "checks": [
             {"type": "item", "name": "ITEM_SUPER_BRACELET"},
@@ -1603,8 +1604,8 @@ REGIONS = {
         ],
         "act": 6
     },
-    # Region 75 - Greenwood Leaf tile
     75: {
+        "detail": "Region 75 - Greenwood Leaf tile",
         "description": "Greenwood",
         "checks": [
             {"type": "item", "name": "ITEM_GREENWOOD_LEAVES"},
@@ -1618,8 +1619,8 @@ REGIONS = {
         ],
         "act": 6
     },
-    # Region 76 - Demon Bird's lair
     76: {
+        "detail": "Region 76 - Demon Bird's lair",
         "description": "Magridd Castle",
         "checks": [
             {"type": "lair", "name": "NPC_KING_MAGRIDD"},
@@ -1643,8 +1644,8 @@ REGIONS = {
     #     ],
     #     "act": 6
     # },
-    # Region 78 - Chest of Drawers in Attic
     78: {
+        "detail": "Region 78 - Chest of Drawers in Attic",
         "description": "Leo`s Lab",
         "checks": [
             {"type": "item", "name": "ITEM_CHEST_OF_DRAWERS_HERB"},
