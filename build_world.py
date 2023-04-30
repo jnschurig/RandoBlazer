@@ -1,7 +1,7 @@
 import sys, getopt
-import json, os
+import json
 import networkx as nx
-from reference import map, constants, rom_data
+from reference import map, constants
 import random_manager
 
 valid_args = '''Valid Arguments:
@@ -20,9 +20,15 @@ valid_args = '''Valid Arguments:
 
 help_info = '''Help Info: 
 
-This script handles item placement througout the world. 
-The arguments are intended to be used for testing by running this script all by itself. 
-The networkx package is in use to assist with graph creation and traversal. 
+Uses network graph logic to control which areas of the game can have progression at a given point in time.
+- **Vanilla**  - All regions in an act can have logical progression.
+- **Balanced** - Sub-regions will be randomly connected to hub-regions. As a result, some regions will be 
+                 excluded from having your current logical progression. However, there may be later-required 
+                 progression in a region that could be excluded from current progression.
+- **Advanced** - Sub-regions are randomly connected to any other already-connected region. Progression logic 
+                 is the Same as in "balanced", but there is a higher likelihood of having entirely "dead" 
+                 regions that have no progression whatsoever. This mode is more likely to reward skipping 
+                 regions.
 '''
 
 def main(argv):
@@ -54,24 +60,8 @@ def main(argv):
             sys.exit()
         elif opt in ('-s', '--seed'):
             arguments['seed'] = arg.strip()
-        elif opt in ('-w', '--starting_weapon'):
-            arguments['starting_weapon'] = arg.strip().upper()
-        elif opt in ('-m', '--magician_item'):
-            arguments['magician_item'] = arg.strip().upper()
         elif opt in ('-a', '--world_type'):
             arguments['world_type'] = arg.strip().lower()
-        elif opt in ('-t', '--trash_mode'):
-            arguments['trash_mode'] = arg.strip().lower()
-        elif opt in ('-u', '--trash'):
-            arguments['trash'] = arg.strip().upper()
-        elif opt in ('-p', '--plan'):
-            arguments['plan'] = arg
-        elif opt in ('-o', '--only_required'):
-            arguments['only_required'] = True
-        elif opt in ('-z', '--randomize_hubs'):
-            arguments['randomize_hubs'] = True
-        elif opt in ('-g', '--gem_scaling'):
-            arguments['gem_scaling'] = float(arg)
         elif opt in ('-d', '--debug'):
             arguments['debug'] = True
         elif opt in ('-v', '--verbose'):
@@ -165,7 +155,7 @@ def initialize_world(settings={'world_type': 'vanilla'}):
     Takes a settings dict with 'world_type' key and generates 
     a graph based on that setting. As of this writing, valid 
     settings are vanilla, balanced, and advanced. Returns a 
-    networkx digraph object. See world_type_help in same script 
+    networkx digraph object. See help_info in same script 
     for additional detail.
     '''
     debug = False

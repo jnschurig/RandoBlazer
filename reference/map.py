@@ -17,16 +17,62 @@ FLAGS = {
     'has_thunder': ['THUNDER_RING', 'ZANTETSU_SWORD', 'SOUL_BLADE'],
 }
 
-SWORDS = [
-    'SWORD_OF_LIFE',
-    'PSYCHO_SWORD',
-    'CRITICAL_SWORD',
-    'LUCKY_BLADE',
-    'ZANTETSU_SWORD',
-    'SPIRIT_SWORD',
-    'RECOVERY_SWORD',
-    'SOUL_BLADE',
-]
+# Idea from Tranq:
+# Swords are found by name, but their power all simultaneously scales 
+# based on how many you have found so far. Choosing a sword is still 
+# valuable for its effect.
+
+OPTIONS_LOOKUP = {
+    'swords': [
+        'SWORD_OF_LIFE',
+        'PSYCHO_SWORD',
+        'CRITICAL_SWORD',
+        'LUCKY_BLADE',
+        'ZANTETSU_SWORD',
+        'SPIRIT_SWORD',
+        'RECOVERY_SWORD',
+        'SOUL_BLADE',
+    ],
+    'armor': [
+        "IRON_ARMOR",
+        "ICE_ARMOR",
+        "BUBBLE_ARMOR",
+        "MAGIC_ARMOR",
+        "MYSTIC_ARMOR",
+        "LIGHT_ARMOR",
+        "ELEMENTAL_MAIL",
+        "SOUL_ARMOR",
+    ],
+    'emblems': [
+        "EMBLEM_A",
+        "EMBLEM_B",
+        "EMBLEM_C",
+        "EMBLEM_D",
+        "EMBLEM_E",
+        "EMBLEM_F",
+        "EMBLEM_G",
+        "EMBLEM_H",
+    ],
+    'stones': [
+        "BROWN_STONE",
+        "GREEN_STONE",
+        "BLUE_STONE",
+        "SILVER_STONE",
+        "PURPLE_STONE",
+        "BLACK_STONE",
+    ],
+    'red_hots': [
+        "RED_HOT_MIRROR",
+        "RED_HOT_BALL",
+        "RED_HOT_STICK",
+    ],
+    'bracelets': [
+        "SHIELD_BRACELET",
+        "POWER_BRACELET",
+        "SUPER_BRACELET",
+    ],
+}
+
 
 ITEM_TO_FLAGS = {
     'ZANTETSU_SWORD': ['can_cut_metal', 'has_thunder'],
@@ -40,6 +86,21 @@ ITEM_TO_FLAGS = {
     'SPARK_BOMB': ['has_magic'],
     'FLAME_PILLAR': ['has_magic'],
     'TORNADO': ['has_magic'],
+}
+
+ADDITIONAL_LOGIC_REQUIREMENTS = {
+    "MERMAIDS_TEARS": {
+        "name": "Require Mermaid's Tears",
+        "description": "Logically require Mermaid's Tears for hot Durean checks.",
+        "regions": [77],
+        "requirements": [{"type": "item", "name": "MERMAIDS_TEARS"}]
+    },
+    "ICE_ARMOR": {
+        "name": "Require Ice Armor",
+        "description": "Logically require Ice Armor for Leo's Lab basement 2 and Power Plant checks after Light Armor chest.",
+        "regions": [66, 32],
+        "requirements": [{"type": "item", "name": "ICE_ARMOR"}]
+    },
 }
 
 CHECK_TYPE_LOOKUP = {
@@ -667,7 +728,7 @@ REGIONS = {
        ],
         "act": 3,
         "is_act_hub": True,
-        "connected_regions": [13, 14, 15, 16, 17, 18, 19, 20, 21, 55, 56, 57, 58, 59]
+        "connected_regions": [13, 14, 15, 16, 17, 18, 77, 19, 20, 21, 55, 56, 57, 58, 59]
     },
 	13: {
         "detail": "Region 13 - Last soul of Southerta",
@@ -745,19 +806,19 @@ REGIONS = {
        ],
         "act": 3
     },
-	18: {
+	18: { # Split into 77 to allow for mermaid's tears requirement
         "detail": "Region 18 - Durean",
         "description": "Durean",
         "checks": [ 
 			{"type": "lair", "name": "NPC_DOLPHIN_PEARL"}, 
 			{"type": "lair", "name": "NPC_LUE"}, 
-			{"type": "lair", "name": "NPC_MERMAID_PEARL"}, 
+			# {"type": "lair", "name": "NPC_MERMAID_PEARL"}, 
 			{"type": "lair", "name": "NPC_MERMAID2"}, 
 			{"type": "lair", "name": "NPC_MERMAID_NANA"}, 
 			{"type": "lair", "name": "NPC_DOLPHIN_SAVES_LUE"}, 
 			{"type": "lair", "name": "NPC_MERMAID3"}, 
-			{"type": "lair", "name": "NPC_MERMAID_STATUE_BLESTER"}, 
-			{"type": "chest", "id": 31}, # CRITICAL_SWORD
+			# {"type": "lair", "name": "NPC_MERMAID_STATUE_BLESTER"}, 
+			# {"type": "chest", "id": 31}, # CRITICAL_SWORD
 			{"type": "chest", "id": 32}, # STRANGE_BOTTLE
 			{"type": "item", "name": "ITEM_CRYSTAL_SEABED_NEAR_DUREAN"}, 
         ],
@@ -911,10 +972,10 @@ REGIONS = {
        ],
         "act": 5,
         "is_act_hub": True,
-        "connected_regions": [27, 28, 29, 30, 31, 32, 63, 64, 65, 67, 68]
+        "connected_regions": [27, 66, 28, 29, 30, 31, 32, 63, 64, 65, 67, 68]
     },
-	27: {
-        "detail": "Region 27 - Leo's Lab Basement",
+	27: { # Split into 66 to allow for separate ice armor requirements
+        "detail": "Region 27 - Leo's Lab Basement 1",
         "description": "Lab Basement",
         "checks": [ 
 			{"type": "lair", "name": "NPC_PLANT_HERB"}, 
@@ -922,12 +983,6 @@ REGIONS = {
 			{"type": "lair", "name": "NPC_CAT3"}, 
 			{"type": "lair", "name": "NPC_GREAT_DOOR"}, 
 			{"type": "lair", "name": "NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR"}, 
-			{"type": "lair", "name": "NPC_CAT_DOOR_KEY"}, 
-			{"type": "lair", "name": "NPC_STEPS_UPSTAIRS"}, 
-			{"type": "lair", "name": "NPC_MOUSE"}, 
-			{"type": "lair", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"}, 
-			{"type": "lair", "name": "NPC_MODEL_TOWN1"}, 
-			{"type": "item", "name": "ITEM_CRYSTAL_LEOS_LAB_BASEMENT"}, 
         ],
         "requirements": [ 
             {"type": "flag", "name": "can_cut_metal"},
@@ -1497,15 +1552,22 @@ REGIONS = {
         ],
         "act": 5
     },
-    # Region 66 - Model Town room (deprecated...)
-    # 66: {
-    #     "checks": [],
-    #     "requirements": [ 
-    #         {"type": "npc_id", "name": "NPC_STEPS_UPSTAIRS"},
-    #         {"type": "npc_id", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"},
-    #     ],
-    #     "act": 5
-    # },
+	66: { # Split from 27 to allow for separate ice armor requirements
+        "detail": "Region 66 - Leo's Lab Basement 2",
+        "description": "Lab Basement",
+        "checks": [ 
+			{"type": "lair", "name": "NPC_CAT_DOOR_KEY"}, 
+			{"type": "lair", "name": "NPC_STEPS_UPSTAIRS"}, 
+			{"type": "lair", "name": "NPC_MOUSE"}, 
+			{"type": "lair", "name": "NPC_GREAT_DOOR_MODEL_TOWNS"}, 
+			{"type": "lair", "name": "NPC_MODEL_TOWN1"}, 
+			{"type": "item", "name": "ITEM_CRYSTAL_LEOS_LAB_BASEMENT"}, 
+        ],
+        "requirements": [ 
+            {"type": "flag", "name": "can_cut_metal"},
+       ],
+        "act": 5,
+    },
     67: {
         "detail": "Region 67 - Leo's Cat",
         "description": "Leo`s Lab",
@@ -1545,16 +1607,18 @@ REGIONS = {
         ],
         "act": 6
     },
-    # Region 70 - Queen Magridd WARNING: this item can be lost if the Queen is already dead
-    # 70: {
-    #     "checks": [
-    #         {"type": "item", "name": "ITEM_QUEEN_MAGRIDD"},
-    #     ],
-    #     "requirements": [ 
-    #         {"type": "npc_id", "name": "NPC_QUEEN_MAGRIDD"},
-    #     ],
-    #     "act": 6
-    # },
+    # WARNING: this item can be lost if the Queen is already dead
+    70: {
+        "detail": "Region 70 - Queen Magridd",
+        "checks": [
+            {"type": "item", "name": "ITEM_QUEEN_MAGRIDD"},
+        ],
+        "requirements": [ 
+            {"type": "npc_id", "name": "NPC_QUEEN_MAGRIDD"},
+            {"type": "item", "name": "Not an item..."} # Make it impossible to require this item.
+        ],
+        "act": 6
+    },
     71: {
         "detail": "Region 71 - Platinum Card soldier",
         "description": "Magridd Castle",
@@ -1632,18 +1696,29 @@ REGIONS = {
         ],
         "act": 6
     },
-    # Region 77 - Leo's Lab Attic (Deprecated...)
-    # 77: {
-    #     "checks": [
-    #         {"type": "lair", "name": "NPC_KING_MAGRIDD"},
-    #     ],
-    #     "requirements": [ 
-    #         {"type": "npc_id", "name": "NPC_SOLDIER_RIGHT_TOWER"},
-    #         {"type": "item", "name": "VIP_CARD"},
-    #         {"type": "item", "name": "MOBILE_KEY"},
-    #     ],
-    #     "act": 6
-    # },
+	77: { # Split from 18 to allow for mermaid's tears requirement
+        "detail": "Region 77 - Durean",
+        "description": "Durean",
+        "checks": [ 
+			# {"type": "lair", "name": "NPC_DOLPHIN_PEARL"}, 
+			# {"type": "lair", "name": "NPC_LUE"}, 
+			{"type": "lair", "name": "NPC_MERMAID_PEARL"}, 
+			# {"type": "lair", "name": "NPC_MERMAID2"}, 
+			# {"type": "lair", "name": "NPC_MERMAID_NANA"}, 
+			# {"type": "lair", "name": "NPC_DOLPHIN_SAVES_LUE"}, 
+			# {"type": "lair", "name": "NPC_MERMAID3"}, 
+			{"type": "lair", "name": "NPC_MERMAID_STATUE_BLESTER"}, 
+			{"type": "chest", "id": 31}, # CRITICAL_SWORD
+			# {"type": "chest", "id": 32}, # STRANGE_BOTTLE
+			# {"type": "item", "name": "ITEM_CRYSTAL_SEABED_NEAR_DUREAN"}, 
+        ],
+        "requirements": [ 
+            {"type": "npc_id", "name": "NPC_MERMAID_STATUE_DUREAN"}, 
+            {"type": "npc_id", "name": "NPC_MERMAID_BUBBLE_ARMOR"},
+            # {"type": "item", "name": "MERMAIDS_TEARS"}, # Opted not to make this required.
+       ],
+        "act": 3
+    },
     78: {
         "detail": "Region 78 - Chest of Drawers in Attic",
         "description": "Leo`s Lab",

@@ -109,3 +109,18 @@ ITEMS = {
     "MAGIC_BELL"     : {"rom_value": b'\x40', "pretty_name": "Magic Bell"},
     "GEMS_EXP"       : {"rom_value": b'\xFF', "pretty_name": "Gems/EXP"},
 }
+
+def pretty_name_lookup_dict():
+    lookup_dict = {}
+    for key in ITEMS.keys():
+        lookup_dict[ITEMS[key]['pretty_name']] = key
+    return lookup_dict
+
+def all_items_list(pretty_names=False):
+    if not pretty_names:
+        return list(ITEMS.keys())
+    
+    item_list = []
+    for key in ITEMS.keys():
+        item_list.append(ITEMS[key]['pretty_name'])
+    return item_list

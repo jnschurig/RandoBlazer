@@ -4,43 +4,22 @@ from reference import constants, map
 import build_world as bw
 import random_manager as rm
 import networkx as nx
-# import matplotlib.pyplot as plt
 import plotly.graph_objects as pgo
 
 node_color_lookup = {
-    1: '#1f77b4',  # muted blue
-    2: '#ff7f0e',  # safety orange
-    3: '#2ca02c',  # cooked asparagus green
-    4: '#d62728',  # brick red
+    1: '#8c564b',  # chestnut brown
+    2: '#2ca02c',  # cooked asparagus green
+    3: '#1f77b4',  # muted blue
+    4: '#bccbe3',  # silver
     5: '#9467bd',  # muted purple
-    6: '#8c564b',  # chestnut brown
-    7: '#e377c2',  # raspberry yogurt pink
-    8: '#7f7f7f',  # middle gray
+    6: '#000000',  # pitch black
+    7: '#d62728',  # brick red
+    8: '#e377c2',  # raspberry yogurt pink
     9: '#bcbd22',  # curry yellow-green
-    10: '#17becf'   # blue-teal
+    10: '#ff7f0e', # safety orange
+    11: '#7f7f7f', # middle gray
+    12: '#17becf', # blue-teal
 }
-
-# def set_node_coordinates(digraph_obj, root_node=0, edge_x=None, edge_y=None, node_x=None, node_y=None, iteration=0):
-def D_set_node_coordinates(digraph_obj, root_node=0, position_dict=None, iteration=0, x_dist=5, y_dist=5):
-    # initialize
-
-    if position_dict is None: position_dict = {
-            'nodes': {root_node: {'x': 1 * x_dist, 'y': iteration * y_dist}},
-            'edges': {},
-            }
-
-    # if root_node not in position_dict:
-    #     position_dict['nodes'][root_node] = {'x': 1 * x_dist, 'y': iteration * y_dist}
-
-    next_iteration = iteration + 1
-    child_number = 0
-    for child in digraph_obj.neighbors(root_node):
-        child_number += 1
-        position_dict['nodes'][child] = {'x': (child_number + iteration) * x_dist, 'y': next_iteration * y_dist}
-        # position_dict['nodes'][child] = {'x': (child_number * x_dist), 'y': next_iteration * y_dist}
-        position_dict = set_node_coordinates(digraph_obj, child, position_dict, next_iteration, x_dist, y_dist)
-
-    return position_dict
 
 def set_node_coordinates(digraph_obj, node=0, position_dict=None, iteration=0, x_dist=5, y_dist=10, vertical_spacing=10, child_idx=0, child_count=0):
     # initialize
@@ -78,6 +57,21 @@ def set_node_coordinates(digraph_obj, node=0, position_dict=None, iteration=0, x
         child_v_spacing = (vertical_spacing * .9)
         child_y_dist = new_y_dist - (child_v_spacing * idx / child_count)
         position_dict = set_node_coordinates(digraph_obj, child, position_dict, iteration, x_dist, child_y_dist, child_idx=idx, child_count=child_count)
+
+    return position_dict
+
+def set_edge_coordinates(digraph_obj, position_dict):
+
+    for edge in digraph_obj.edges():
+
+        edge_name = str(edge[0]) + '-' + str(edge[1])
+
+        position_dict['edges'][edge_name] = {
+            'x0': position_dict['nodes'][edge[0]]['x'],
+            'x1': position_dict['nodes'][edge[1]]['x'],
+            'y0': position_dict['nodes'][edge[0]]['y'],
+            'y1': position_dict['nodes'][edge[1]]['y'],
+        }
 
     return position_dict
 
@@ -179,19 +173,8 @@ def go(settings_dict={'seed': None, 'world_type': 'vanilla'}, nx_graph=None):
     left_col, right_col = st.columns([1, 4])
 
     position_dict = set_node_coordinates(nx_graph, 37, x_dist=1, y_dist=1)
+    position_dict = set_edge_coordinates(nx_graph, position_dict)
 
-    for edge in nx_graph.edges():
-        # st.write(type(edge))
-        # st.write(edge)
-
-        edge_name = str(edge[0]) + '-' + str(edge[1])
-
-        position_dict['edges'][edge_name] = {
-            'x0': position_dict['nodes'][edge[0]]['x'],
-            'x1': position_dict['nodes'][edge[1]]['x'],
-            'y0': position_dict['nodes'][edge[0]]['y'],
-            'y1': position_dict['nodes'][edge[1]]['y'],
-        }
     # set_node_coordinates(nx_graph.reverse())
 
     with left_col:
@@ -225,5 +208,5 @@ if __name__ == '__main__':
     settings_dict['world_type'] = st.selectbox('Network Generation Method', constants.VALID_WORLD_TYPES)
     if st.button('Draw it...'):
         settings_dict['seed'] = rm.start_randomization(settings_dict['seed'])
-        world_graph = bw.initialize_world(settings_dict)
+        world_graph = nx.DiGraph(bw.initialize_world(settings_dict))
         go(settings_dict, world_graph)

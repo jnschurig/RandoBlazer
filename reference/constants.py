@@ -72,15 +72,17 @@ BASE_LOOKUP = {
 	35: 'z'
 }
 
-VALID_WORLD_TYPES = ['vanilla', 'balanced', 'advanced']
+# VALID_ITEM_PROGRESSION_OPTIONS = ['vanilla', 'progressive', 'additive']
 
-VALID_TRASH_SETTINGS = ['vanilla', 'random', '<ITEM>', 'none']
+VALID_WORLD_TYPES = ['vanilla', 'balanced', 'advanced']
 
 DEFAULT_RANDO_SETTINGS = {
     'world_type': 'balanced',
     'starting_weapon': 'RANDOM',
     'magician_item': 'RANDOM',
 }
+
+VALID_TRASH_SETTINGS = ['vanilla', 'random', '<ITEM>', 'none']
 
 TRASH_FILL_METHODS = ['vanilla', 'equalized', 'chaotic',]
 
@@ -91,7 +93,9 @@ VANILLA_TRASH_WEIGHTS = {
 	'NOTHING': 3,
 }
 
-CHAOS_TRASH_MIN_MAX = [1, 10]
+DEFAULT_WEIGHTS_MIN_MAX = [1, 10]
+
+WEIGHTS_ABSOLUTE_MIN_MAX = [1, 40]
 
 GEM_EXP_AMOUNTS = {
 	'1': 2,
