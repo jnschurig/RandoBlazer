@@ -1,5 +1,6 @@
 # Graph management package. Used for world generation and organization.
 networkx
+plotly
 
 # Streamlit is used as a web-based visualizer. See https://streamlit.io/
 streamlit
