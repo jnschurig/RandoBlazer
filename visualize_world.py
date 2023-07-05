@@ -30,7 +30,7 @@ ready = False
 with st.sidebar:
     st.session_state['seed'] = st.text_input('Seed', st.session_state['seed'])
 
-    sword_list = map.SWORDS
+    sword_list = map.OPTIONS_LOOKUP['swords']
     if 'RANDOM' not in sword_list:
         sword_list.append('RANDOM')
     st.session_state['starting_weapon'] = st.radio('Starting Weapon', sword_list)

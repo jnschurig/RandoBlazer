@@ -1,9 +1,11 @@
 import sys, getopt
 import json
 import streamlit as st
+import networkx as nx
 
 from reference import map, constants, rom_data
 import random_manager as rm
+import build_world as bw
 
 valid_args = '''Valid Arguments:
 -h                --help                       | Information about the script. 
@@ -137,9 +139,9 @@ def display_optional_logic_options():
                 optional_logic[region] = map.ADDITIONAL_LOGIC_REQUIREMENTS[key]['requirements']
     return optional_logic
 
-def session_list_pop(session_key_name, list_idx=0):
-    return
-    # return st.session_state[session_key_name].pop(list_idx)
+# def session_list_pop(session_key_name, list_idx=0):
+#     return
+#     # return st.session_state[session_key_name].pop(list_idx)
     
 def reset_session_var(session_key_name):
     if session_key_name in st.session_state:
@@ -315,12 +317,28 @@ def compile_settings_string(settings_dict, settings_string=''):
 
     return formatted_settings
 
+# def rando(seed: str=None):
+#     settings_dict = {'seed': None}
+#     # st.set_page_config(
+#     #     page_title='Regional Progression Graph',
+#     #     layout='wide'
+#     # )
+#     seed_value = st.text_input('Seed', value='', key='input_seed')
+#     if seed_value:
+#         settings_dict['seed'] = seed_value
+#     settings_dict['world_type'] = st.selectbox('Network Generation Method', constants.VALID_WORLD_TYPES)
+#     if st.button('Draw it...'):
+#         world_graph = nx.DiGraph(bw.initialize_world(settings_dict))
+
+#     return world_graph
+
 if __name__ == '__main__':
     # Run this with creds built in.
     settings_dict = main(sys.argv[1:])
     if settings_dict['cli_execution']:
         detailed_settings = compile_settings_string(settings_dict)
         print(json.dumps(detailed_settings, indent=4))
+
     else:
         detailed_settings = display_options(settings_dict)
         st.markdown('#### Settings Dictionary')

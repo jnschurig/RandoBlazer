@@ -46,7 +46,7 @@ starting_weapon_help = '''Starting Weapon Help:
 Determine the starting weapon in the first chest of the game.
 Default: SWORD_OF_LIFE (Sword of Life)
 Valid options are any of the swords in the game or "RANDOM"
-Valid swords:''' + str(map.SWORDS) + ''' 
+Valid swords:''' + str(map.OPTIONS_LOOKUP['swords']) + ''' 
 '''
 
 magician_item_help = '''Magician Item Help:
