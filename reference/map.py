@@ -17,6 +17,27 @@ FLAGS = {
     'has_thunder': ['THUNDER_RING', 'ZANTETSU_SWORD', 'SOUL_BLADE'],
 }
 
+def ITEM_FLAGS(item_name:str = None) -> dict|list:
+    '''
+    Takes the FLAGS constant dict and inverts it. 
+    This allows for lookup of valid flags related to an item. 
+    If item_name is provided, the result will be a list of  
+    flags that apply to that item name.
+    '''
+    item_flags_dict = {}
+    for flag, item_list in FLAGS.items():
+        for item in item_list:
+            if item not in item_flags_dict:
+                item_flags_dict[item] = []
+            if flag not in item_flags_dict[item]:
+                item_flags_dict[item].append(flag)
+
+    if item_name is not None:
+        return item_flags_dict[item_name]
+
+    return item_flags_dict
+
+
 # Idea from Tranq:
 # Swords are found by name, but their power all simultaneously scales 
 # based on how many you have found so far. Choosing a sword is still 
