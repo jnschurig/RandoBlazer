@@ -1,0 +1,262 @@
+26:
+  act: 5
+  connected_regions: [27, 66, 28, 29, 30, 31, 32, 63, 64, 65, 67, 68, 82,]
+  description: Lab Basement
+  detail: Region 26 - Act 5 start, first lairs of Leo's Lab Basement
+  is_act_hub: true
+  locations:
+  - name: NPC_PLANT
+    type: lair
+  - name: NPC_CAT
+    type: lair
+  - name: NPC_GREAT_DOOR_ZANTETSU_SWORD
+    type: lair
+  requirements: []
+27:
+  act: 5
+  description: Lab Basement
+  detail: Region 27 - Leo's Lab Basement 1
+  locations:
+  - name: NPC_PLANT_HERB
+    type: lair
+  - name: NPC_CAT2
+    type: lair
+  - name: NPC_CAT3
+    type: lair
+  - name: NPC_GREAT_DOOR
+    type: lair
+  - name: NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR
+    type: lair
+  requirements:
+  - name: can_cut_metal
+    type: flag
+28:
+  act: 5
+  description: Leo`s Lab
+  detail: Region 28 - Leo's Lab main room
+  locations:
+  - id: 43
+    type: chest
+  requirements:
+  - name: NPC_GREAT_DOOR_ZANTETSU_SWORD
+    type: npc_code
+29:
+  act: 5
+  description: Model Town
+  detail: Region 29 - Model Town 1
+  locations:
+  - name: NPC_CHEST_OF_DRAWERS
+    type: lair
+  - name: NPC_PLANT2
+    type: lair
+  - name: NPC_MOUSE2
+    type: lair
+  - name: NPC_MOUSE3
+    type: lair
+  - name: NPC_MOUSE4
+    type: lair
+  - name: NPC_MOUSE_SPARK_BOMB
+    type: lair
+  - name: NPC_GREAT_DOOR_SOUL_OF_DETECTION
+    type: lair
+  - name: NPC_MODEL_TOWN2
+    type: lair
+  - name: NPC_STEPS_MARIE
+    type: lair
+  - id: 45
+    type: chest
+  - id: 46
+    type: chest
+  - id: 47
+    type: chest
+  - name: ITEM_CRYSTAL_MODEL_TOWN
+    type: npc_item
+  requirements:
+  - name: NPC_MODEL_TOWN1
+    type: npc_code
+  - name: NPC_GREAT_DOOR_MODEL_TOWNS
+    type: npc_code
+  - name: NPC_STEPS_UPSTAIRS
+    type: npc_code
+  - name: has_magic
+    type: flag
+30:
+  act: 5
+  description: Model Town
+  detail: Region 30 - Model Town 2
+  locations:
+  - name: NPC_CHEST_OF_DRAWERS2
+    type: lair
+  - name: NPC_PLANT_ACTINIDIA_LEAVES
+    type: lair
+  - name: NPC_MOUSE5
+    type: lair
+  - name: NPC_CAT4
+    type: lair
+  - name: NPC_STAIRS_POWER_PLANT
+    type: lair
+  - id: 48
+    type: chest
+  - id: 49
+    type: chest
+  requirements:
+  - name: NPC_MODEL_TOWN2
+    type: npc_code
+  - name: NPC_GREAT_DOOR_MODEL_TOWNS
+    type: npc_code
+  - name: NPC_STEPS_UPSTAIRS
+    type: npc_code
+  - name: has_magic
+    type: flag
+31:
+  act: 5
+  description: Power Plant
+  detail: Region 31 - Light Armor chest
+  locations:
+  - id: 44
+    type: chest
+  requirements:
+  - name: NPC_STAIRS_POWER_PLANT
+    type: npc_code
+  - name: can_cut_metal
+    type: flag
+32:
+  act: 5
+  description: Power Plant
+  detail: Region 32 - Power Plant
+  locations:
+  - name: NPC_DOLL
+    type: lair
+  - name: NPC_MARIE
+    type: lair
+  - name: ITEM_CRYSTAL_POWER_PLANT
+    type: npc_item
+  requirements:
+  - name: NPC_STAIRS_POWER_PLANT
+    type: npc_code
+  - name: can_cut_metal
+    type: flag
+63:
+  act: 5
+  description: Leo`s Lab
+  detail: Region 63 - Locked dining room
+  locations:
+  - name: ITEM_CHEST_OF_DRAWERS_MYSTIC_ARMOR
+    type: npc_item
+  - name: ITEM_EMBLEM_G
+    type: npc_item
+  requirements:
+  - name: NPC_GREAT_DOOR
+    type: npc_code
+  - name: NPC_CHEST_OF_DRAWERS_MYSTIC_ARMOR
+    type: npc_code
+  - name: DOOR_KEY
+    type: item
+64:
+  act: 5
+  description: Leo`s Lab
+  detail: Region 64 - Spark Magic mouse
+  locations:
+  - name: ITEM_MOUSE_SPARK_BOMB
+    type: npc_item
+  requirements:
+  - name: NPC_GREAT_DOOR
+    type: npc_code
+  - name: NPC_CAT
+    type: npc_code
+  - name: NPC_CAT2
+    type: npc_code
+  - name: NPC_MOUSE
+    type: npc_code
+  - name: NPC_MOUSE_SPARK_BOMB
+    type: npc_code
+  - name: ACTINIDIA_LEAF
+    type: item
+65:
+  act: 5
+  description: Leo`s Lab
+  detail: Region 65 - Medical Herb plant
+  locations:
+  - name: ITEM_PLANT_HERB
+    type: npc_item
+  requirements:
+  - name: NPC_GREAT_DOOR
+    type: npc_code
+  - name: NPC_CAT
+    type: npc_code
+  - name: NPC_CAT2
+    type: npc_code
+  - name: NPC_MOUSE
+    type: npc_code
+  - name: NPC_PLANT_HERB
+    type: npc_code
+  - name: ACTINIDIA_LEAF
+    type: item
+66:
+  act: 5
+  description: Lab Basement
+  detail: Region 66 - Leo's Lab Basement 2
+  locations:
+  - name: NPC_CAT_DOOR_KEY
+    type: lair
+  - name: NPC_STEPS_UPSTAIRS
+    type: lair
+  - name: NPC_MOUSE
+    type: lair
+  - name: NPC_GREAT_DOOR_MODEL_TOWNS
+    type: lair
+  - name: NPC_MODEL_TOWN1
+    type: lair
+  - name: ITEM_CRYSTAL_LEOS_LAB_BASEMENT
+    type: npc_item
+  requirements:
+  - name: can_cut_metal
+    type: flag
+67:
+  act: 5
+  description: Leo`s Lab
+  detail: Region 67 - Leo's Cat
+  locations:
+  - name: ITEM_CAT_DOOR_KEY
+    type: npc_item
+  requirements:
+  - name: NPC_STEPS_UPSTAIRS
+    type: npc_code
+  - name: NPC_GREAT_DOOR_MODEL_TOWNS
+    type: npc_code
+  - name: NPC_CAT_DOOR_KEY
+    type: npc_code
+  - name: DREAM_ROD
+    type: item
+68:
+  act: 5
+  description: Leo`s Lab
+  detail: Region 68 - Actinidia Plant
+  locations:
+  - name: ITEM_PLANT_ACTINIDIA_LEAVES
+    type: npc_item
+  requirements:
+  - name: NPC_STEPS_UPSTAIRS
+    type: npc_code
+  - name: NPC_GREAT_DOOR_MODEL_TOWNS
+    type: npc_code
+  - name: NPC_PLANT_ACTINIDIA_LEAVES
+    type: npc_code
+82:
+  act: 5
+  description: Leo's Lab
+  detail: Region 82 - Final part of Act 5. Get item from Marie and start Act 6.
+  is_act_terminus: true
+  locations:
+  - flag: act_6_access
+    name: ITEM_MARIE
+    type: npc_item
+  requirements:
+  - name: NPC_MARIE
+    type: npc_code
+  - name: NPC_GREAT_DOOR_MODEL_TOWNS
+    type: npc_code
+  - name: NPC_STEPS_UPSTAIRS
+    type: npc_code
+  - name: NPC_STEPS_MARIE
+    type: npc_code

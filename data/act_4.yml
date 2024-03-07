@@ -1,0 +1,188 @@
+23:
+  act: 4
+  connected_regions: [24, 25, 40, 60, 61, 62, 81,]
+  description: Mountain of Souls
+  detail: Region 23 - Act 4 start, Mountain of Souls
+  is_act_hub: true
+  locations:
+  - name: NPC_GIRL
+    type: lair
+  - name: NPC_GRANDPA
+    type: lair
+  - name: NPC_MUSHROOM
+    type: lair
+  - name: NPC_BOY
+    type: lair
+  - name: NPC_GRANDPA2
+    type: lair
+  - name: NPC_SNAIL_JOCKEY
+    type: lair
+  - name: NPC_BOY_MUSHROOM_SHOES
+    type: lair
+  - name: NPC_GIRL2
+    type: lair
+  - id: 35
+    type: chest
+  - id: 36
+    type: chest
+  - id: 37
+    type: chest
+  - id: 38
+    type: chest
+  - id: 39
+    type: chest
+  - name: ITEM_CRYSTAL_MOUNTAIN_OF_SOULS
+    type: npc_item
+  requirements: []
+24:
+  act: 4
+  description: Laynole
+  detail: Region 24 - Mountain of Souls last lair + Laynole
+  locations:
+  - name: NPC_GRANDMA
+    type: lair
+  - name: NPC_MUSHROOM2
+    type: lair
+  - name: NPC_SNAIL_RACER
+    type: lair
+  - name: NPC_SNAIL_RACER2
+    type: lair
+  - name: NPC_GIRL3
+    type: lair
+  - name: NPC_MUSHROOM3
+    type: lair
+  - name: NPC_SNAIL
+    type: lair
+  - name: NPC_GRANDPA3
+    type: lair
+  - name: NPC_GRANDPA4
+    type: lair
+  - name: NPC_GRANDPA_LUNE
+    type: lair
+  - name: NPC_SNAIL2
+    type: lair
+  - name: NPC_GRANDPA5
+    type: lair
+  - id: 40
+    type: chest
+  requirements:
+  - name: MUSHROOM_SHOES
+    type: item
+25:
+  act: 4
+  description: Lune
+  detail: Region 25 - Last part of Laynole + Lune
+  locations:
+  - name: NPC_BOY2
+    type: lair
+  - name: NPC_NOME
+    type: lair
+  - name: NPC_MUSHROOM_EMBLEM_F
+    type: lair
+  - name: NPC_DANCING_GRANDMA
+    type: lair
+  - name: NPC_DANCING_GRANDMA2
+    type: lair
+  - name: NPC_MOUNTAIN_KING
+    type: lair
+  - id: 41
+    type: chest
+  - id: 42
+    type: chest
+  - name: ITEM_CRYSTAL_LUNE
+    type: npc_item
+  requirements:
+  - name: LUCKY_BLADE
+    type: item
+  - name: NPC_GIRL3
+    type: npc_code
+  - name: NPC_GRANDPA4
+    type: npc_code
+  - name: NPC_GRANDPA_LUNE
+    type: npc_code
+40:
+  act: 4
+  description: Lune
+  detail: Region 40 - Last Lair in Lune
+  locations:
+  - name: NPC_SNAIL_EMBLEM_E
+    type: lair
+  - name: ITEM_EMBLEM_F
+    type: npc_item
+  requirements:
+  - name: NPC_MUSHROOM2
+    type: npc_code
+  - name: NPC_GRANDPA5
+    type: npc_code
+  - name: NPC_MUSHROOM_EMBLEM_F
+    type: npc_code
+  - name: DREAM_ROD
+    type: item
+60:
+  act: 4
+  description: Mountain of Souls
+  detail: Region 60 - Emblem E snail
+  locations:
+  - name: ITEM_SNAIL_EMBLEM_E
+    type: npc_item
+  requirements:
+  - name: NPC_SNAIL_EMBLEM_E
+    type: npc_code
+61:
+  act: 4
+  description: Mountain of Souls
+  detail: Region 61 - Mushroom Shoes boy
+  locations:
+  - name: ITEM_BOY_MUSHROOM_SHOES
+    type: npc_item
+  requirements:
+  - name: NPC_BOY_MUSHROOM_SHOES
+    type: npc_code
+62:
+  act: 4
+  description: Mountain of Souls
+  detail: Region 62 - Mountain King's item + Deathtoll appears!
+  locations:
+  - name: ITEM_MOUNTAIN_KING
+    type: npc_item
+  requirements:
+  - name: NPC_BOY_MUSHROOM_SHOES
+    type: npc_code
+  - name: NPC_BOY
+    type: npc_code
+  - name: NPC_GRANDPA3
+    type: npc_code
+  - name: NPC_DANCING_GRANDMA
+    type: npc_code
+  - name: NPC_DANCING_GRANDMA2
+    type: npc_code
+  - name: NPC_MOUNTAIN_KING
+    type: npc_code
+  - name: RED_HOT_BALL
+    type: item
+  - name: RED_HOT_MIRROR
+    type: item
+  - name: RED_HOT_STICK
+    type: item
+81:
+  act: 4
+  description: Mountain of Souls
+  detail: Region 81 - Final part of Act 4. Get item from Nome and start Act 5.
+  is_act_terminus: true
+  locations:
+  - flag: act_5_access
+    name: ITEM_NOME
+    type: npc_item
+  requirements:
+  - name: NPC_GIRL3
+    type: npc_code
+  - name: NPC_GRANDPA4
+    type: npc_code
+  - name: NPC_MUSHROOM2
+    type: npc_code
+  - name: NPC_GRANDPA5
+    type: npc_code
+  - name: NPC_NOME
+    type: npc_code
+  - name: NPC_MOUNTAIN_KING
+    type: npc_code

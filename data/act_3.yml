@@ -1,0 +1,292 @@
+12:
+  act: 3
+  connected_regions: [13, 14, 15, 16, 17, 18, 77, 19, 20, 21, 55, 56, 57, 58, 59, 80,]
+  description: Southerta
+  detail: Region 12 - Act 3 start, Southerta
+  is_act_hub: true
+  locations:
+  - name: NPC_DOLPHIN2
+    type: lair
+  - name: NPC_MERMAID4
+    type: lair
+  - name: NPC_MERMAID5
+    type: lair
+  - name: NPC_MERMAID6
+    type: lair
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: lair
+  - id: 28
+    type: chest
+  requirements: []
+13:
+  act: 3
+  description: Southerta
+  detail: Region 13 - Last soul of Southerta
+  locations:
+  - name: NPC_MERMAID_STATUE_ROCKBIRD
+    type: lair
+  requirements:
+  - name: BUBBLE_ARMOR
+    type: item
+14:
+  act: 3
+  description: Seabed
+  detail: Region 14 - Big Pearl chest
+  locations:
+  - id: 23
+    type: chest
+  requirements:
+  - name: NPC_MERMAID_PEARL
+    type: npc_code
+  - name: NPC_DOLPHIN_PEARL
+    type: npc_code
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: npc_code
+15:
+  act: 3
+  description: Rockbird
+  detail: Region 15 - Rockbird
+  locations:
+  - name: NPC_MERMAID9
+    type: lair
+  - name: NPC_MERMAID_TEARS
+    type: lair
+  - name: NPC_MERMAID_MAGIC_FLARE
+    type: lair
+  - name: NPC_ANGELFISH_SOUL_OF_SHIELD
+    type: lair
+  - name: NPC_MERMAID_STATUE_DUREAN
+    type: lair
+  - id: 29
+    type: chest
+  - id: 30
+    type: chest
+  - name: ITEM_CRYSTAL_ROCKBIRD
+    type: npc_item
+  requirements:
+  - name: NPC_MERMAID_STATUE_ROCKBIRD
+    type: npc_code
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: npc_code
+16:
+  act: 3
+  description: Blester
+  detail: Region 16 - Blester
+  locations:
+  - name: NPC_ANGELFISH
+    type: lair
+  - name: NPC_ANGELFISH2
+    type: lair
+  - name: NPC_MERMAID
+    type: lair
+  - name: NPC_MERMAID7
+    type: lair
+  - name: NPC_ANGELFISH4
+    type: lair
+  - name: NPC_MERMAID8
+    type: lair
+  - name: NPC_DOLPHIN_SECRET_CAVE
+    type: lair
+  - name: ITEM_CRYSTAL_SEABED_NEAR_BLESTER
+    type: npc_item
+  requirements:
+  - name: NPC_MERMAID_STATUE_BLESTER
+    type: npc_code
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: npc_code
+17:
+  act: 3
+  contains_groups: true
+  description: Blester
+  detail: Region 17 - Blester Metal Gorillas
+  locations:
+  - name: NPC_MERMAID_STATUE_GHOST_SHIP
+    type: lair
+  requirements:
+  - name: NPC_MERMAID_STATUE_BLESTER
+    type: npc_code
+  - name: has_thunder
+    type: flag
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: npc_code
+18:
+  act: 3
+  description: Durean
+  detail: Region 18 - Durean
+  locations:
+  - name: NPC_DOLPHIN_PEARL
+    type: lair
+  - name: NPC_LUE
+    type: lair
+  - name: NPC_MERMAID2
+    type: lair
+  - name: NPC_MERMAID_NANA
+    type: lair
+  - name: NPC_DOLPHIN_SAVES_LUE
+    type: lair
+  - name: NPC_MERMAID3
+    type: lair
+  - id: 32
+    type: chest
+  - name: ITEM_CRYSTAL_SEABED_NEAR_DUREAN
+    type: npc_item
+  requirements:
+  - name: NPC_MERMAID_STATUE_DUREAN
+    type: npc_code
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: npc_code
+19:
+  act: 3
+  description: Durean
+  detail: Region 19 - Durean Metal Gorillas
+  locations:
+  - name: NPC_MERMAID_RED_HOT_STICK
+    type: lair
+  requirements:
+  - name: NPC_MERMAID_STATUE_DUREAN
+    type: npc_code
+  - name: can_cut_metal
+    type: flag
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: npc_code
+20:
+  act: 3
+  description: Ghost Ship
+  detail: Region 20 - Ghost Ship
+  locations:
+  - name: NPC_ANGELFISH3
+    type: lair
+  - name: NPC_DOLPHIN
+    type: lair
+  - name: NPC_MERMAID_QUEEN
+    type: lair
+  - id: 33
+    type: chest
+  - id: 34
+    type: chest
+  requirements:
+  - name: NPC_MERMAID_STATUE_GHOST_SHIP
+    type: npc_code
+  - name: NPC_MERMAID_STATUE_DUREAN
+    type: npc_code
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: npc_code
+21:
+  act: 3
+  description: Seabed
+  detail: Region 21 - Seabed Secret Cave
+  locations:
+  - id: 24
+    type: chest
+  - id: 25
+    type: chest
+  - id: 26
+    type: chest
+  - id: 27
+    type: chest
+  requirements:
+  - name: NPC_MERMAID_PEARL
+    type: npc_code
+  - name: NPC_DOLPHIN_SECRET_CAVE
+    type: npc_code
+  - name: NPC_MERMAID_STATUE_GHOST_SHIP
+    type: npc_code
+  - name: NPC_MERMAID_STATUE_DUREAN
+    type: npc_code
+  - name: DREAM_ROD
+    type: item
+  - name: BIG_PEARL
+    type: item
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: npc_code
+55:
+  act: 3
+  description: St Elles
+  detail: Region 55 - Medical Herb mermaid (north-eastern house of St Elles)
+  locations:
+  - name: ITEM_MERMAID_HERB
+    type: npc_item
+  requirements:
+  - name: NPC_DOLPHIN2
+    type: npc_code
+  - name: NPC_MERMAID
+    type: npc_code
+56:
+  act: 3
+  description: St Elles
+  detail: Region 56 - Common Mermaid house
+  locations:
+  - id: 22
+    type: chest
+  - name: ITEM_MERMAID_BUBBLE_ARMOR
+    type: npc_item
+  requirements:
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: npc_code
+57:
+  act: 3
+  description: St Elles
+  detail: Region 57 - Magic Flare mermaid
+  locations:
+  - name: ITEM_MERMAID_MAGIC_FLARE
+    type: npc_item
+  requirements:
+  - name: NPC_MERMAID_MAGIC_FLARE
+    type: npc_code
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: npc_code
+58:
+  act: 3
+  description: St Elles
+  detail: Region 58 - Red-Hot Stick mermaid
+  locations:
+  - name: ITEM_MERMAID_RED_HOT_STICK
+    type: npc_item
+  requirements:
+  - name: NPC_MERMAID_RED_HOT_STICK
+    type: npc_code
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: npc_code
+59:
+  act: 3
+  description: St Elles
+  detail: Region 59 - Lue
+  locations:
+  - name: ITEM_LUE
+    type: npc_item
+  requirements:
+  - name: NPC_MERMAID_PEARL
+    type: npc_code
+  - name: NPC_LUE
+    type: npc_code
+  - name: NPC_DOLPHIN_SAVES_LUE
+    type: npc_code
+77:
+  act: 3
+  description: Durean
+  detail: Region 77 - Durean
+  locations:
+  - name: NPC_MERMAID_PEARL
+    type: lair
+  - name: NPC_MERMAID_STATUE_BLESTER
+    type: lair
+  - id: 31
+    type: chest
+  requirements:
+  - name: NPC_MERMAID_STATUE_DUREAN
+    type: npc_code
+  - name: NPC_MERMAID_BUBBLE_ARMOR
+    type: npc_code
+80:
+  act: 3
+  description: St Elles
+  detail: Region 80 - Final part of Act 3. Get item from Mermaid Queen and start Act
+    4.
+  is_act_terminus: true
+  locations:
+  - flag: act_4_access
+    name: ITEM_MERMAID_QUEEN
+    type: npc_item
+  requirements:
+  - name: NPC_MERMAID_QUEEN
+    type: npc_code
