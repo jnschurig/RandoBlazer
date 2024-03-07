@@ -1,0 +1,53 @@
+37:
+  act: 7
+  connected_regions: [39, 41,]
+  description: World of Evil
+  detail: Region 37 - Act 7 start, World of Evil
+  is_act_hub: true
+  locations:
+  - id: 60
+    type: chest
+  - id: 61
+    type: chest
+  - id: 62
+    type: chest
+  - id: 63
+    type: chest
+  requirements:
+  - name: BROWN_STONE
+    type: item
+  - name: GREEN_STONE
+    type: item
+  - name: BLUE_STONE
+    type: item
+  - name: SILVER_STONE
+    type: item
+  - name: PURPLE_STONE
+    type: item
+  - name: BLACK_STONE
+    type: item
+39:
+  act: 7
+  description: World of Evil
+  detail: Region 39 - Dazzling Space
+  locations:
+  - id: 64
+    type: chest
+  - id: 65
+    type: chest
+  requirements:
+  - name: SOUL_ARMOR
+    type: item
+41:
+  act: 7
+  description: End of the line...
+  detail: Region 41 - End of the game
+  is_end_region: true
+  locations: []
+  requirements:
+  - name: SOUL_BLADE
+    type: item
+  - name: SOUL_ARMOR
+    type: item
+  - name: PHOENIX
+    type: item

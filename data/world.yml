@@ -1,0 +1,22 @@
+acts:
+  1:
+    hub_region: 0
+    terminal_region: 22
+  2:
+    hub_region: 6
+    terminal_region: 79
+  3:
+    hub_region: 12
+    terminal_region: 80
+  4:
+    hub_region: 23
+    terminal_region: 81
+  5:
+    hub_region: 26
+    terminal_region: 82
+  6:
+    hub_region: 33
+    terminal_region: 83
+  7:
+    hub_region: 37
+    terminal_region: 41
