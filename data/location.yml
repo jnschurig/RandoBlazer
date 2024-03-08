@@ -129,10 +129,9 @@ data:
 - [123, npc_item, ITEM_CRYSTAL_ROCKBIRD              , GEMS_EXP                         , 200 ]
 - [124, npc_item, ITEM_CRYSTAL_SEABED_NEAR_BLESTER   , GEMS_EXP                         , 300 ]
 - [125, npc_item, ITEM_CRYSTAL_SEABED_NEAR_DUREAN    , GEMS_EXP                         , 250 ]
-
 # Skipped lair ID 0 is the first lair that releases the magician. This is typically left static.
 # Other skipped lairs are typically the ones that modify terrain. These have been excluded from randomization.
-# Total lair count, including npc releases and terrain modifiers, is 420 (blaze it)
+# Total lair count, including npc releases and terrain modifiers, is 420 (blaze)
 - [2  , lair    , NPC_OLD_WOMAN                      , NPC_OLD_WOMAN                    , null]
 - [6  , lair    , NPC_TOOL_SHOP_OWNER                , NPC_TOOL_SHOP_OWNER              , null]
 - [7  , lair    , NPC_TULIP                          , NPC_TULIP                        , null]
