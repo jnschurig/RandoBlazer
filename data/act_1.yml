@@ -1,252 +1,254 @@
-0:
-  act: 1
-  connected_regions: [1, 2, 3, 4, 5, 22, 42, 43, 44, 45, 46, 47, 48,]
-  description: Underground Castle
-  detail: Region 0 - Act 1 start, Underground Castle before elevator
-  is_act_hub: true
-  locations:
-  - id: 0
-    type: chest
-  - name: ITEM_MAGICIAN
-    type: npc_item
-  - name: NPC_OLD_WOMAN
-    type: lair
-  - name: NPC_TOOL_SHOP_OWNER
-    type: lair
-  - name: NPC_TULIP
-    type: lair
-  - name: NPC_BRIDGE_GUARD
-    type: lair
-  - name: NPC_IVY_CHEST_ROOM
-    type: lair
-  - name: NPC_WATER_MILL
-    type: lair
-  - id: 3
-    type: chest
-  - id: 4
-    type: chest
-  - id: 5
-    type: chest
-  - name: ITEM_CRYSTAL_UNDERGROUND_CASTLE
-    type: npc_item
-  requirements: []
-1:
-  act: 1
-  description: Grass Valley
-  detail: Region 1 - Underground chest room
-  locations:
-  - id: 1
-    type: chest
-  - id: 2
-    type: chest
-  - name: ITEM_CRYSTAL_GRASS_VALLEY
-    type: npc_item
-  requirements:
-  - name: NPC_BRIDGE_GUARD
-    type: npc_code
-  - name: NPC_IVY_CHEST_ROOM
-    type: npc_code
-2:
-  act: 1
-  description: Underground Castle
-  detail: Region 2 - Underground Castle after elevator
-  locations:
-  - name: NPC_OLD_MAN2
-    type: lair
-  - name: NPC_GOAT_HERB
-    type: lair
-  - name: NPC_LISA
-    type: lair
-  - name: NPC_TULIP2
-    type: lair
-  - name: NPC_ARCHITECT
-    type: lair
-  - name: NPC_IVY2
-    type: lair
-  - name: NPC_TEDDY
-    type: lair
-  - name: NPC_GOAT
-    type: lair
-  - name: NPC_TULIP3
-    type: lair
-  - name: NPC_LEOS_HOUSE
-    type: lair
-  requirements:
-  - name: NPC_BRIDGE_GUARD
-    type: npc_code
-  - name: NPC_WATER_MILL
-    type: npc_code
-3:
-  act: 1
-  description: Leo's Paintings
-  detail: Region 3 - Leo's Paintings
-  locations:
-  - name: NPC_TULIP4
-    type: lair
-  - name: NPC_LONELY_GOAT
-    type: lair
-  - name: NPC_IVY
-    type: lair
-  - name: NPC_GOAT2
-    type: lair
-  - name: NPC_BOY_CABIN
-    type: lair
-  - name: NPC_TULIP_PASS
-    type: lair
-  - name: NPC_BOY_CAVE
-    type: lair
-  - name: NPC_VILLAGE_CHIEF
-    type: lair
-  - id: 7
-    type: chest
-  requirements:
-  - name: NPC_BRIDGE_GUARD
-    type: npc_code
-  - name: NPC_ARCHITECT
-    type: npc_code
-  - name: NPC_LEOS_HOUSE
-    type: npc_code
-  - name: LEOS_BRUSH
-    type: item
-4:
-  act: 1
-  description: Underground Castle
-  detail: Region 4 - Last part of Underground Castle
-  locations:
-  - name: NPC_OLD_MAN
-    type: lair
-  - id: 6
-    type: chest
-  requirements:
-  - name: NPC_LISA
-    type: npc_code
-  - name: DREAM_ROD
-    type: item
-5:
-  act: 1
-  description: Leo`s Paintings
-  detail: Region 5 - Leo's Paintings Metal Enemies
-  locations:
-  - name: NPC_IVY_EMBLEM_A
-    type: lair
-  - name: NPC_IVY_RECOVERY_SWORD
-    type: lair
-  - id: 8
-    type: chest
-  requirements:
-  - name: can_cut_metal
-    type: flag
-  - name: NPC_BRIDGE_GUARD
-    type: npc_code
-  - name: NPC_ARCHITECT
-    type: npc_code
-  - name: NPC_LEOS_HOUSE
-    type: npc_code
-  - name: LEOS_BRUSH
-    type: item
-42:
-  act: 1
-  description: Grass Valley
-  detail: Region 42 - Tool Shop Owner
-  locations:
-  - name: ITEM_TOOL_SHOP_OWNER
-    type: npc_item
-  requirements:
-  - name: NPC_TOOL_SHOP_OWNER
-    type: npc_code
-43:
-  act: 1
-  description: Grass Valley
-  detail: Region 43 - Tool Shop Owner's son Teddy
-  locations:
-  - name: ITEM_TEDDY
-    type: npc_item
-  requirements:
-  - name: NPC_TEDDY
-    type: npc_code
-44:
-  act: 1
-  description: Grass Valley
-  detail: Region 44 - Emblem A tile
-  locations:
-  - name: ITEM_EMBLEM_A
-    type: npc_item
-  requirements:
-  - name: NPC_BRIDGE_GUARD
-    type: npc_code
-  - name: NPC_WATER_MILL
-    type: npc_code
-  - name: NPC_IVY
-    type: npc_code
-  - name: NPC_IVY_EMBLEM_A
-    type: npc_code
-45:
-  act: 1
-  description: Grass Valley
-  detail: Region 45 - Secret Cave pass
-  locations:
-  - name: ITEM_PASS
-    type: npc_item
-  requirements:
-  - name: NPC_BRIDGE_GUARD
-    type: npc_code
-  - name: NPC_IVY
-    type: npc_code
-  - name: NPC_TULIP_PASS
-    type: npc_code
-46:
-  act: 1
-  description: Grass Valley
-  detail: Region 46 - Goat pen corner tile
-  locations:
-  - name: ITEM_GOAT_PEN
-    type: npc_item
-  requirements:
-  - name: NPC_BRIDGE_GUARD
-    type: npc_code
-  - name: NPC_GOAT_HERB
-    type: npc_code
-47:
-  act: 1
-  description: Grass Valley
-  detail: Region 47 - Secret Cave
-  locations:
-  - name: ITEM_SECRET_CAVE_TILE
-    type: npc_item
-  requirements:
-  - name: NPC_BRIDGE_GUARD
-    type: npc_code
-  - name: NPC_BOY_CAVE
-    type: npc_code
-  - name: PASS
-    type: item
-48:
-  act: 1
-  description: Grass Valley
-  detail: Region 48 - Recovery Sword crystal
-  locations:
-  - name: ITEM_CRYSTAL_RECOVERY_SWORD
-    type: npc_item
-  requirements:
-  - name: NPC_BRIDGE_GUARD
-    type: npc_code
-  - name: NPC_BOY_CAVE
-    type: npc_code
-  - name: PASS
-    type: item
-  - name: NPC_IVY_RECOVERY_SWORD
-    type: npc_code
-22:
-  act: 1
-  description: Grass Valley
-  detail: Region 22 - Final part of Act 1. Get item from mayor and start Act 2.
-  is_act_terminus: true
-  locations:
-  - flag: act_2_access
-    name: ITEM_VILLAGE_CHIEF
-    type: npc_code
-  requirements:
-  - name: NPC_VILLAGE_CHIEF
-    type: npc_code
-  - name: NPC_OLD_WOMAN
-    type: npc_code
+regions:
+  0:
+    act: 1
+    # connected_regions: [1, 2, 3, 4, 5, 22, 42, 43, 44, 45, 46, 47, 48,]
+    area: Underground Castle
+    description: Act 1 start, Underground Castle before elevator
+    is_act_hub: true
+    locations:
+      - id: 0
+        type: chest
+      - name: ITEM_MAGICIAN
+        type: npc_item
+      - name: NPC_OLD_WOMAN
+        type: lair
+      - name: NPC_TOOL_SHOP_OWNER
+        type: lair
+      - name: NPC_TULIP
+        type: lair
+      - name: NPC_BRIDGE_GUARD
+        type: lair
+      - name: NPC_IVY_CHEST_ROOM
+        type: lair
+      - name: NPC_WATER_MILL
+        type: lair
+      - id: 3
+        type: chest
+      - id: 4
+        type: chest
+      - id: 5
+        type: chest
+      - name: ITEM_CRYSTAL_UNDERGROUND_CASTLE
+        type: npc_item
+    requirements: []
+  1:
+    act: 1
+    area: Grass Valley
+    description: Underground chest room
+    locations:
+      - id: 1
+        type: chest
+      - id: 2
+        type: chest
+      - name: ITEM_CRYSTAL_GRASS_VALLEY
+        type: npc_item
+    requirements:
+      - name: NPC_BRIDGE_GUARD
+        type: npc_code
+      - name: NPC_IVY_CHEST_ROOM
+        type: npc_code
+  2:
+    act: 1
+    area: Underground Castle
+    description: Underground Castle after elevator
+    locations:
+      - name: NPC_OLD_MAN2
+        type: lair
+      - name: NPC_GOAT_HERB
+        type: lair
+      - name: NPC_LISA
+        type: lair
+      - name: NPC_TULIP2
+        type: lair
+      - name: NPC_ARCHITECT
+        type: lair
+      - name: NPC_IVY2
+        type: lair
+      - name: NPC_TEDDY
+        type: lair
+      - name: NPC_GOAT
+        type: lair
+      - name: NPC_TULIP3
+        type: lair
+      - name: NPC_LEOS_HOUSE
+        type: lair
+    requirements:
+      - name: NPC_BRIDGE_GUARD
+        type: npc_code
+      - name: NPC_WATER_MILL
+        type: npc_code
+  3:
+    act: 1
+    area: Leo's Paintings
+    description: Leo's Paintings
+    locations:
+      - name: NPC_TULIP4
+        type: lair
+      - name: NPC_LONELY_GOAT
+        type: lair
+      - name: NPC_IVY
+        type: lair
+      - name: NPC_GOAT2
+        type: lair
+      - name: NPC_BOY_CABIN
+        type: lair
+      - name: NPC_TULIP_PASS
+        type: lair
+      - name: NPC_BOY_CAVE
+        type: lair
+      - boss_lair: true
+        name: NPC_VILLAGE_CHIEF
+        type: lair
+      - id: 7
+        type: chest
+    requirements:
+      - name: NPC_BRIDGE_GUARD
+        type: npc_code
+      - name: NPC_ARCHITECT
+        type: npc_code
+      - name: NPC_LEOS_HOUSE
+        type: npc_code
+      - name: LEOS_BRUSH
+        type: item
+  4:
+    act: 1
+    area: Underground Castle
+    description: Last part of Underground Castle
+    locations:
+      - name: NPC_OLD_MAN
+        type: lair
+      - id: 6
+        type: chest
+    requirements:
+      - name: NPC_LISA
+        type: npc_code
+      - name: DREAM_ROD
+        type: item
+  5:
+    act: 1
+    area: Leo`s Paintings
+    description: Leo's Paintings Metal Enemies
+    locations:
+      - name: NPC_IVY_EMBLEM_A
+        type: lair
+      - name: NPC_IVY_RECOVERY_SWORD
+        type: lair
+      - id: 8
+        type: chest
+    requirements:
+      - name: can_cut_metal
+        type: flag
+      - name: NPC_BRIDGE_GUARD
+        type: npc_code
+      - name: NPC_ARCHITECT
+        type: npc_code
+      - name: NPC_LEOS_HOUSE
+        type: npc_code
+      - name: LEOS_BRUSH
+        type: item
+  42:
+    act: 1
+    area: Grass Valley
+    description: Tool Shop Owner
+    locations:
+      - name: ITEM_TOOL_SHOP_OWNER
+        type: npc_item
+    requirements:
+      - name: NPC_TOOL_SHOP_OWNER
+        type: npc_code
+  43:
+    act: 1
+    area: Grass Valley
+    description: Tool Shop Owner's son Teddy
+    locations:
+      - name: ITEM_TEDDY
+        type: npc_item
+    requirements:
+      - name: NPC_TEDDY
+        type: npc_code
+  44:
+    act: 1
+    area: Grass Valley
+    description: Emblem A tile
+    locations:
+      - name: ITEM_EMBLEM_A
+        type: npc_item
+    requirements:
+      - name: NPC_BRIDGE_GUARD
+        type: npc_code
+      - name: NPC_WATER_MILL
+        type: npc_code
+      - name: NPC_IVY
+        type: npc_code
+      - name: NPC_IVY_EMBLEM_A
+        type: npc_code
+  45:
+    act: 1
+    area: Grass Valley
+    description: Secret Cave pass
+    locations:
+      - name: ITEM_PASS
+        type: npc_item
+    requirements:
+      - name: NPC_BRIDGE_GUARD
+        type: npc_code
+      - name: NPC_IVY
+        type: npc_code
+      - name: NPC_TULIP_PASS
+        type: npc_code
+  46:
+    act: 1
+    area: Grass Valley
+    description: Goat pen corner tile
+    locations:
+      - name: ITEM_GOAT_PEN
+        type: npc_item
+    requirements:
+      - name: NPC_BRIDGE_GUARD
+        type: npc_code
+      - name: NPC_GOAT_HERB
+        type: npc_code
+  47:
+    act: 1
+    area: Grass Valley
+    description: Secret Cave
+    locations:
+      - name: ITEM_SECRET_CAVE_TILE
+        type: npc_item
+    requirements:
+      - name: NPC_BRIDGE_GUARD
+        type: npc_code
+      - name: NPC_BOY_CAVE
+        type: npc_code
+      - name: PASS
+        type: item
+  48:
+    act: 1
+    area: Grass Valley
+    description: Recovery Sword crystal
+    locations:
+      - name: ITEM_CRYSTAL_RECOVERY_SWORD
+        type: npc_item
+    requirements:
+      - name: NPC_BRIDGE_GUARD
+        type: npc_code
+      - name: NPC_BOY_CAVE
+        type: npc_code
+      - name: PASS
+        type: item
+      - name: NPC_IVY_RECOVERY_SWORD
+        type: npc_code
+  22:
+    act: 1
+    area: Grass Valley
+    description: Final part of Act 1. Get item from mayor and start Act 2.
+    is_act_terminus: true
+    locations:
+      - flag: act_2_access
+        name: ITEM_VILLAGE_CHIEF
+        type: npc_code
+    requirements:
+      - name: NPC_VILLAGE_CHIEF
+        type: npc_code
+      - name: NPC_OLD_WOMAN
+        type: npc_code
