@@ -1,249 +1,251 @@
-6:
-  act: 2
-  connected_regions: [7, 8, 9, 10, 11, 49, 50, 51, 52, 53, 54, 79,]
-  description: Lost Marshes
-  detail: Region 6 - Act 2 start, Lost Marshes + Water/Fire Shrines
-  is_act_hub: true
-  locations:
-  - name: NPC_BIRD
-    type: lair
-  - name: NPC_DOG
-    type: lair
-  - name: NPC_SQUIRREL_PSYCHO_SWORD
-    type: lair
-  - name: NPC_BIRD2
-    type: lair
-  - name: NPC_MOLE_SOUL_OF_LIGHT
-    type: lair
-  - name: NPC_CROCODILE
-    type: lair
-  - name: NPC_SQUIRREL
-    type: lair
-  - name: NPC_MOLE
-    type: lair
-  - name: NPC_DEER
-    type: lair
-  - name: NPC_DOG2
-    type: lair
-  - name: NPC_DOG4
-    type: lair
-  - name: NPC_DOG5
-    type: lair
-  - name: NPC_CROCODILE2
-    type: lair
-  - name: NPC_SQUIRREL_ICE_ARMOR
-    type: lair
-  - name: NPC_MOLE2
-    type: lair
-  - name: NPC_SQUIRREL3
-    type: lair
-  - name: NPC_BIRD_GREENWOOD_LEAF
-    type: lair
-  - name: NPC_MOLE3
-    type: lair
-  - name: NPC_DEER_MAGIC_BELL
-    type: lair
-  - name: NPC_SQUIRREL2
-    type: lair
-  - id: 11
-    type: chest
-  - id: 12
-    type: chest
-  - id: 13
-    type: chest
-  - id: 14
-    type: chest
-  - id: 15
-    type: chest
-  - id: 16
-    type: chest
-  - id: 19
-    type: chest
-  - id: 20
-    type: chest
-  - name: ITEM_CRYSTAL_WATER_SHRINE
-    type: npc_item
-  - name: ITEM_WATER_SHRINE_TILE
-    type: npc_item
-  - name: ITEM_CRYSTAL_LIGHT_ARROW
-    type: npc_item
-  requirements: []
-7:
-  act: 2
-  description: Lost Marshes
-  detail: Region 7 - Last part of Marshes + Light Shrine
-  locations:
-  - name: NPC_MOLE_SHIELD_BRACELET
-    type: lair
-  - name: NPC_DOG3
-    type: lair
-  - name: NPC_SQUIRREL_EMBLEM_C
-    type: lair
-  - name: NPC_CROCODILE3
-    type: lair
-  - name: NPC_MONMO
-    type: lair
-  - name: NPC_GREENWOODS_GUARDIAN
-    type: lair
-  - name: ITEM_CRYSTAL_LOST_MARSH
-    type: npc_item
-  requirements:
-  - name: GREENWOOD_LEAF
-    type: item
-8:
-  act: 2
-  description: Lost Marshes
-  detail: Region 8 - Fire Shrine Scorpions
-  locations:
-  - name: NPC_BIRD3
-    type: lair
-  - id: 18
-    type: chest
-  - name: ITEM_CRYSTAL_FIRE_SHRINE
-    type: npc_item
-  requirements:
-  - name: can_cut_metal
-    type: flag
-9:
-  act: 2
-  description: Greenwood
-  detail: Region 9 - Monmo's Treasure
-  locations:
-  - id: 10
-    type: chest
-  requirements:
-  - name: NPC_MONMO
-    type: npc_code
-  - name: NPC_MOLE3
-    type: npc_code
-10:
-  act: 2
-  description: Greenwood
-  detail: Region 10 - Ice Armor chest
-  locations:
-  - id: 9
-    type: chest
-  requirements:
-  - name: NPC_MOLE
-    type: npc_code
-  - name: NPC_SQUIRREL_ICE_ARMOR
-    type: npc_code
-  - name: DREAM_ROD
-    type: item
-11:
-  act: 2
-  description: Lost Marshes
-  detail: Region 11 - Light Shrine Fire Spirits
-  locations:
-  - name: NPC_BIRD_RED_HOT_MIRROR
-    type: lair
-  - id: 21
-    type: chest
-  requirements:
-  - name: can_cut_spirit
-    type: flag
-  - name: GREENWOOD_LEAF
-    type: item
-49:
-  act: 2
-  description: Greenwood
-  detail: Region 49 - Red-Hot Mirror bird
-  locations:
-  - name: ITEM_BIRD_RED_HOT_MIRROR
-    type: npc_item
-  requirements:
-  - name: RED_HOT_MIRROR
-    type: item
-50:
-  act: 2
-  description: Greenwood
-  detail: Region 50 - Magic Bell crystal
-  locations:
-  - name: ITEM_CRYSTAL_MAGIC_BELL
-    type: npc_item
-  requirements:
-  - name: NPC_DEER_MAGIC_BELL
-    type: npc_code
-  - name: NPC_CROCODILE3
-    type: npc_code
-  - name: EMBLEM_A
-    type: item
-  - name: EMBLEM_B
-    type: item
-  - name: EMBLEM_C
-    type: item
-  - name: EMBLEM_D
-    type: item
-  - name: EMBLEM_E
-    type: item
-  - name: EMBLEM_F
-    type: item
-  - name: EMBLEM_G
-    type: item
-  - name: EMBLEM_H
-    type: item
-51:
-  act: 2
-  description: Greenwood
-  detail: Region 51 - Woodstin Trio
-  locations:
-  - name: ITEM_WOODSTIN_TRIO
-    type: npc_item
-  requirements:
-  - name: NPC_DEER
-    type: npc_code
-  - name: NPC_SQUIRREL3
-    type: npc_code
-  - name: NPC_DOG3
-    type: npc_code
-52:
-  act: 2
-  description: Greenwood
-  detail: Region 52 - Shield Bracelet mole
-  locations:
-  - name: ITEM_MOLE_SHIELD_BRACELET
-    type: npc_item
-  requirements:
-  - name: NPC_MOLE
-    type: npc_code
-  - name: NPC_MOLE_SHIELD_BRACELET
-    type: npc_code
-  - name: MOLES_RIBBON
-    type: item
-53:
-  act: 2
-  description: Greenwood
-  detail: Region 53 - Psycho Sword squirrel
-  locations:
-  - name: ITEM_SQUIRREL_PSYCHO_SWORD
-    type: npc_item
-  requirements:
-  - name: NPC_SQUIRREL_PSYCHO_SWORD
-    type: npc_code
-  - name: DELICIOUS_SEEDS
-    type: item
-54:
-  act: 2
-  description: Greenwood
-  detail: Region 54 - Emblem C squirrel
-  locations:
-  - name: ITEM_SQUIRREL_EMBLEM_C
-    type: npc_item
-  requirements:
-  - name: NPC_SQUIRREL_PSYCHO_SWORD
-    type: npc_code
-  - name: NPC_SQUIRREL_EMBLEM_C
-    type: npc_code
-79:
-  act: 2
-  description: Greenwood
-  detail: Region 79 - Final part of Act 2. Get item from Greenwood Guardian and start
-    Act 3.
-  is_act_terminus: true
-  locations:
-  - flag: act_3_access
-    name: ITEM_GREENWOODS_GUARDIAN
-    type: npc_item
-  requirements:
-  - name: NPC_GREENWOODS_GUARDIAN
-    type: npc_code
+regions:
+  6:
+    act: 2
+    # connected_regions: [7, 8, 9, 10, 11, 49, 50, 51, 52, 53, 54, 79,]
+    area: Lost Marshes
+    description: Act 2 start, Lost Marshes + Water/Fire Shrines
+    is_act_hub: true
+    locations:
+      - name: NPC_BIRD
+        type: lair
+      - name: NPC_DOG
+        type: lair
+      - name: NPC_SQUIRREL_PSYCHO_SWORD
+        type: lair
+      - name: NPC_BIRD2
+        type: lair
+      - name: NPC_MOLE_SOUL_OF_LIGHT
+        type: lair
+      - name: NPC_CROCODILE
+        type: lair
+      - name: NPC_SQUIRREL
+        type: lair
+      - name: NPC_MOLE
+        type: lair
+      - name: NPC_DEER
+        type: lair
+      - name: NPC_DOG2
+        type: lair
+      - name: NPC_DOG4
+        type: lair
+      - name: NPC_DOG5
+        type: lair
+      - name: NPC_CROCODILE2
+        type: lair
+      - name: NPC_SQUIRREL_ICE_ARMOR
+        type: lair
+      - name: NPC_MOLE2
+        type: lair
+      - name: NPC_SQUIRREL3
+        type: lair
+      - name: NPC_BIRD_GREENWOOD_LEAF
+        type: lair
+      - name: NPC_MOLE3
+        type: lair
+      - name: NPC_DEER_MAGIC_BELL
+        type: lair
+      - name: NPC_SQUIRREL2
+        type: lair
+      - id: 11
+        type: chest
+      - id: 12
+        type: chest
+      - id: 13
+        type: chest
+      - id: 14
+        type: chest
+      - id: 15
+        type: chest
+      - id: 16
+        type: chest
+      - id: 19
+        type: chest
+      - id: 20
+        type: chest
+      - name: ITEM_CRYSTAL_WATER_SHRINE
+        type: npc_item
+      - name: ITEM_WATER_SHRINE_TILE
+        type: npc_item
+      - name: ITEM_CRYSTAL_LIGHT_ARROW
+        type: npc_item
+    requirements: []
+  7:
+    act: 2
+    area: Lost Marshes
+    description: Last part of Marshes + Light Shrine
+    locations:
+      - name: NPC_MOLE_SHIELD_BRACELET
+        type: lair
+      - name: NPC_DOG3
+        type: lair
+      - name: NPC_SQUIRREL_EMBLEM_C
+        type: lair
+      - name: NPC_CROCODILE3
+        type: lair
+      - name: NPC_MONMO
+        type: lair
+      - boss_lair: true
+        name: NPC_GREENWOODS_GUARDIAN
+        type: lair
+      - name: ITEM_CRYSTAL_LOST_MARSH
+        type: npc_item
+    requirements:
+      - name: GREENWOOD_LEAF
+        type: item
+  8:
+    act: 2
+    area: Lost Marshes
+    description: Fire Shrine Scorpions
+    locations:
+      - name: NPC_BIRD3
+        type: lair
+      - id: 18
+        type: chest
+      - name: ITEM_CRYSTAL_FIRE_SHRINE
+        type: npc_item
+    requirements:
+      - name: can_cut_metal
+        type: flag
+  9:
+    act: 2
+    area: Greenwood
+    description: Monmo's Treasure
+    locations:
+      - id: 10
+        type: chest
+    requirements:
+      - name: NPC_MONMO
+        type: npc_code
+      - name: NPC_MOLE3
+        type: npc_code
+  10:
+    act: 2
+    area: Greenwood
+    description: Ice Armor chest
+    locations:
+      - id: 9
+        type: chest
+    requirements:
+      - name: NPC_MOLE
+        type: npc_code
+      - name: NPC_SQUIRREL_ICE_ARMOR
+        type: npc_code
+      - name: DREAM_ROD
+        type: item
+  11:
+    act: 2
+    area: Lost Marshes
+    description: Light Shrine Fire Spirits
+    locations:
+      - name: NPC_BIRD_RED_HOT_MIRROR
+        type: lair
+      - id: 21
+        type: chest
+    requirements:
+      - name: can_cut_spirit
+        type: flag
+      - name: GREENWOOD_LEAF
+        type: item
+  49:
+    act: 2
+    area: Greenwood
+    description: Red-Hot Mirror bird
+    locations:
+      - name: ITEM_BIRD_RED_HOT_MIRROR
+        type: npc_item
+    requirements:
+      - name: RED_HOT_MIRROR
+        type: item
+  50:
+    act: 2
+    area: Greenwood
+    description: Magic Bell crystal
+    locations:
+      - name: ITEM_CRYSTAL_MAGIC_BELL
+        type: npc_item
+    requirements:
+      - name: NPC_DEER_MAGIC_BELL
+        type: npc_code
+      - name: NPC_CROCODILE3
+        type: npc_code
+      - name: EMBLEM_A
+        type: item
+      - name: EMBLEM_B
+        type: item
+      - name: EMBLEM_C
+        type: item
+      - name: EMBLEM_D
+        type: item
+      - name: EMBLEM_E
+        type: item
+      - name: EMBLEM_F
+        type: item
+      - name: EMBLEM_G
+        type: item
+      - name: EMBLEM_H
+        type: item
+  51:
+    act: 2
+    area: Greenwood
+    description: Woodstin Trio
+    locations:
+      - name: ITEM_WOODSTIN_TRIO
+        type: npc_item
+    requirements:
+      - name: NPC_DEER
+        type: npc_code
+      - name: NPC_SQUIRREL3
+        type: npc_code
+      - name: NPC_DOG3
+        type: npc_code
+  52:
+    act: 2
+    area: Greenwood
+    description: Shield Bracelet mole
+    locations:
+      - name: ITEM_MOLE_SHIELD_BRACELET
+        type: npc_item
+    requirements:
+      - name: NPC_MOLE
+        type: npc_code
+      - name: NPC_MOLE_SHIELD_BRACELET
+        type: npc_code
+      - name: MOLES_RIBBON
+        type: item
+  53:
+    act: 2
+    area: Greenwood
+    description: Psycho Sword squirrel
+    locations:
+      - name: ITEM_SQUIRREL_PSYCHO_SWORD
+        type: npc_item
+    requirements:
+      - name: NPC_SQUIRREL_PSYCHO_SWORD
+        type: npc_code
+      - name: DELICIOUS_SEEDS
+        type: item
+  54:
+    act: 2
+    area: Greenwood
+    description: Emblem C squirrel
+    locations:
+      - name: ITEM_SQUIRREL_EMBLEM_C
+        type: npc_item
+    requirements:
+      - name: NPC_SQUIRREL_PSYCHO_SWORD
+        type: npc_code
+      - name: NPC_SQUIRREL_EMBLEM_C
+        type: npc_code
+  79:
+    act: 2
+    area: Greenwood
+    description: Final part of Act 2. Get item from Greenwood Guardian and start
+      Act 3.
+    is_act_terminus: true
+    locations:
+      - flag: act_3_access
+        name: ITEM_GREENWOODS_GUARDIAN
+        type: npc_item
+    requirements:
+      - name: NPC_GREENWOODS_GUARDIAN
+        type: npc_code

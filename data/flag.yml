@@ -1,0 +1,19 @@
+flags:
+  can_cut_metal:
+    - ZANTETSU_SWORD
+    - SOUL_BLADE
+  can_cut_spirit:
+    - SPIRIT_SWORD
+    - SOUL_BLADE
+  has_magic:
+    - FLAME_BALL
+    - LIGHT_ARROW
+    - MAGIC_FLARE
+    - ROTATOR
+    - SPARK_BOMB
+    - FLAME_PILLAR
+    - TORNADO
+  has_thunder:
+    - THUNDER_RING
+    - ZANTETSU_SWORD
+    - SOUL_BLADE

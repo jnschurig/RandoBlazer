@@ -1,249 +1,249 @@
-33:
-  act: 6
-  connected_regions: [34, 35, 36, 38, 69, 71, 72, 73, 74, 75, 76, 78, 83,]
-  description: Castle Basement
-  detail: Region 33 - Act 6 start, first lairs of Magridd Castle Basement
-  is_act_hub: true
-  locations:
-  - name: NPC_SOLDIER
-    type: lair
-  - id: 50
-    type: chest
-  - id: 51
-    type: chest
-  - name: ITEM_HARP_STRING
-    type: npc_item
-  requirements: []
-34:
-  act: 6
-  description: Castle Basement
-  detail: Region 34 - Magridd Castle Basement
-  locations:
-  - name: NPC_SOLDIER2
-    type: lair
-  - name: NPC_SINGER_CONCERT_HALL
-    type: lair
-  - name: NPC_SOLDIER3
-    type: lair
-  - name: NPC_SOLDIER4
-    type: lair
-  - name: NPC_SOLDIER5
-    type: lair
-  - name: NPC_SOLDIER6
-    type: lair
-  - name: NPC_SOLDIER_ELEMENTAL_MAIL
-    type: lair
-  - name: NPC_MAID
-    type: lair
-  - name: NPC_SOLDIER_LEFT_TOWER
-    type: lair
-  - name: NPC_SOLDIER_DOK
-    type: lair
-  - name: NPC_SOLDIER_PLATINUM_CARD
-    type: lair
-  - name: NPC_SINGER
-    type: lair
-  - id: 52
-    type: chest
-  - id: 53
-    type: chest
-  - id: 54
-    type: chest
-  - id: 55
-    type: chest
-  requirements:
-  - name: can_cut_spirit
-    type: flag
-35:
-  act: 6
-  description: Castle Tower
-  detail: Region 35 - Magridd Castle Left Tower
-  locations:
-  - name: NPC_SOLDIER_SOUL_OF_REALITY
-    type: lair
-  - name: NPC_QUEEN_MAGRIDD
-    type: lair
-  - name: NPC_MAID2
-    type: lair
-  - name: NPC_SOLDIER_WITH_LEO
-    type: lair
-  - name: NPC_SOLDIER_RIGHT_TOWER
-    type: lair
-  - name: NPC_DR_LEO
-    type: lair
-  - name: NPC_SOLDIER7
-    type: lair
-  requirements:
-  - name: NPC_SOLDIER_LEFT_TOWER
-    type: npc_code
-  - name: PLATINUM_CARD
-    type: item
-36:
-  act: 6
-  description: Castle Tower
-  detail: Region 36 - Magridd Castle Right Tower
-  locations:
-  - name: NPC_MAID_HERB
-    type: lair
-  - name: NPC_SOLDIER8
-    type: lair
-  - name: NPC_SOLDIER_CASTLE
-    type: lair
-  - name: NPC_SOLDIER9
-    type: lair
-  - name: NPC_SOLDIER10
-    type: lair
-  - name: NPC_SOLDIER11
-    type: lair
-  - id: 56
-    type: chest
-  - id: 57
-    type: chest
-  - id: 58
-    type: chest
-  - id: 59
-    type: chest
-  requirements:
-  - name: NPC_SOLDIER_RIGHT_TOWER
-    type: npc_code
-  - name: VIP_CARD
-    type: item
-38:
-  act: 6
-  description: Magridd Castle
-  detail: Region 38 - Dr Leo + Queen Magridd cutscene + Super Bracelet Tile
-  locations:
-  - name: ITEM_DR_LEO
-    type: npc_item
-  - name: ITEM_SUPER_BRACELET
-    type: npc_item
-  requirements:
-  - name: NPC_SOLDIER_RIGHT_TOWER
-    type: npc_code
-  - name: VIP_CARD
-    type: item
-  - name: NPC_SOLDIER_WITH_LEO
-    type: npc_code
-  - name: NPC_SOLDIER_DOK
-    type: npc_code
-  - name: NPC_DR_LEO
-    type: npc_code
-69:
-  act: 6
-  description: Magridd Castle
-  detail: Region 69 - Elemental Mail soldier
-  locations:
-  - name: ITEM_SOLDIER_ELEMENTAL_MAIL
-    type: npc_item
-  requirements:
-  - name: NPC_SOLDIER_ELEMENTAL_MAIL
-    type: npc_code
-  - name: DREAM_ROD
-    type: item
-70:
-  act: 6
-  detail: Region 70 - Queen Magridd
-  locations:
-  - name: ITEM_QUEEN_MAGRIDD
-    type: npc_item
-  requirements:
-  - name: NPC_QUEEN_MAGRIDD
-    type: npc_code
-71:
-  act: 6
-  description: Magridd Castle
-  detail: Region 71 - Platinum Card soldier
-  locations:
-  - name: ITEM_SOLDIER_PLATINUM_CARD
-    type: npc_item
-  requirements:
-  - name: NPC_SINGER_CONCERT_HALL
-    type: npc_code
-  - name: NPC_SOLDIER_PLATINUM_CARD
-    type: npc_code
-  - name: HARP_STRING
-    type: item
-72:
-  act: 6
-  description: Magridd Castle
-  detail: Region 72 - Medical Herb maid
-  locations:
-  - name: ITEM_MAID_HERB
-    type: npc_item
-  requirements:
-  - name: NPC_MAID_HERB
-    type: npc_code
-73:
-  act: 6
-  description: Magridd Castle
-  detail: Region 73 - Magridd Castle + Emblem H tile
-  locations:
-  - name: ITEM_EMBLEM_H
-    type: npc_item
-  requirements:
-  - name: NPC_SOLDIER_CASTLE
-    type: npc_code
-75:
-  act: 6
-  description: Greenwood
-  detail: Region 75 - Greenwood Leaf tile
-  locations:
-  - name: ITEM_GREENWOOD_LEAVES
-    type: npc_item
-  requirements:
-  - name: NPC_CROCODILE
-    type: npc_code
-  - name: NPC_CROCODILE2
-    type: npc_code
-  - name: NPC_BIRD_GREENWOOD_LEAF
-    type: npc_code
-  - name: NPC_MOLE_SOUL_OF_LIGHT
-    type: npc_code
-  - name: DREAM_ROD
-    type: item
-76:
-  act: 6
-  description: Magridd Castle
-  detail: Region 76 - Demon Bird's lair
-  locations:
-  - boss_lair: true
-    name: NPC_KING_MAGRIDD
-    type: lair
-  requirements:
-  - name: NPC_SOLDIER_RIGHT_TOWER
-    type: npc_code
-  - name: VIP_CARD
-    type: item
-  - name: MOBILE_KEY
-    type: item
-78:
-  act: 6
-  description: Leo`s Lab
-  detail: Region 78 - Chest of Drawers in Attic
-  locations:
-  - name: ITEM_CHEST_OF_DRAWERS_HERB
-    type: npc_item
-  requirements:
-  - name: NPC_GREAT_DOOR_MODEL_TOWNS
-    type: npc_code
-  - name: NPC_STEPS_UPSTAIRS
-    type: npc_code
-  - name: NPC_STEPS_MARIE
-    type: npc_code
-  - name: NPC_CHEST_OF_DRAWERS2
-    type: npc_code
-83:
-  act: 6
-  description: Magridd Castle
-  detail: Region 83 - Final part of Act 6. Get item from King Magridd and start Act
-    7.
-  is_act_terminus: true
-  locations:
-  - flag: act_7_access
-    name: ITEM_KING_MAGRIDD
-    type: npc_item
-  requirements:
-  - name: NPC_KING_MAGRIDD
-    type: npc_code
-  - name: NPC_SOLDIER_CASTLE
-    type: npc_code
+regions:
+  33:
+    act: 6
+    # connected_regions: [34, 35, 36, 38, 69, 71, 72, 73, 74, 75, 76, 78, 83,]
+    area: Castle Basement
+    description: Act 6 start, first lairs of Magridd Castle Basement
+    is_act_hub: true
+    locations:
+      - name: NPC_SOLDIER
+        type: lair
+      - id: 50
+        type: chest
+      - id: 51
+        type: chest
+      - name: ITEM_HARP_STRING
+        type: npc_item
+    requirements: []
+  34:
+    act: 6
+    area: Castle Basement
+    description: Magridd Castle Basement
+    locations:
+      - name: NPC_SOLDIER2
+        type: lair
+      - name: NPC_SINGER_CONCERT_HALL
+        type: lair
+      - name: NPC_SOLDIER3
+        type: lair
+      - name: NPC_SOLDIER4
+        type: lair
+      - name: NPC_SOLDIER5
+        type: lair
+      - name: NPC_SOLDIER6
+        type: lair
+      - name: NPC_SOLDIER_ELEMENTAL_MAIL
+        type: lair
+      - name: NPC_MAID
+        type: lair
+      - name: NPC_SOLDIER_LEFT_TOWER
+        type: lair
+      - name: NPC_SOLDIER_DOK
+        type: lair
+      - name: NPC_SOLDIER_PLATINUM_CARD
+        type: lair
+      - name: NPC_SINGER
+        type: lair
+      - id: 52
+        type: chest
+      - id: 53
+        type: chest
+      - id: 54
+        type: chest
+      - id: 55
+        type: chest
+    requirements:
+      - name: can_cut_spirit
+        type: flag
+  35:
+    act: 6
+    area: Castle Tower
+    description: Magridd Castle Left Tower
+    locations:
+      - name: NPC_SOLDIER_SOUL_OF_REALITY
+        type: lair
+      - name: NPC_QUEEN_MAGRIDD
+        type: lair
+      - name: NPC_MAID2
+        type: lair
+      - name: NPC_SOLDIER_WITH_LEO
+        type: lair
+      - name: NPC_SOLDIER_RIGHT_TOWER
+        type: lair
+      - name: NPC_DR_LEO
+        type: lair
+      - name: NPC_SOLDIER7
+        type: lair
+    requirements:
+      - name: NPC_SOLDIER_LEFT_TOWER
+        type: npc_code
+      - name: PLATINUM_CARD
+        type: item
+  36:
+    act: 6
+    area: Castle Tower
+    description: Magridd Castle Right Tower
+    locations:
+      - name: NPC_MAID_HERB
+        type: lair
+      - name: NPC_SOLDIER8
+        type: lair
+      - name: NPC_SOLDIER_CASTLE
+        type: lair
+      - name: NPC_SOLDIER9
+        type: lair
+      - name: NPC_SOLDIER10
+        type: lair
+      - name: NPC_SOLDIER11
+        type: lair
+      - id: 56
+        type: chest
+      - id: 57
+        type: chest
+      - id: 58
+        type: chest
+      - id: 59
+        type: chest
+    requirements:
+      - name: NPC_SOLDIER_RIGHT_TOWER
+        type: npc_code
+      - name: VIP_CARD
+        type: item
+  38:
+    act: 6
+    area: Magridd Castle
+    description: Dr Leo + Queen Magridd cutscene + Super Bracelet Tile
+    locations:
+      - name: ITEM_DR_LEO
+        type: npc_item
+      - name: ITEM_SUPER_BRACELET
+        type: npc_item
+    requirements:
+      - name: NPC_SOLDIER_RIGHT_TOWER
+        type: npc_code
+      - name: VIP_CARD
+        type: item
+      - name: NPC_SOLDIER_WITH_LEO
+        type: npc_code
+      - name: NPC_SOLDIER_DOK
+        type: npc_code
+      - name: NPC_DR_LEO
+        type: npc_code
+  69:
+    act: 6
+    area: Magridd Castle
+    description: Elemental Mail soldier
+    locations:
+      - name: ITEM_SOLDIER_ELEMENTAL_MAIL
+        type: npc_item
+    requirements:
+      - name: NPC_SOLDIER_ELEMENTAL_MAIL
+        type: npc_code
+      - name: DREAM_ROD
+        type: item
+  70:
+    act: 6
+    description: Queen Magridd
+    locations:
+      - name: ITEM_QUEEN_MAGRIDD
+        type: npc_item
+    requirements:
+      - name: NPC_QUEEN_MAGRIDD
+        type: npc_code
+  71:
+    act: 6
+    area: Magridd Castle
+    description: Platinum Card soldier
+    locations:
+      - name: ITEM_SOLDIER_PLATINUM_CARD
+        type: npc_item
+    requirements:
+      - name: NPC_SINGER_CONCERT_HALL
+        type: npc_code
+      - name: NPC_SOLDIER_PLATINUM_CARD
+        type: npc_code
+      - name: HARP_STRING
+        type: item
+  72:
+    act: 6
+    area: Magridd Castle
+    description: Medical Herb maid
+    locations:
+      - name: ITEM_MAID_HERB
+        type: npc_item
+    requirements:
+      - name: NPC_MAID_HERB
+        type: npc_code
+  73:
+    act: 6
+    area: Magridd Castle
+    description: Magridd Castle + Emblem H tile
+    locations:
+      - name: ITEM_EMBLEM_H
+        type: npc_item
+    requirements:
+      - name: NPC_SOLDIER_CASTLE
+        type: npc_code
+  75:
+    act: 6
+    area: Greenwood
+    description: Greenwood Leaf tile
+    locations:
+      - name: ITEM_GREENWOOD_LEAVES
+        type: npc_item
+    requirements:
+      - name: NPC_CROCODILE
+        type: npc_code
+      - name: NPC_CROCODILE2
+        type: npc_code
+      - name: NPC_BIRD_GREENWOOD_LEAF
+        type: npc_code
+      - name: NPC_MOLE_SOUL_OF_LIGHT
+        type: npc_code
+      - name: DREAM_ROD
+        type: item
+  76:
+    act: 6
+    area: Magridd Castle
+    description: Demon Bird's lair
+    locations:
+      - boss_lair: true
+        name: NPC_KING_MAGRIDD
+        type: lair
+    requirements:
+      - name: NPC_SOLDIER_RIGHT_TOWER
+        type: npc_code
+      - name: VIP_CARD
+        type: item
+      - name: MOBILE_KEY
+        type: item
+  78:
+    act: 6
+    area: Leo's Lab
+    description: Chest of Drawers in Attic
+    locations:
+      - name: ITEM_CHEST_OF_DRAWERS_HERB
+        type: npc_item
+    requirements:
+      - name: NPC_GREAT_DOOR_MODEL_TOWNS
+        type: npc_code
+      - name: NPC_STEPS_UPSTAIRS
+        type: npc_code
+      - name: NPC_STEPS_MARIE
+        type: npc_code
+      - name: NPC_CHEST_OF_DRAWERS2
+        type: npc_code
+  83:
+    act: 6
+    area: Magridd Castle
+    description: Final part of Act 6. Get item from King Magridd and start Act 7.
+    is_act_terminus: true
+    locations:
+      - flag: act_7_access
+        name: ITEM_KING_MAGRIDD
+        type: npc_item
+    requirements:
+      - name: NPC_KING_MAGRIDD
+        type: npc_code
+      - name: NPC_SOLDIER_CASTLE
+        type: npc_code
